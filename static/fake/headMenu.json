@@ -1,0 +1,22 @@
+{
+  "menuLists" : [
+    {
+      "id" : 1,
+      "name" : "Lap",
+      "url" : "/lab",
+      "requiresAuth" : false
+    },
+    {
+      "id" : 2,
+      "name" : "Post",
+      "url" : "/post",
+      "requiresAuth" : true
+    },
+    {
+      "id" : 3,
+      "name" : "Root",
+      "url" : "/root",
+      "requiresAuth" : true
+    }
+  ]
+}

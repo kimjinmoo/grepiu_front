@@ -1,0 +1,21 @@
+{
+    "slideLists" : [
+      {
+        "id"  : 0,
+        "title" : "Jenkins 세팅",
+        "description" : "세팅 정보 안내",
+        "url" : "/post/0",
+        "imageUrl" : "/resource/img/index/jenkins.jpeg",
+        "alt" : ""
+      },
+      {
+        "id"  : 1,
+        "title" : "docker 세팅",
+        "description" : "세팅 정보 안내",
+        "url" : "/post/1",
+        "imageUrl" : "/resource/img/index/docker.png",
+        "alt" : ""
+      }
+    ]
+
+}

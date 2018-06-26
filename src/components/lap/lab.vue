@@ -117,7 +117,7 @@
     },
     created : function() {
       // 슬라이드 화면을 불러온다.
-      axios.get("/fake/slideData.json")
+      axios.get("/static/fake/slideData.json")
       .then((response) => {
         this.slideLists = response.data.slideLists;
       })
@@ -272,27 +272,27 @@
     background-repeat: no-repeat;
   }
   .movie {
-    background-image: url("/img/bg/cinema-3218422_1920.jpg");
+    background-image: url("/static/img/bg/cinema-3218422_1920.jpg");
   }
 
   .jenkins {
-    background-image: url("/img/bg/puzzle-226743_1920.jpg");
+    background-image: url("/static/img/bg/puzzle-226743_1920.jpg");
   }
 
   .selenium {
-    background-image: url("/img/bg/arranged-1842261_1920.jpg");
+    background-image: url("/static/img/bg/arranged-1842261_1920.jpg");
   }
 
   .swagger {
-    background-image: url("/img/bg/document-3268750_1920.jpg");
+    background-image: url("/static/img/bg/document-3268750_1920.jpg");
   }
 
   .websocket {
-    background-image: url("/img/bg/feedback-1825515_1920.jpg");
+    background-image: url("/static/img/bg/feedback-1825515_1920.jpg");
   }
 
   .slack {
-    background-image: url("/img/bg/logo-2563719_1920.jpg");
+    background-image: url("/static/img/bg/logo-2563719_1920.jpg");
   }
 
   .inner {

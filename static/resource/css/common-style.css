@@ -1,0 +1,46 @@
+body, html {
+    width : 100%;
+    height: 100%;
+    margin: 0%;
+}
+
+main {
+    position: relative;
+}
+footer {
+    position: relative;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    text-align:center;
+    color: #010101;
+    background-color:#fff
+}
+footer p {
+    font-size:12px;
+    margin:0
+}
+footer ul {
+    margin-bottom:0
+}
+footer ul li a {
+    font-size:12px;
+    color:rgba(255,255,255,.3)
+}
+footer ul li a.active,footer ul li a:active,footer ul li a:focus,footer ul li a:hover {
+    text-decoration:none
+}
+
+.signUpFrom {
+    /* The image used */
+    background-image: url("/img/bg/signUp2.jpg");
+
+    /* Full height */
+    min-height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}

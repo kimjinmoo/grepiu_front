@@ -43,6 +43,7 @@
   </div>
 </template>
 <script>
+  var MobileDetect = require('mobile-detect'),md = new MobileDetect(navigator.userAgent);
   import axios from 'axios'
   // vue google map
   // ref : https://developers.google.com/maps/documentation/javascript/events?hl=ko
@@ -189,9 +190,9 @@
           let lng = item.location == null?0:item.location.x;
           // todo. 로직 수정해야됨
           if(item.type == 'lotte') {
-            map.push({"position" : {"lng" : lng, "lat" : lat}, "storeName" : item.storeName, "type" : item.type, "url" : "/img/cinema_lotte_icon.png"})
+            map.push({"position" : {"lng" : lng, "lat" : lat}, "storeName" : item.storeName, "type" : item.type, "url" : "/static/img/cinema_lotte_icon.png"})
           } else {
-            map.push({"position" : {"lng" : lng, "lat" : lat}, "storeName" : item.storeName, "type" : item.type, "url" : "/img/cinema_cgv_icon.png"})
+            map.push({"position" : {"lng" : lng, "lat" : lat}, "storeName" : item.storeName, "type" : item.type, "url" : "/static/img/cinema_cgv_icon.png"})
           }
         }
         this.markers = map;
