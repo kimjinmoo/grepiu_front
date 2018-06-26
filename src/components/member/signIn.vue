@@ -6,9 +6,9 @@
         <small class="text-muted">Login via</small>
         <br><br>
         <p>
-          <a class="btn btn-primary social-login-btn social-google" href="javascript:void(0);" v-on:click="signInByGoogle"><i class="fa icon-social-google"></i></a>
+          <a class="btn btn-primary fa fa-google" href="javascript:void(0);" v-on:click="signInByGoogle"><i class="fa icon-social-google"></i></a>
           &nbsp;
-          <a class="btn btn-primary social-login-btn social-facebook" href="javascript:void(0);" v-on:click="signInByFaceBook"><i class="fa icon-social-facebook"></i></a>
+          <a class="btn btn-primary fa fa-facebook" href="javascript:void(0);" v-on:click="signInByFaceBook"><i class="fa icon-social-facebook"></i></a>
         </p>
         <small class="text-muted">with firebase</small>
         <!--<input id="email" autocomplete="off"  v-model="form.email" class="ember-view ember-text-field form-control login-input" placeholder="이메일주소" type="text">-->

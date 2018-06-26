@@ -3,12 +3,7 @@
 2018.03.12 최초 생성
 2018.06.26 vue cli-3.0으로 변경 
 
-<h5>- 최초 세팅 방법</h5>
-<pre>
-npm install
-</pre>
-
-<h5>설치된 플로그인 설치<h5>
+<h5>설치된 플로그인 목록<h5>
 <pre>
 npm i bootstrap-vue --save
 npm install vue-router —save
@@ -28,21 +23,27 @@ npm install --save vue-carousel webstomp-client
 * 모바일
 npm install mobile-detect --save
 * 웹 호환성 entries 지원
+npm install --save-dev babel-preset-es2017
 npm install --save babel-polyfill
 => entry: ["babel-polyfill", "./app/js"]};
 </pre>
 
 <h5>Git에서 받은 후 작업</h5>
 <pre>
-npm install 
-npm install -g yarn
-yarn run serve [ 개발용 ] / package.json 스크립트확인
+npm install or yarn install
+npm install -g yarn (yarn이 설치 안되어 있을 경우)
+yarn run dev [개발 버전 실행]
 </pre>
 
 <h5>디렉토리 구조<h5>
 <pre>
-[+]node_module  # 빌드결과물
-[+]public # 공용 폴더
+[+]build 빌드파일
+[+]config 설정파일 
+[+]node_module  # 모듈
 [+]src # 어플리케이션
-package.json
+[+]static # 정적 파일
+[+]test # teset
+package.json npm 패키지 관리 프로그램
+.babelrc 바밸 설정 파일
+index.html index 파일
 </pre>
