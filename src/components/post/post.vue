@@ -18,7 +18,7 @@
             <b-form-select v-model="editor.category_selected" :options="editor.category_options" class="mb-3" size="sm" />
           </div>
           <div style="margin-top: 5pt">
-            <vue-editor v-model="editor.content" :editorOptions="editorSettings" useCustomImageHandler @imageAdded="handleImageAdded"></vue-editor>
+            <vue-editor v-model="editor.content" useCustomImageHandler @imageAdded="handleImageAdded"></vue-editor>
           </div>
           <div align="right" style="margin-top: 5pt">
             <b-button variant="success" @click="onCreate">등록</b-button>
