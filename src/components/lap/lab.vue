@@ -33,7 +33,7 @@
             <div class="content">
               <p>크롤링 및 Test 자동화</p>
             </div>
-            <div class="more"><b-btn variant="primary" href="http://conf.grepiu.com:9200/wd/hub/" target="_blank">확인하기(새창)</b-btn></div>
+            <div class="more"><b-btn variant="primary" href="http://sselenium.grepiu.com/wd/hub/" target="_blank">확인하기(새창)</b-btn></div>
           </div>
         </slide>
         <slide class="label bg swagger">
