@@ -19,7 +19,7 @@
           </div>
           <div style="margin-top: 5pt">
             <vue-editor v-model="editor.content"
-                        :editorOptions="editorSettings"
+                        :editorOptions="editor.editorSettings"
                         useCustomImageHandler @imageAdded="handleImageAdded"></vue-editor>
           </div>
           <div align="right" style="margin-top: 5pt">
@@ -46,13 +46,13 @@
     },
     data : function(){
       return {
-        editorSettings: {
-          modules: {
-            imageDrop: true,
-            imageResize: {}
-          }
-        },
         editor : {
+          editorSettings: {
+            modules: {
+              imageDrop: true,
+              imageResize: {}
+            }
+          },
           category_selected : "lab",
           category_options: [
             {value: "lab", text: "Lab"},
