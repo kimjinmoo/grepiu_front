@@ -5,10 +5,10 @@
         <a href="https://github.com/kimjinmoo" target="_blank"><i class="fa custom_fa fa-github" ></i></a>
       </li>
       <li>
-        <p class="m-0 text-center text-write">이메일 : iukim21c@gmail.com</p>
+        <p class="m-0 text-center light">이메일 : iukim21c@gmail.com</p>
       </li>
       <li>
-        <p class="m-0 text-center text-write">대한민국 서울 / Since 2018, GrepIU</p>
+        <p class="m-0 text-center light">대한민국 서울 / Since 2018, GrepIU</p>
       </li>
     </ul>
   </footer>
@@ -29,7 +29,10 @@
   }
   .footer {
     min-height: 75px;
-    background-color: #fefefe;
+    background-color: #ced4da;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
   }
 
   .footer ul{
