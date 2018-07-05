@@ -16,14 +16,11 @@ npm install --save vue2-google-maps
 *editor
 npm install --save vue2-editor
 => https://www.npmjs.com/package/vue2-editor
-npm install -save quill-image-drop-module
-npm install --save quill-image-resize-module
 * Socket 통신
 npm install --save vue-carousel webstomp-client
 * 모바일
 npm install mobile-detect --save
 * 웹 호환성 entries 지원
-npm install --save-dev babel-preset-es2017
 npm install --save babel-polyfill
 => entry: ["babel-polyfill", "./app/js"]};
 </pre>

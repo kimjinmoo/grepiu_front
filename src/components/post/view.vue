@@ -9,10 +9,7 @@
                         placeholder="제목을 입력하여주십시요."></b-form-input>
           <br>
           <b-form-select v-model="category" :options="category_options" class="mb-3" size="sm" />
-          <vue-editor v-model="content"
-                      useCustomImageHandler @imageAdded="handleImageAdded"
-                      :editorOptions="editorSettings"
-          ></vue-editor>
+          <vue-editor v-model="content" @imageAdded="handleImageAdded"></vue-editor>
           <b-alert :show="alert">수정되었습니다.</b-alert>
           <div align="right" style="margin-top: 5pt">
             <b-button variant="success" @click="onModify">수정</b-button>
@@ -31,12 +28,7 @@
    *
    */
   import axios from 'axios'
-  import { VueEditor, Quill} from 'vue2-editor'
-  import { ImageDrop } from 'quill-image-drop-module'
-  import ImageResize from 'quill-image-resize-module'
-
-  Quill.register('modules/imageDrop', ImageDrop)
-  Quill.register('modules/imageResize', ImageResize)
+  import { VueEditor } from 'vue2-editor'
 
   export default {
     name: 'PostView',

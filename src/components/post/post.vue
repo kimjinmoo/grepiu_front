@@ -18,9 +18,7 @@
             <b-form-select v-model="editor.category_selected" :options="editor.category_options" class="mb-3" size="sm" />
           </div>
           <div style="margin-top: 5pt">
-            <vue-editor v-model="editor.content"
-                        :editorOptions="editor.editorSettings"
-                        useCustomImageHandler @imageAdded="handleImageAdded"></vue-editor>
+            <vue-editor v-model="editor.content" useCustomImageHandler @imageAdded="handleImageAdded"></vue-editor>
           </div>
           <div align="right" style="margin-top: 5pt">
             <b-button variant="success" @click="onCreate">등록</b-button>
@@ -33,11 +31,6 @@
 <script>
   import axios from 'axios'
   import { VueEditor, Quill} from 'vue2-editor'
-  import { ImageDrop } from 'quill-image-drop-module'
-  import ImageResize from 'quill-image-resize-module'
-
-  Quill.register('modules/imageDrop', ImageDrop)
-  Quill.register('modules/imageResize', ImageResize)
 
   export default {
     name: "Post",
