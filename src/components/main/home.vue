@@ -1,10 +1,73 @@
 <template>
-  <div class="container-fluid">
-    <div class="grp bg_00">
-      <p class="day_text">{{nowData}}&nbsp;</p>
-      <p class="time_text">{{nowTime}}&nbsp;</p>
-      <p class="text_commandBar">{{commandBar}}&nbsp;</p>
-    </div>
+  <div class="container-fluid h-100">
+    <carousel id="ca" :loop="true" :perPage="1" :spacePadding="2" style="background-color: #fefefe">
+      <b-tooltip :show.sync="carousel.tooltip" target="ca" placement="top">
+        마우스 <strong>swipe!!</strong>
+      </b-tooltip>
+      <slide class="label bg movie">
+        <div class="inner">
+          <div class="head">영화찾기</div>
+          <div class="content">
+            <p>좌표를 이용한 근방의 영화 찾기</p>
+          </div>
+          <div class="more">
+            <b-btn variant="primary" to="/lab/movie">구현방식</b-btn>
+            <b-btn variant="primary" to="/lab/movie">확인하기</b-btn>
+          </div>
+        </div>
+      </slide>
+      <slide class="label bg jenkins">
+        <div class="inner">
+          <div class="head">Jenkins</div>
+          <div class="content">
+            <p>CI 배포</p>
+          </div>
+          <div class="more">
+            <b-btn variant="primary" href="https://jenkins.grepiu.com" target="_blank">확인하기(새창)</b-btn>
+          </div>
+        </div>
+      </slide>
+      <slide class="label bg selenium">
+        <div class="inner">
+          <div class="head">Selenium Session</div>
+          <div class="content">
+            <p>크롤링 및 Test 자동화</p>
+          </div>
+          <div class="more"><b-btn variant="primary" href="http://sselenium.grepiu.com/wd/hub/" target="_blank">확인하기(새창)</b-btn></div>
+        </div>
+      </slide>
+      <slide class="label bg swagger">
+        <div class="inner">
+          <div class="head">스웨거 API</div>
+          <div class="content">
+            <p>- API 문서 자동화</p>
+          </div>
+          <div  class="more"><b-btn variant="primary" href="https://conf.grepiu.com/swagger-ui.html" target="_blank">확인하기(새창)</b-btn></div>
+        </div>
+      </slide>
+      <slide class="label bg websocket">
+        <div class="inner">
+          <div class="head">WebSocket</div>
+          <div class="content">
+            <p>Websocket을 이용한 Push</p>
+          </div>
+          <div class="more">
+            <b-btn variant="primary" href="https://conf.grepiu.com" target="_blank">확인하기(새창)</b-btn>
+          </div>
+        </div>
+      </slide>
+      <slide class="label bg slack">
+        <div class="inner">
+          <div class="head">Slack</div>
+          <div class="content">
+            <p>- 개발 도구</p>
+          </div>
+          <div class="more">
+            <b-btn variant="primary" href="https://iustudy.slack.com" target="_blank">확인하기(새창)</b-btn>
+          </div>
+        </div>
+      </slide>
+    </carousel>
   </div>
 </template>
 <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
@@ -18,149 +81,90 @@
     },
     data : function() {
       return {
-        nowData : "",
-        nowTime : "",
-        interval: false,
-        commandBar : "_",
-        commandCount : 1,
-        commandTexts : [
-            "Hello!",
-            "안녕!",
-            "你好!",
-            "Salut!",
-            "",
-            "",
-            "ERROR!!"
-        ],
-        startDelayTime : 1000
+        carousel : {
+          tooltip : false,
+          nextLabel : ">",
+          prevLabel : "<"
+        },
+        slide: 0,
+        sliding: null,
+        slideLists: []
       }
     },
     mounted : function() {
-      // 시간을 표출 한다.
-      setInterval(()=>{
-        this.animation_command();
-      },350)
-      setTimeout(()=>{
-        // setInterval(()=>{
-        //   var today = new Date();
-        //   var h = today.getHours();
-        //   var m = today.getMinutes();
-        //   var s = today.getSeconds();
-        //   this.nowData = today.getFullYear() + "." + this.zero(today.getMonth()+1) + "." + this.zero(today.getDate())
-        //   this.nowTime =  this.zero(h) + ":" + this.zero(m) + ":" + this.zero(s);
-        // }, 500)
-      }, this.startDelayTime)
     },
-    methods : {
-      getRandomChar : function() {
-        var r = Math.floor(Math.random()*26)
-        return String.fromCharCode(65+r);
-      },
-      animation_command : function(){
-        if(this.commandBar.indexOf("_") != -1){
-          this.commandBar = this.commandBar.replace("_","");
-        } else {
-          this.commandBar+="_";
-        }
-        var typeEvent = Math.floor(Math.random()*10);
-        //console.log(this.commandCount%3);
-        if(this.commandCount%3==0)
-        switch(typeEvent) {
-          case 0 :
-          case 1 :
-            this.nowTime = this.commandTexts[Math.floor(Math.random()*this.commandTexts.length)];
-          case 2 :
-            this.commandBar = this.commandBar.replace("_","");
-            this.commandBar += this.getRandomChar();
-            break;
-          default :
-            this.commandBar = this.commandBar.replace("_","");
-            this.commandBar = this.commandBar.substring(0,this.commandBar.length-1)
-            break;
-        }
-
-        this.commandCount++;
-      },
-      zero : function(number) {
-        var d = "0000000000"+number;
-        return d.substr(d.length-2, d.length);
-      }
+    methods : {},
+    created : function(){
+      // 슬라이드 화면을 불러온다.
+      axios.get("/static/fake/slideData.json")
+      .then((response) => {
+        this.slideLists = response.data.slideLists;
+      })
+      .catch(()=>{
+        //console.log("err");
+      });
     }
   }
 </script>
 <style>
-  @media (max-width: 575px) {
-    .grp {
-      width : 100%;
-      height : 370px;
-    }
-    .bg_00 {
-      background-color: #343a40;
-    }
+  .label {
+    height: 75vh;
+    text-align: center
+  ;
   }
-  @media (min-width: 576px) {
-    .grp {
-      width : 100%;
-      height : 370px;
-    }
-    .bg_00 {
-      background-color: #343a40;
-    }
+  .bg {
+    vertical-align: middle;
+    background-size: cover;
+    background-position: left top;
+    background-repeat: no-repeat;
   }
-  @media (min-width: 768px) {
-    .grp {
-      width : 100%;
-      height : 370px;
-    }
-    .bg_00 {
-      background-color: #343a40;
-    }
-  }
-  @media (min-width: 992px) {
-    .grp {
-      width : 100%;
-      height : 570px;
-    }
-    .bg_00 {
-      background-color: #343a40;
-    }
-  }
-  @media (min-width: 1200px) {
-    .grp {
-      width : 100%;
-      height : 750px;
-    }
-    .bg_00 {
-      background-color: #343a40;
-    }
+  .movie {
+    background-image: url("/static/img/bg/cinema-3218422_1920.jpg");
   }
 
-  .grp .day_text {
-    color: white;
-    text-align: left;
-    font-size: 2vw;
-    margin-left: 16px;
+  .jenkins {
+    background-image: url("/static/img/bg/puzzle-226743_1920.jpg");
   }
-  .grp .time_text {
-    color: white;
+
+  .selenium {
+    background-image: url("/static/img/bg/arranged-1842261_1920.jpg");
+  }
+
+  .swagger {
+    background-image: url("/static/img/bg/document-3268750_1920.jpg");
+  }
+
+  .websocket {
+    background-image: url("/static/img/bg/feedback-1825515_1920.jpg");
+  }
+
+  .slack {
+    background-image: url("/static/img/bg/logo-2563719_1920.jpg");
+  }
+
+  .inner {
+    display: inline-block; padding: 30px;
+  }
+  .head {
+    color: #ffffff;
+    font-size: 8vw;
     text-align: center;
-    font-size: 20vw;
   }
-  .grp .text_commandBar {
-    position: absolute;
+  .content {
+    color: #f0f0f0;
+    font-size: 1.5vw;
+    direction: rtl;
+    text-align : center;
+  }
+  .more {
     bottom: 0;
-    color: white;
-    margin-top: 0px;
-    margin-left: 16px;
-    font-size: 4vw;
+    left: 0;
+    margin: 1vw;
+    font-size: 2vw;
+    text-align: center;
   }
-  .grp .bg_gray{
-    background-color: whitesmoke;
-  }
-  .grp .bg_write{
-    background-color: white;
-  }
-  .weatherEffect {
-    display: none;
+
+  .more a {
+    margin-right: 1vw;
   }
 </style>
