@@ -1,38 +1,41 @@
 <template>
-  <div id="app">
-    <b-navbar toggleable="md" type="light" variant="write" v-scroll="scrollHandler">
-      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-      <b-navbar-brand to="/" >GrepIU</b-navbar-brand>
-      <b-collapse is-nav id="nav_collapse" right>
-        <b-navbar-nav>
-          <b-nav-item to="/about">About</b-nav-item>
-          <b-nav-item v-if="menu.requiresAuth==false" :to="menu.url" v-for="menu in menuLists"
-                      v-bind:key="menu.id">{{menu.name}}
-          </b-nav-item>
-          <b-nav-item v-if="isLogin && menu.requiresAuth==true" :to="menu.url" v-for="menu in menuLists"
-                      v-bind:key="menu.id">{{menu.name}}
-          </b-nav-item>
-          <b-nav-item to="/search">Search</b-nav-item>
-        </b-navbar-nav>
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown right>
-            <template slot="button-content" v-b-popover.hover="'I am popover content!'" title="Popover Title">
-              <span v-if="!isLogin">계정</span>
-              <span v-else>{{u.email}}</span>
-            </template>
-            <b-nav-item v-if="!isLogin" to="/signIn">로그인</b-nav-item>
-            <b-nav-item v-if="!isLogin">도움말</b-nav-item>
-            <b-nav-item v-if="isLogin" to="/member/account">계정수정</b-nav-item>
-            <b-nav-item v-if="isLogin" v-on:click="signOut">로그아웃</b-nav-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
-    <main role="main">
-      <router-view></router-view>
-    </main>
+  <div id="app" class="app">
+    <div class="wrapper">
+      <b-navbar toggleable="md" type="light" variant="write" v-scroll="scrollHandler">
+        <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+        <b-navbar-brand to="/" >GrepIU</b-navbar-brand>
+        <b-collapse is-nav id="nav_collapse" right>
+          <b-navbar-nav>
+            <b-nav-item to="/about">About</b-nav-item>
+            <b-nav-item v-if="menu.requiresAuth==false" :to="menu.url" v-for="menu in menuLists"
+                        v-bind:key="menu.id">{{menu.name}}
+            </b-nav-item>
+            <b-nav-item v-if="isLogin && menu.requiresAuth==true" :to="menu.url" v-for="menu in menuLists"
+                        v-bind:key="menu.id">{{menu.name}}
+            </b-nav-item>
+            <b-nav-item to="/search">Search</b-nav-item>
+          </b-navbar-nav>
+          <b-navbar-nav class="ml-auto">
+            <b-nav-item-dropdown right>
+              <template slot="button-content" v-b-popover.hover="'I am popover content!'" title="Popover Title">
+                <span v-if="!isLogin">계정</span>
+                <span v-else>{{u.email}}</span>
+              </template>
+              <b-nav-item v-if="!isLogin" to="/signIn">로그인</b-nav-item>
+              <b-nav-item v-if="!isLogin">도움말</b-nav-item>
+              <b-nav-item v-if="isLogin" to="/member/account">계정수정</b-nav-item>
+              <b-nav-item v-if="isLogin" v-on:click="signOut">로그아웃</b-nav-item>
+            </b-nav-item-dropdown>
+          </b-navbar-nav>
+        </b-collapse>
+      </b-navbar>
+      <main role="main">
+        <router-view></router-view>
+      </main>
+      <div class="inner_footer_margin"></div>
+    </div>
     <!-- Footer -->
-    <homeFooter></homeFooter>
+    <homeFooter class="footer"></homeFooter>
     <!-- 소켓알람-->
     <b-modal ref="alertModar" centered title="알림" ok-only>
       {{socketMessage}}
@@ -167,8 +170,20 @@
   }
 </script>
 <style>
-  body {
-    background-color: #fefefe;
+  .app {
+    height: 100%;
+  }
+  .wrapper {
+    min-height: 100%;
+    margin-bottom: -120px;
+  }
+  .footer,
+  .inner_footer_margin {
+    height: 120px;
+  }
+  footer {
+    background-color: #ced4da;
+    color: #343a40;
   }
   .search {
     background: url('/static/img/icon_search.png') left no-repeat;

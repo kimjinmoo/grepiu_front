@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer">
+  <footer>
     <ul style="list-style-type: none;">
       <li>
         <a href="https://github.com/kimjinmoo" target="_blank"><i class="fa custom_fa fa-github" ></i></a>
@@ -26,16 +26,5 @@
     text-align: center;
     text-decoration: none;
     color: #0d95e8;
-  }
-  .footer {
-    min-height: 75px;
-    background-color: #ced4da;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
-
-  .footer ul{
-    margin: 10px;
   }
 </style>
