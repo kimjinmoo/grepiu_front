@@ -1,5 +1,6 @@
 <template>
   <div class="container-fluid">
+    <pre>
     GrepIU 구성
     Server
     AWS EC2
@@ -9,6 +10,7 @@
     Vue , Bootstrap-vue
     Login
     Firebase Login
+    </pre>
   </div>
 </template>
 <script>

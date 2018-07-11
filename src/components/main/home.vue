@@ -108,7 +108,7 @@
 </script>
 <style>
   .label {
-    height: 75vh;
+    height: 70vh;
     text-align: center
   ;
   }

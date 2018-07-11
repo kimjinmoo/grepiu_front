@@ -1,23 +1,23 @@
 <template>
   <div class="container-fluid">
-    <b-container fluid class="post">
+    <b-container fluid>
       <div align="center">
         <h2>작성한 글</h2>
       </div>
       <b-row>
-        <b-col col lg="2" class="post_navi">
-          <b-list-group>
-              <b-list-group-item>글 List</b-list-group-item>
-              <b-list-group-item :href="'#'+item.id" class="small" v-for="(item) in sectionLists" :key="item.id">{{item.subject}}</b-list-group-item>
-          </b-list-group>
-        </b-col>
         <b-col col>
-          <div id="grep_post">
+          <div>
             <div v-for="(item) in sectionLists" :key="item.id">
               <h2 :id="item.id" class="text-dark">{{item.subject}}-(최종수정:{{item.modifyDate}})</h2>
-              <div class="text-justify" v-html="item.content"></div>
+              <div class="post" v-html="item.content"></div>
             </div>
           </div>
+        </b-col>
+        <b-col col lg="2">
+          <b-list-group>
+            <b-list-group-item>글 List</b-list-group-item>
+            <b-list-group-item :href="'#'+item.id" class="small" v-for="(item) in sectionLists" :key="item.id">{{item.subject}}</b-list-group-item>
+          </b-list-group>
         </b-col>
       </b-row>
       <div>
@@ -98,4 +98,18 @@
     margin: 0;
     -webkit-overflow-scrolling: touch;
   }
+
+  .post img {
+    max-width: 100%;
+    height : auto;
+    height: inherit !important;
+  }
+
+  .post {
+    /*white-space: nowrap;*/
+    text-align: justify;
+    text-overflow: ellipsis;
+    word-break:break-all;
+  }
+
 </style>

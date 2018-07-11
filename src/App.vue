@@ -178,14 +178,14 @@
   }
   .wrapper {
     min-height: 100%;
-    margin-bottom: -74px;
+    margin-bottom: -150px;
   }
   main {
     height : 100%;
   }
   .footer,
   .inner_footer_margin {
-    height: 74px;
+    height: 150px;
   }
   footer {
     background-color: #ced4da;
