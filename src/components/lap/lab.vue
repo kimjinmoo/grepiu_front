@@ -4,22 +4,16 @@
       <div align="center">
         <h2>작성한 글</h2>
       </div>
-      <b-row>
-        <b-col col>
-          <div>
-            <div v-for="(item) in sectionLists" :key="item.id">
-              <h2 :id="item.id" class="text-dark">{{item.subject}}-(최종수정:{{item.modifyDate}})</h2>
-              <div class="post" v-html="item.content"></div>
-            </div>
-          </div>
-        </b-col>
-        <b-col col lg="2">
-          <b-list-group>
-            <b-list-group-item>글 List</b-list-group-item>
-            <b-list-group-item :href="'#'+item.id" class="small" v-for="(item) in sectionLists" :key="item.id">{{item.subject}}</b-list-group-item>
-          </b-list-group>
-        </b-col>
-      </b-row>
+      <div>
+        <div v-for="(item) in sectionLists" :key="item.id" class="post" >
+          <h2 :id="item.id" class="text-dark">{{item.subject}}-(최종수정:{{item.modifyDate}})</h2>
+          <div v-html="item.content"></div>
+        </div>
+      </div>
+      <b-list-group>
+        <b-list-group-item>글 List</b-list-group-item>
+        <b-list-group-item :href="'#'+item.id" class="small" v-for="(item) in sectionLists" :key="item.id">{{item.subject}}</b-list-group-item>
+      </b-list-group>
       <div>
         <b-pagination align="center" size="sm" :total-rows="tCount" v-model="cPage" :per-page="size" @input="getList(cPage-1)"></b-pagination>
       </div>
