@@ -1,5 +1,5 @@
 <template>
-  <div class="center">
+  <div class="signin_center">
     <h1>#Login</h1>
     <form class="form-signin" data-ember-action="2">
       <p class="small m-0">아래 로그인을 지원합니다.</p>
@@ -97,10 +97,8 @@
   }
 </script>
 <style>
-  main {
-    min-height:80vh;
-  }
-  .center {
+  .signin_center {
+    min-height:72vh;
     vertical-align: middle;
     top: 50%;
     left: 50%;

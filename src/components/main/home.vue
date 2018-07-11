@@ -5,64 +5,64 @@
         마우스 <strong>swipe!!</strong>
       </b-tooltip>
       <slide class="label bg movie">
-        <div class="inner">
-          <div class="head">영화찾기</div>
-          <div class="content">
+        <div class="home_inner">
+          <div class="home_head">영화찾기</div>
+          <div class="home_content">
             <p>좌표를 이용한 근방의 영화 찾기</p>
           </div>
-          <div class="more">
+          <div class="home_more">
             <b-btn variant="primary" to="/lab/movie">구현방식</b-btn>
             <b-btn variant="primary" to="/lab/movie">확인하기</b-btn>
           </div>
         </div>
       </slide>
       <slide class="label bg jenkins">
-        <div class="inner">
-          <div class="head">Jenkins</div>
-          <div class="content">
+        <div class="home_inner">
+          <div class="home_head">Jenkins</div>
+          <div class="home_content">
             <p>CI 배포</p>
           </div>
-          <div class="more">
+          <div class="home_more">
             <b-btn variant="primary" href="https://jenkins.grepiu.com" target="_blank">확인하기(새창)</b-btn>
           </div>
         </div>
       </slide>
       <slide class="label bg selenium">
-        <div class="inner">
-          <div class="head">Selenium Session</div>
-          <div class="content">
+        <div class="home_inner">
+          <div class="home_head">Selenium Session</div>
+          <div class="home_content">
             <p>크롤링 및 Test 자동화</p>
           </div>
-          <div class="more"><b-btn variant="primary" href="http://sselenium.grepiu.com/wd/hub/" target="_blank">확인하기(새창)</b-btn></div>
+          <div class="home_more"><b-btn variant="primary" href="http://sselenium.grepiu.com/wd/hub/" target="_blank">확인하기(새창)</b-btn></div>
         </div>
       </slide>
       <slide class="label bg swagger">
-        <div class="inner">
-          <div class="head">스웨거 API</div>
-          <div class="content">
+        <div class="home_inner">
+          <div class="home_head">스웨거 API</div>
+          <div class="home_content">
             <p>- API 문서 자동화</p>
           </div>
-          <div  class="more"><b-btn variant="primary" href="https://conf.grepiu.com/swagger-ui.html" target="_blank">확인하기(새창)</b-btn></div>
+          <div  class="home_more"><b-btn variant="primary" href="https://conf.grepiu.com/swagger-ui.html" target="_blank">확인하기(새창)</b-btn></div>
         </div>
       </slide>
       <slide class="label bg websocket">
-        <div class="inner">
-          <div class="head">WebSocket</div>
-          <div class="content">
+        <div class="home_inner">
+          <div class="home_head">WebSocket</div>
+          <div class="home_content">
             <p>Websocket을 이용한 Push</p>
           </div>
-          <div class="more">
+          <div class="home_more">
             <b-btn variant="primary" href="https://conf.grepiu.com" target="_blank">확인하기(새창)</b-btn>
           </div>
         </div>
       </slide>
       <slide class="label bg slack">
-        <div class="inner">
-          <div class="head">Slack</div>
-          <div class="content">
+        <div class="home_inner">
+          <div class="home_head">Slack</div>
+          <div class="home_content">
             <p>- 개발 도구</p>
           </div>
-          <div class="more">
+          <div class="home_more">
             <b-btn variant="primary" href="https://iustudy.slack.com" target="_blank">확인하기(새창)</b-btn>
           </div>
         </div>
@@ -106,65 +106,3 @@
     }
   }
 </script>
-<style>
-  .label {
-    height: 70vh;
-    text-align: center
-  ;
-  }
-  .bg {
-    vertical-align: middle;
-    background-size: cover;
-    background-position: left top;
-    background-repeat: no-repeat;
-  }
-  .movie {
-    background-image: url("/static/img/bg/cinema-3218422_1920.jpg");
-  }
-
-  .jenkins {
-    background-image: url("/static/img/bg/puzzle-226743_1920.jpg");
-  }
-
-  .selenium {
-    background-image: url("/static/img/bg/arranged-1842261_1920.jpg");
-  }
-
-  .swagger {
-    background-image: url("/static/img/bg/document-3268750_1920.jpg");
-  }
-
-  .websocket {
-    background-image: url("/static/img/bg/feedback-1825515_1920.jpg");
-  }
-
-  .slack {
-    background-image: url("/static/img/bg/logo-2563719_1920.jpg");
-  }
-
-  .inner {
-    display: inline-block; padding: 30px;
-  }
-  .head {
-    color: #ffffff;
-    font-size: 8vw;
-    text-align: center;
-  }
-  .content {
-    color: #f0f0f0;
-    font-size: 1.5vw;
-    direction: rtl;
-    text-align : center;
-  }
-  .more {
-    bottom: 0;
-    left: 0;
-    margin: 1vw;
-    font-size: 2vw;
-    text-align: center;
-  }
-
-  .more a {
-    margin-right: 1vw;
-  }
-</style>

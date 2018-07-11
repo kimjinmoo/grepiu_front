@@ -84,32 +84,3 @@
     }
   }
 </script>
-<style>
-  html {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  body {
-    height: 100%;
-    padding: 0;
-    overflow: auto;
-    margin: 0;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .post img {
-    max-width: 100%;
-    height : auto;
-    height: inherit !important;
-  }
-
-  .post {
-    /*white-space: nowrap;*/
-    text-align: justify;
-    text-overflow: ellipsis;
-    word-break:break-all;
-  }
-
-</style>
