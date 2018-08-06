@@ -9,6 +9,7 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import VueCarousel from 'vue-carousel';
 
 Vue.config.productionTip = false
+Vue.use(require('vue-moment'));
 Vue.use(BootstrapVue)
 Vue.use(VueCarousel)
 Vue.use(VueGeolocation)

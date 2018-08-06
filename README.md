@@ -23,6 +23,8 @@ npm install mobile-detect --save
 * 웹 호환성 entries 지원
 npm install --save babel-polyfill
 => entry: ["babel-polyfill", "./app/js"]};
+* 날짜
+npm install vue-moment --save
 </pre>
 
 <h5>Git에서 받은 후 작업</h5>
