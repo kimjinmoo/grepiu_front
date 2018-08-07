@@ -8,14 +8,13 @@ import SignUp from '@/components/member/signUp'
 import SignIn from '@/components/member/signIn'
 
 import Post from "@/components/post/post"
-import PostView from '@/components/post/view'
 
 import MyAccount from "@/components/member/myAccount"
 
 import Search from "@/components/search/search"
 
-import Lab from "@/components/lap/lab"
-import Movie from '@/components/lap/movie'
+import Admin from "@/components/admin/admin"
+import AdminView from '@/components/admin/view'
 
 Vue.use(Router)
 
@@ -47,22 +46,14 @@ export default new Router({
       component: Post
     },
     {
-      path: '/post/:id',
-      name: 'PostView',
-      component: PostView
+      path: '/admin/:id',
+      name: 'AdminView',
+      component: AdminView
     },
     {
-      path: '/lab',
-      name : 'Lab',
-      component: Lab,
-      meta: {
-        requiresAuth: false
-      }
-    },
-    {
-      path : "/lab/movie",
-      name: "Movie",
-      component: Movie,
+      path: '/admin',
+      name : 'Admin',
+      component: Admin,
       meta: {
         requiresAuth: false
       }

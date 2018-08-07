@@ -56,7 +56,7 @@
     },
     methods : {
       onList : function() {
-        this.$router.push("/post");
+        this.$router.push("/admin");
       },
       onModify : function() {
         axios.put("https://conf.grepiu.com/sample/post/"+this.$route.params.id, {

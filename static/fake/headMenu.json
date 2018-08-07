@@ -2,20 +2,14 @@
   "menuLists" : [
     {
       "id" : 1,
-      "name" : "Lap",
-      "url" : "/lab",
+      "name" : "포스트",
+      "url" : "/post",
       "requiresAuth" : false
     },
     {
       "id" : 2,
-      "name" : "Post",
-      "url" : "/post",
-      "requiresAuth" : true
-    },
-    {
-      "id" : 3,
-      "name" : "Root",
-      "url" : "/root",
+      "name" : "관리자",
+      "url" : "/admin",
       "requiresAuth" : true
     }
   ]

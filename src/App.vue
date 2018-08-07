@@ -6,14 +6,14 @@
         <b-navbar-brand to="/" >GrepIU</b-navbar-brand>
         <b-collapse is-nav id="nav_collapse" right>
           <b-navbar-nav>
-            <b-nav-item to="/about">About</b-nav-item>
+            <b-nav-item to="/about">관하여..</b-nav-item>
             <b-nav-item v-if="menu.requiresAuth==false" :to="menu.url" v-for="menu in menuLists"
                         v-bind:key="menu.id">{{menu.name}}
             </b-nav-item>
             <b-nav-item v-if="isLogin && menu.requiresAuth==true" :to="menu.url" v-for="menu in menuLists"
                         v-bind:key="menu.id">{{menu.name}}
             </b-nav-item>
-            <b-nav-item to="/search">Search</b-nav-item>
+            <b-nav-item to="/search">검색</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-item-dropdown right>
