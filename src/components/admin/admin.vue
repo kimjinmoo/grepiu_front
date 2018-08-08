@@ -93,7 +93,7 @@
           "subject" : this.editor.subject,
           "category" : this.editor.category_selected,
           "content" : this.editor.content,
-          "regId" : ""
+          "regId" : this.$store.getters.user.id
         }).then(() => {
           this.initEditor();
           this.editor.alert=true;

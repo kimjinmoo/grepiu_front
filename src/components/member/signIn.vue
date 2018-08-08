@@ -27,8 +27,7 @@
 </template>
 <script>
   import axios from 'axios'
-  import firebase from 'firebase/app'
-  import "firebase/auth"
+  import firebase from 'firebase/app';
   export default {
     name: 'signIn',
     components:{
@@ -48,6 +47,16 @@
         }
       }
      },
+    computed : {
+      user() {
+        return this.$store.getters.user
+      }
+    },
+    watch : {
+      user(value) {
+        this.$router.replace("/")
+      }
+    },
     methods : {
       signInGrep : function() {
         axios.request({
@@ -72,54 +81,13 @@
         });
       },
       signInByFaceBook : function() {
-        this.$parent.showLoading(true);
-        var provider = new firebase.auth.FacebookAuthProvider();
-        provider.addScope('email');
-        firebase.auth().signInWithPopup(provider).then(()=> {
-          // var token = r.credential.accessToken;
-          // var user = r.user;
-          this.successLogin();
-        }).catch(function(error) {
-          var errorCode = error.code;
-          // var errorMessage = error.message;
-          // var email = error.email;
-          // var credential = error.credential;
-          if (errorCode === 'auth/account-exists-with-different-credential') {
-            alert('You have already signed up with a different auth provider for that email.');
-          } else {
-            console.error(error);
-          }
-        }).then(()=>{this.$parent.showLoading(false);});
+        this.$store.dispatch("signUserInFacebook")
       },
       signInByGoogle : function() {
-        this.$parent.showLoading(true);
-        var provider = new firebase.auth.GoogleAuthProvider();
-        provider.addScope('https://www.googleapis.com/auth/userinfo.email');
-        firebase.auth().signInWithPopup(provider).then(()=> {
-          // var token = r.credential.accessToken;
-          // var user = r.user;
-          this.successLogin();
-        }).catch(function(error) {
-          var errorCode = error.code;
-          // var errorMessage = error.message;
-          // var email = error.email;
-          // var credential = error.credential;
-          if (errorCode === 'auth/account-exists-with-different-credential') {
-            alert('You have already signed up with a different auth provider for that email.');
-          } else {
-            console.error(error);
-          }
-        }).then(()=>{this.$parent.showLoading(false);});
+        this.$store.dispatch("signUserInGoogle")
       },
       signIn : function() {
-        this.$parent.showLoading(true);
-        firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password).then(
-            () => {
-              this.successLogin();
-            }, (err) => {
-              alert(err.message)
-            }
-        ).then(()=>{this.$parent.showLoading(false);});
+        this.$store.dispatch("signUserIn")
       }
     }
   }

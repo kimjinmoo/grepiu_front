@@ -25,6 +25,8 @@ npm install --save babel-polyfill
 => entry: ["babel-polyfill", "./app/js"]};
 * 날짜
 npm install vue-moment --save
+* 관리
+npm install vuex --save
 </pre>
 
 <h5>Git에서 받은 후 작업</h5>

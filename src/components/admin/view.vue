@@ -63,7 +63,7 @@
           "subject" : this.subject,
           "category" : this.category,
           "content" : this.content,
-          "regId" : ""
+          "modifyId" : this.$store.getters.user.id
         }).then(() => {
           this.alert = true;
         }).catch((e)=>{

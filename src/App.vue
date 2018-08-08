@@ -10,7 +10,7 @@
             <b-nav-item v-if="menu.requiresAuth==false" :to="menu.url" v-for="menu in menuLists"
                         v-bind:key="menu.id">{{menu.name}}
             </b-nav-item>
-            <b-nav-item v-if="isLogin && menu.requiresAuth==true" :to="menu.url" v-for="menu in menuLists"
+            <b-nav-item v-if="userIsAuthenticated && menu.requiresAuth==true" :to="menu.url" v-for="menu in menuLists"
                         v-bind:key="menu.id">{{menu.name}}
             </b-nav-item>
             <b-nav-item to="/search">검색</b-nav-item>
@@ -18,13 +18,13 @@
           <b-navbar-nav class="ml-auto">
             <b-nav-item-dropdown right>
               <template slot="button-content" v-b-popover.hover="'I am popover content!'" title="Popover Title">
-                <span v-if="!isLogin">계정</span>
-                <span v-else>{{u.email}}</span>
+                <span v-if="!userIsAuthenticated">계정</span>
+                <span v-else>{{user.name}}</span>
               </template>
-              <b-nav-item v-if="!isLogin" to="/signIn">로그인</b-nav-item>
-              <b-nav-item v-if="!isLogin">도움말</b-nav-item>
-              <b-nav-item v-if="isLogin" to="/member/account">계정수정</b-nav-item>
-              <b-nav-item v-if="isLogin" v-on:click="signOut">로그아웃</b-nav-item>
+              <b-nav-item v-if="!userIsAuthenticated" to="/signIn">로그인</b-nav-item>
+              <b-nav-item v-if="!userIsAuthenticated">도움말</b-nav-item>
+              <b-nav-item v-if="userIsAuthenticated" to="/member/account">계정수정</b-nav-item>
+              <b-nav-item v-if="userIsAuthenticated" v-on:click="signOut">로그아웃</b-nav-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
         </b-collapse>
@@ -72,8 +72,7 @@
     data : function() {
       return {
         searchMode : false,
-        u : {},
-        isLogin : false,
+        // isLogin : false,
         isMenuHide : false,
         menuLists: [],
         isLoading : false,
@@ -84,6 +83,14 @@
     watch : {
       // '$route' (to, from) {
       // }
+    },
+    computed : {
+      user() {
+        return this.$store.getters.user
+      },
+      userIsAuthenticated () {
+        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      }
     },
     methods: {
       onSearch : function() {
@@ -141,19 +148,15 @@
       loginProc : function(user) {
         //this.show = false;
         if(user) {
-          this.u = user;
-          this.isLogin = true;
           // 웹소켓 접속
           this.connect();
         } else {
           this.disconnect();
-          this.isLogin = false;
         }
       },
       signOut : function() {
-        firebase.auth().signOut().then(()=>{
-          this.isLogin = false;
-        });
+        this.$store.dispatch("logout")
+        this.$router.push("/")
       }
     },
     beforeCreate : function() {

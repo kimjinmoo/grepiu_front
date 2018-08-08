@@ -8,6 +8,7 @@ import "firebase/auth"
 import VueGeolocation from 'vue-browser-geolocation'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueCarousel from 'vue-carousel';
+import store from './store'
 
 Vue.config.productionTip = false
 Vue.use(require('vue-moment'));
@@ -20,28 +21,19 @@ Vue.use(VueGoogleMaps, {
     libraries: 'places,drawing,visualization'
   }
 });
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   components: { App },
   template: '<App/>',
   created() {
     firebase.initializeApp(config)
-    router.beforeEach((to,from,next) =>{
-      // 권한 설정
-      firebase.auth().onAuthStateChanged(()=>{
-        const currentUser = firebase.auth().currentUser;
-        const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-        if (requiresAuth && !currentUser) {
-          next('/signIn');
-        } else if (requiresAuth && currentUser) {
-          next();
-        } else {
-          next();
-        }
-      })
-    });
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user) {
+        this.$store.dispatch("autoSignIn", user)
+      }
+    })
   }
 })

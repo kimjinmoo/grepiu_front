@@ -17,68 +17,106 @@ import Search from "@/components/search/search"
 import Admin from "@/components/admin/admin"
 import AdminView from '@/components/admin/view'
 
+import store from "../store"
+
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Home,
+      meta: {
+        requiresAuth: false
+      }
     },
     {
       path: "/about",
       name: 'About',
-      component: About
+      component: About,
+      meta: {
+        requiresAuth: false
+      }
     },
     {
       path: '/signUp',
       name: 'SignUp',
-      component: SignUp
+      component: SignUp,
+      meta: {
+        requiresAuth: false
+      }
     },
     {
       path: '/signIn',
       name: 'SignIn',
-      component: SignIn
+      component: SignIn,
+      meta: {
+        requiresAuth: false
+      }
     },
     {
       path: '/post',
       name: 'Post',
-      component: Post
+      component: Post,
+      meta: {
+        requiresAuth: false
+      }
     },
     {
       path: '/admin/:id',
       name: 'AdminView',
-      component: AdminView
+      component: AdminView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/admin',
       name : 'Admin',
       component: Admin,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     },
     {
       path : "/member/account",
       name : "MyAccount",
       component : MyAccount,
-      meta : {
-        requiresAuth : true
+      meta: {
+        requiresAuth: true
       }
     },
     {
       path : "/search",
       name : "Search",
       component : Search,
-      meta : {
-        requiresAuth : false
+      meta: {
+        requiresAuth: false
       }
     },
     {
       path : "/lab/movie",
       name : "Movie",
-      component : Movie
+      component : Movie,
+      meta: {
+        requiresAuth: false
+      }
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+  console.log("befor" + requiresAuth)
+
+  if (requiresAuth && !store.getters.user) {
+    next('/signIn');
+  } else if (requiresAuth && store.getters.user) {
+    next();
+  } else {
+    next();
+  }
+})
+export default router;
