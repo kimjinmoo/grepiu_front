@@ -114,7 +114,7 @@
             this.cineInfo = [];
           }
         }).catch((e)=>{
-          console.log(e);
+          //console.log(e);
         });
       },
       findMyLocation : function() {
@@ -140,7 +140,7 @@
           let position = {"lat" : lat , "lng" : lng};
           this.onMarker(storeName, position);
         }).catch((e)=>{
-          console.log(e);
+          //console.log(e);
         })
       },
       findPrevNearLocation : function() {
@@ -198,7 +198,7 @@
         this.markers = map;
       })
       .catch((e)=>{
-        console.log(e);
+        //console.log(e);
       })
     },
     created : function() {

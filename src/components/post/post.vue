@@ -54,10 +54,10 @@
     },
     methods : {
       onPageChange : function(val) {
-        console.log('change', val)
+        //console.log('change', val)
       },
       handleSlideClick : function(dataset) {
-        console.log(dataset.index, dataset.name);
+        //console.log(dataset.index, dataset.name);
       },
       getList : function(page) {
         // 세션 text를 불러온다.

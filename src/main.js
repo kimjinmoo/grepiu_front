@@ -3,7 +3,8 @@ import App from './App'
 import router from './router'
 import BootstrapVue from 'bootstrap-vue'
 import {config} from './config/firebaseConfig'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import "firebase/auth"
 import VueGeolocation from 'vue-browser-geolocation'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueCarousel from 'vue-carousel';
@@ -19,27 +20,28 @@ Vue.use(VueGoogleMaps, {
     libraries: 'places,drawing,visualization'
   }
 });
-firebase.initializeApp(config);
-router.beforeEach((to,from,next) =>{
-  // 권한 설정
-  firebase.auth().onAuthStateChanged(()=>{
-    const currentUser = firebase.auth().currentUser;
-    const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-    if (requiresAuth && !currentUser) {
-      next('/signIn');
-    } else if (requiresAuth && currentUser) {
-      next();
-    } else {
-      next();
-    }
-  })
-});
-
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  created() {
+    firebase.initializeApp(config)
+    router.beforeEach((to,from,next) =>{
+      // 권한 설정
+      firebase.auth().onAuthStateChanged(()=>{
+        const currentUser = firebase.auth().currentUser;
+        const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+        if (requiresAuth && !currentUser) {
+          next('/signIn');
+        } else if (requiresAuth && currentUser) {
+          next();
+        } else {
+          next();
+        }
+      })
+    });
+  }
 })

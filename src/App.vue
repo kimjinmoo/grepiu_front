@@ -46,7 +46,8 @@
   import 'bootstrap/dist/css/bootstrap.css'
   import 'bootstrap-vue/dist/bootstrap-vue.css'
   import axios from 'axios'
-  import firebase from 'firebase'
+  import firebase from 'firebase/app'
+  import "firebase/auth"
   import homeFooter from '@/components/main/footer'
   import SockJS from 'sockjs-client'
   import Stomp from 'webstomp-client'
@@ -89,11 +90,11 @@
         this.$router.push("/search")
       },
       onFocusSearch : function() {
-        console.log("onFocus");
+        //console.log("onFocus");
         this.searchMode = true;
       },
       onBlurSearch : function() {
-        console.log("onBlur");
+        //console.log("onBlur");
         this.searchMode = false;
       },
       send : function() {
@@ -103,7 +104,9 @@
       },
       connect : function() {
         this.socket = new SockJS('https://conf.grepiu.com/ws');
-        this.stompClient = Stomp.over(this.socket);
+        this.stompClient = Stomp.over(this.socket, {
+          debug : false
+        });
         this.stompClient.connect({}, ()=>{
           this.connected = true;
           this.stompClient.subscribe("/topic/messages", (tick) => {
@@ -111,7 +114,7 @@
             this.$refs.alertModar.show();
           })
         },(error) => {
-          console.log(error);
+          //console.log(error);
           this.connected =false;
         })
       },
@@ -130,7 +133,7 @@
         } else {
           this.isMenuHide = false;
         }
-        console.log(this.isMenuHide);
+        //console.log(this.isMenuHide);
       },
       showLoading : function(is) {
         this.isLoading = is;
@@ -154,6 +157,15 @@
       }
     },
     beforeCreate : function() {
+      if(window.console) {
+        console.log('%c GrepIU', [
+          'font-family: "sans-serif";',
+          'font-size: 40px;',
+          'color: #dc006c',
+          'text-align: center',
+          'font-weight: bold'
+        ].join(';'));
+      }
       // get Menu
       axios.get("/static/fake/headMenu.json")
       .then((response) => {

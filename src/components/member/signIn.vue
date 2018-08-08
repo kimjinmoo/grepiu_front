@@ -27,7 +27,8 @@
 </template>
 <script>
   import axios from 'axios'
-  import firebase from 'firebase';
+  import firebase from 'firebase/app'
+  import "firebase/auth"
   export default {
     name: 'signIn',
     components:{
@@ -62,7 +63,7 @@
           },
           json: true
         }).then(function(res) {
-          console.log(res);
+          //console.log(res);
         });
       },
       successLogin : function() {
@@ -111,9 +112,6 @@
         }).then(()=>{this.$parent.showLoading(false);});
       },
       signIn : function() {
-        console.log(this.form.email);
-        console.log(this.form.password);
-
         this.$parent.showLoading(true);
         firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password).then(
             () => {

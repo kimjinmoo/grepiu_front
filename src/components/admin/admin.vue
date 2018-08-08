@@ -81,12 +81,11 @@
         axios.post('https://conf.grepiu.com/sample/upload/file', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then((result) => {
           let url = "http://data.grepiu.com/"+result.data.fileName // Get url from response
-          console.log(url);
           Editor.insertEmbed(cursorLocation, 'image', url);
           resetUploader();
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
         })
       },
       onCreate : function() {
@@ -100,13 +99,12 @@
           this.editor.alert=true;
           this.getList(0);
         }).catch((e)=>{
-          console.log(e);
+          //console.log(e);
         })
       },
       onDelete : function(id) {
         axios.delete("https://conf.grepiu.com/sample/post/"+id)
         .then((r)=> {
-          console.log(r);
           this.getList(0);
         })
       },
