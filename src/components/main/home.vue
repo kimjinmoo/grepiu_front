@@ -11,8 +11,8 @@
             <p>좌표를 이용한 근방의 영화 찾기</p>
           </div>
           <div class="home_more">
-            <b-btn variant="primary" to="/lab/movie">구현방식</b-btn>
-            <b-btn variant="primary" to="/lab/movie">확인하기</b-btn>
+            <b-btn variant="primary" to="/post/movie">구현방식</b-btn>
+            <b-btn variant="primary" to="/post/movie">확인하기</b-btn>
           </div>
         </div>
       </slide>
