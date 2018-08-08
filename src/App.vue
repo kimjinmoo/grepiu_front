@@ -23,7 +23,7 @@
               </template>
               <b-nav-item v-if="!userIsAuthenticated" to="/signIn">로그인</b-nav-item>
               <b-nav-item v-if="!userIsAuthenticated">도움말</b-nav-item>
-              <b-nav-item v-if="userIsAuthenticated" to="/member/account">계정수정</b-nav-item>
+              <b-nav-item v-if="userIsAuthenticated" to="/member/account">계정정보</b-nav-item>
               <b-nav-item v-if="userIsAuthenticated" v-on:click="signOut">로그아웃</b-nav-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
