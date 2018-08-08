@@ -8,6 +8,7 @@ import SignUp from '@/components/member/signUp'
 import SignIn from '@/components/member/signIn'
 
 import Post from "@/components/post/post"
+import Movie from "@/components/lab/movie"
 
 import MyAccount from "@/components/member/myAccount"
 
@@ -73,7 +74,11 @@ export default new Router({
       meta : {
         requiresAuth : false
       }
-
+    },
+    {
+      path : "/lab/movie",
+      name : "Movie",
+      component : Movie
     }
   ]
 })
