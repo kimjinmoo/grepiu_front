@@ -103,14 +103,18 @@ const router = new Router({
         requiresAuth: false
       }
     }
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 })
 
 router.beforeEach((to, from, next) => {
-
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  console.log("befor" + requiresAuth)
-
   if (requiresAuth && !store.getters.user) {
     next('/signIn');
   } else if (requiresAuth && store.getters.user) {

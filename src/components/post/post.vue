@@ -1,20 +1,28 @@
 <template>
   <div class="container-fluid">
     <b-container fluid>
-      <div>
+      <div class="container">
         <div v-for="(item) in sectionLists" :key="item.id" class="post" >
           <h1 :id="item.id" class="text-dark">{{item.subject}}</h1>
           <div v-html="item.content"></div>
           <p>(최종수정:{{item.modifyDate | moment("YYYY-MM-DD HH:mm")}})</p>
+          <vue-disqus shortname="grepiu" :identifier="cPage.toString()" url="https://grepiu.disqus.com/embed.js"></vue-disqus>
         </div>
-        <div align="center mx-auto">
-          <b-button-group class="mx-1">
-            <b-btn v-on:click="prevPost" v-if="this.cPage > 0">&lsaquo;</b-btn>
-          </b-button-group>
-          <b-button-group class="mx-1">
-            <b-btn v-on:click="nextPost" v-if="this.cPage < this.tCount-1">&rsaquo;</b-btn>
-          </b-button-group>
+        <div>
+          <list>
+              todo. 포스트 리스트
+          </list>
         </div>
+        <b-pagination align="center" size="md" :total-rows="tCount" v-model="cPage" :per-page="size" @input="getList(cPage-1)"></b-pagination>
+        <!--<div align="row">-->
+          <!--<div class="col-xs-4">-->
+            <!--<b-btn v-on:click="prevPost" v-if="this.cPage > 0">이전</b-btn>-->
+          <!--</div>-->
+          <!--<div class="col-xs-4 text-right">-->
+            <!--<b-btn v-on:click="nextPost" v-if="this.cPage < this.tCount-1">다음</b-btn>-->
+          <!--</div>-->
+        <!--</div>-->
+        <br>
       </div>
     </b-container>
   </div>
@@ -70,6 +78,7 @@
         .then((response) => {
           this.sectionLists = response.data.list;
           this.tCount = response.data.tCount;
+          window.scrollTo(0);
         }).catch(()=>{
 
         });
