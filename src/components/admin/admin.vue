@@ -80,7 +80,7 @@
 
         axios.post('https://conf.grepiu.com/sample/upload/file', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then((result) => {
-          let url = "http://data.grepiu.com/"+result.data.fileName // Get url from response
+          let url = "https://data.grepiu.com/"+result.data.fileName // Get url from response
           Editor.insertEmbed(cursorLocation, 'image', url);
           resetUploader();
         })
