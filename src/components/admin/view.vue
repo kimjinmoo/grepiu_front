@@ -59,7 +59,7 @@
         this.$router.push("/admin");
       },
       onModify : function() {
-        axios.put("https://conf.grepiu.com/sample/post/"+this.$route.params.id, {
+        axios.put("https://conf.grepiu.com/grepiu/post/"+this.$route.params.id, {
           "subject" : this.subject,
           "category" : this.category,
           "content" : this.content,
@@ -78,7 +78,7 @@
         var formData = new FormData();
         formData.append('file', file)
 
-        axios.post('https://conf.grepiu.com/sample/upload/file', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        axios.post('https://conf.grepiu.com/api/ver1/upload/file', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then((result) => {
           let url = "http://data.grepiu.com/"+result.data.fileName // Get url from response
           Editor.insertEmbed(cursorLocation, 'image', url);
@@ -90,7 +90,7 @@
       },
     },
     created : function(){
-      axios.get("https://conf.grepiu.com/sample/post/"+this.$route.params.id).then((r)=>{
+      axios.get("https://conf.grepiu.com/grepiu/post/"+this.$route.params.id).then((r)=>{
         this.id = r.data.id;
         this.category = r.data.category;
         this.content = r.data.content;

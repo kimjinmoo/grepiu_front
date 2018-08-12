@@ -8,11 +8,6 @@
           <p>(최종수정:{{item.modifyDate | moment("YYYY-MM-DD HH:mm")}})</p>
           <vue-disqus shortname="grepiu" :identifier="cPage.toString()" url="https://grepiu.disqus.com/embed.js"></vue-disqus>
         </div>
-        <div>
-          <list>
-              todo. 포스트 리스트
-          </list>
-        </div>
         <b-pagination align="center" size="md" :total-rows="tCount" v-model="cPage" :per-page="size" @input="getList(cPage-1)"></b-pagination>
         <!--<div align="row">-->
           <!--<div class="col-xs-4">-->
@@ -69,7 +64,7 @@
       },
       getList : function(page) {
         // 세션 text를 불러온다.
-        axios.get("https://conf.grepiu.com/sample/post",{
+        axios.get("https://conf.grepiu.com/grepiu/post",{
           params : {
             currentPage : page,
             size : this.size

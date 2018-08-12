@@ -78,7 +78,7 @@
         var formData = new FormData();
         formData.append('file', file)
 
-        axios.post('https://conf.grepiu.com/sample/upload/file', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        axios.post('https://conf.grepiu.com/api/ver1/upload/file', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then((result) => {
           let url = "https://data.grepiu.com/"+result.data.fileName // Get url from response
           Editor.insertEmbed(cursorLocation, 'image', url);
@@ -89,7 +89,7 @@
         })
       },
       onCreate : function() {
-        axios.post("https://conf.grepiu.com/sample/post", {
+        axios.post("https://conf.grepiu.com/grepiu/post", {
           "subject" : this.editor.subject,
           "category" : this.editor.category_selected,
           "content" : this.editor.content,
@@ -103,14 +103,14 @@
         })
       },
       onDelete : function(id) {
-        axios.delete("https://conf.grepiu.com/sample/post/"+id)
+        axios.delete("https://conf.grepiu.com/grepiu/post/"+id)
         .then((r)=> {
           this.getList(0);
         })
       },
       getList : function(page) {
         // 세션 text를 불러온다.
-        axios.get("https://conf.grepiu.com/sample/post",{
+        axios.get("https://conf.grepiu.com/grepiu/post",{
           params : {
             currentPage : page,
             size : this.size

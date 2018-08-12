@@ -107,7 +107,7 @@
         this.selectedStoreName = storeName;
         this.$refs.mapRef.panTo(position);
         this.setCurrentLanLng(position.lat, position.lng);
-        axios.get("https://conf.grepiu.com/sample/crawler/cine/screen/"+storeName).then((res)=>{
+        axios.get("https://conf.grepiu.com/grepiu/crawler/cine/screen/"+storeName).then((res)=>{
           if(res.data.length > 0) {
             this.cineInfo = res.data;
           } else {
@@ -125,7 +125,7 @@
         this.isDataExists = false;
         // 인접 index 초기화
         this.nearIndex = 0;
-        axios.get("https://conf.grepiu.com/sample/crawler/cine/near", {
+        axios.get("https://conf.grepiu.com/grepiu/crawler/cine/near", {
           params: {
             lat: this.currentLatLng.lat,
             lng: this.currentLatLng.lng,
@@ -181,7 +181,7 @@
 
     },
     beforeCreate : function() {
-      axios.get("https://conf.grepiu.com/sample/crawler/cine/locale")
+      axios.get("https://conf.grepiu.com/grepiu/crawler/cine/locale")
       .then((response) => {
         let map = [];
         for(var inx in response.data) {

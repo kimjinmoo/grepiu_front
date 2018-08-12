@@ -61,7 +61,7 @@
       signInGrep : function() {
         axios.request({
           method: 'POST',
-          url: 'http://localhost:8010/oauth/token',
+          url: 'https://conf.grepiu.com/oauth/token',
           auth : {
             username : this.login.id,
             password : this.login.passwd,
