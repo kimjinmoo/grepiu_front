@@ -106,7 +106,7 @@
         this.selectedStoreName = storeName;
         this.$refs.mapRef.panTo(position);
         this.setCurrentLanLng(position.lat, position.lng);
-        this.$http.get(process.env.ROOT_API+"/grepiu/crawler/cine/screen/"+storeName).then((res)=>{
+        this.$http.get(process.env.ROOT_API+"/grepiu/lab/crawler/cine/screen/"+storeName).then((res)=>{
           if(res.data.length > 0) {
             this.cineInfo = res.data;
           } else {
