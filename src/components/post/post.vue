@@ -23,8 +23,6 @@
   </div>
 </template>
 <script>
-  import axios from 'axios'
-
   export default {
     name : "Lap",
     data : function() {
@@ -64,7 +62,7 @@
       },
       getList : function(page) {
         // 세션 text를 불러온다.
-        axios.get("https://conf.grepiu.com/grepiu/post",{
+        this.$http.get(process.env.ROOT_API+"/grepiu/post",{
           params : {
             currentPage : page,
             size : this.size

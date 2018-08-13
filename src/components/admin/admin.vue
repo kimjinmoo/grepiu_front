@@ -33,7 +33,6 @@
   </div>
 </template>
 <script>
-  import axios from 'axios'
   import { VueEditor, Quill} from 'vue2-editor'
 
   export default {
@@ -78,7 +77,7 @@
         var formData = new FormData();
         formData.append('file', file)
 
-        axios.post('https://conf.grepiu.com/api/ver1/upload/file', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        this.$http.post(process.env.ROOT_API+'/api/ver1/upload/file', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then((result) => {
           let url = "https://data.grepiu.com/"+result.data.path+result.data.fileName // Get url from response
           Editor.insertEmbed(cursorLocation, 'image', url);
@@ -89,7 +88,7 @@
         })
       },
       onCreate : function() {
-        axios.post("https://conf.grepiu.com/grepiu/post", {
+        this.$http.post(process.env.ROOT_API+"/grepiu/post", {
           "subject" : this.editor.subject,
           "category" : this.editor.category_selected,
           "content" : this.editor.content,
@@ -103,14 +102,14 @@
         })
       },
       onDelete : function(id) {
-        axios.delete("https://conf.grepiu.com/grepiu/post/"+id)
+        this.$http.delete(process.env.ROOT_API+"/grepiu/post/"+idsss)
         .then((r)=> {
           this.getList(0);
         })
       },
       getList : function(page) {
         // 세션 text를 불러온다.
-        axios.get("https://conf.grepiu.com/grepiu/post",{
+        this.$http.get(process.env.ROOT_API+"/grepiu/post",{
           params : {
             currentPage : page,
             size : this.size

@@ -10,8 +10,12 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import VueCarousel from 'vue-carousel';
 import store from './store'
 import VueDisqus from 'vue-disqus'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
+Vue.config.silent = false
 Vue.config.productionTip = false
+Vue.use(VueAxios, axios)
 Vue.use(require('vue-moment'));
 Vue.use(VueDisqus)
 Vue.use(BootstrapVue)
@@ -19,7 +23,7 @@ Vue.use(VueCarousel)
 Vue.use(VueGeolocation)
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyCdlJJ5RuA6jrq-VzexA-8ryqOJVqTJJ-Y',
+    key: 'AIzaSyCJsKiHbnKj7wS6uTtCaJVJZrtDES57k3s',
     libraries: 'places,drawing,visualization'
   }
 });

@@ -112,7 +112,7 @@
       connect : function() {
         this.socket = new SockJS('https://conf.grepiu.com/ws');
         this.stompClient = Stomp.over(this.socket, {
-          debug : false
+          debug : true
         });
         this.stompClient.connect({}, ()=>{
           this.connected = true;

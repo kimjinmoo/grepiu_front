@@ -26,7 +26,6 @@
     </div>
 </template>
 <script>
-  import axios from 'axios'
   import firebase from 'firebase/app';
   export default {
     name: 'signIn',
@@ -59,9 +58,9 @@
     },
     methods : {
       signInGrep : function() {
-        axios.request({
+        this.$http.request({
           method: 'POST',
-          url: 'https://conf.grepiu.com/oauth/token',
+          url: process.env.ROOT_API+'/oauth/token',
           auth : {
             username : this.login.id,
             password : this.login.passwd,

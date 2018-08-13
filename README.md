@@ -7,7 +7,7 @@
 <pre>
 npm i bootstrap-vue --save
 npm install vue-router —save
-npm install axios --save
+npm install axios vue-axios --save
 npm install --save glyphicons
 npm install -g npm-install-peers
 npm install --save firebase

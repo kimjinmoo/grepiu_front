@@ -44,7 +44,6 @@
 </template>
 <script>
   var MobileDetect = require('mobile-detect'),md = new MobileDetect(navigator.userAgent);
-  import axios from 'axios'
   // vue google map
   // ref : https://developers.google.com/maps/documentation/javascript/events?hl=ko
   // ref : https://github.com/heavyy/vue2-google-maps/blob/master/API.md
@@ -107,7 +106,7 @@
         this.selectedStoreName = storeName;
         this.$refs.mapRef.panTo(position);
         this.setCurrentLanLng(position.lat, position.lng);
-        axios.get("https://conf.grepiu.com/grepiu/crawler/cine/screen/"+storeName).then((res)=>{
+        this.$http.get(process.env.ROOT_API+"/grepiu/crawler/cine/screen/"+storeName).then((res)=>{
           if(res.data.length > 0) {
             this.cineInfo = res.data;
           } else {
@@ -125,7 +124,7 @@
         this.isDataExists = false;
         // 인접 index 초기화
         this.nearIndex = 0;
-        axios.get("https://conf.grepiu.com/grepiu/lab/crawler/cine/near", {
+        this.$http.get(process.env.ROOT_API+"/grepiu/lab/crawler/cine/near", {
           params: {
             lat: this.currentLatLng.lat,
             lng: this.currentLatLng.lng,
@@ -181,7 +180,7 @@
 
     },
     beforeCreate : function() {
-      axios.get("https://conf.grepiu.com/grepiu/lab/crawler/cine/locale")
+      this.$http.get(process.env.ROOT_API+"/grepiu/lab/crawler/cine/locale")
       .then((response) => {
         let map = [];
         for(var inx in response.data) {

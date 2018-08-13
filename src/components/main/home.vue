@@ -71,8 +71,6 @@
 </template>
 <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
 <script>
-  import axios from 'axios'
-
   export default {
     name: 'Home',
     props : {
@@ -95,7 +93,7 @@
     methods : {},
     created : function(){
       // 슬라이드 화면을 불러온다.
-      axios.get("/static/fake/slideData.json")
+      this.$http.get("/static/fake/slideData.json")
       .then((response) => {
         this.slideLists = response.data.slideLists;
       })
