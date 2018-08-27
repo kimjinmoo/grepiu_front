@@ -1,72 +1,52 @@
 <template>
   <div class="container-fluid h-100">
-    <carousel id="ca" :loop="true" :perPage="1" :spacePadding="2" style="background-color: #fefefe">
-      <b-tooltip :show.sync="carousel.tooltip" target="ca" placement="top">
-        마우스 <strong>swipe!!</strong>
-      </b-tooltip>
-      <slide class="label bg movie">
-        <div class="home_inner">
-          <div class="home_head">영화찾기</div>
-          <div class="home_content">
-            <p>좌표를 이용한 근방의 영화 찾기</p>
-          </div>
-          <div class="home_more">
-            <b-btn variant="primary" to="/lab/movie">확인하기</b-btn>
-          </div>
+      <div style="height: 12rem">
+        <div class="container">
+          <b-container>
+            <b-row>
+              <b-col>
+                <h3 cols="8" md="auto">심심플이</h3>
+                <h4 class="m-lg-2" style="color: #555555">GrepIU</h4>
+              </b-col>
+              <b-col>
+                  Q
+              </b-col>
+            </b-row>
+          </b-container>
         </div>
-      </slide>
-      <slide class="label bg jenkins">
-        <div class="home_inner">
-          <div class="home_head">Jenkins</div>
-          <div class="home_content">
-            <p>CI 배포</p>
+      </div>
+      <div class="bg-light" style="height: 13rem">
+          <div class="container">
+            <b-container class="home-sub1 p-4" fluid>
+              <b-row>
+                <b-col sm>
+                  <h6>구글 맵을 통한 근처 영화관 정보 엊기</h6>
+                  <b-button to="/lab/movie">확인하기</b-button>
+                </b-col>
+                <b-col sm>
+                  <h6>conf 방문하기</h6>
+                  <b-button href="https://conf.grepiu.com" target="_blank">확인하기</b-button>
+                </b-col>
+                <b-col sm>
+                  <h6>API 스웨거</h6>
+                  <b-button href="https://conf.grepiu.com/swagger-ui.html" target="_blank">확인하기</b-button>
+                </b-col>
+              </b-row>
+            </b-container>
           </div>
-          <div class="home_more">
-            <b-btn variant="primary" href="https://jenkins.grepiu.com" target="_blank">확인하기(새창)</b-btn>
-          </div>
+      </div>
+      <div style="height: 13rem;">
+        <div class="container">
+          <p>promotion</p>
+          <b-container class="home-sub1">
+            <b-row>
+              <b-col sm>info</b-col>
+              <b-col sm>info</b-col>
+              <b-col sm>info</b-col>
+            </b-row>
+          </b-container>
         </div>
-      </slide>
-      <slide class="label bg selenium">
-        <div class="home_inner">
-          <div class="home_head">Selenium Session</div>
-          <div class="home_content">
-            <p>크롤링 및 Test 자동화</p>
-          </div>
-          <div class="home_more"><b-btn variant="primary" href="http://sselenium.grepiu.com/wd/hub/" target="_blank">확인하기(새창)</b-btn></div>
-        </div>
-      </slide>
-      <slide class="label bg swagger">
-        <div class="home_inner">
-          <div class="home_head">스웨거 API</div>
-          <div class="home_content">
-            <p>- API 문서 자동화</p>
-          </div>
-          <div  class="home_more"><b-btn variant="primary" href="https://conf.grepiu.com/swagger-ui.html" target="_blank">확인하기(새창)</b-btn></div>
-        </div>
-      </slide>
-      <slide class="label bg websocket">
-        <div class="home_inner">
-          <div class="home_head">WebSocket</div>
-          <div class="home_content">
-            <p>Websocket을 이용한 Push</p>
-          </div>
-          <div class="home_more">
-            <b-btn variant="primary" href="https://conf.grepiu.com" target="_blank">확인하기(새창)</b-btn>
-          </div>
-        </div>
-      </slide>
-      <slide class="label bg slack">
-        <div class="home_inner">
-          <div class="home_head">Slack</div>
-          <div class="home_content">
-            <p>- 개발 도구</p>
-          </div>
-          <div class="home_more">
-            <b-btn variant="primary" href="https://iustudy.slack.com" target="_blank">확인하기(새창)</b-btn>
-          </div>
-        </div>
-      </slide>
-    </carousel>
+      </div>
   </div>
 </template>
 <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
@@ -103,3 +83,9 @@
     }
   }
 </script>
+<style>
+  .index{
+    width: auto;
+    height: auto;
+  }
+</style>

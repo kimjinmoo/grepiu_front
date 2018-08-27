@@ -96,66 +96,6 @@ footer ul li a {
 footer ul li a.active,footer ul li a:active,footer ul li a:focus,footer ul li a:hover {
     text-decoration:none
 }
-.label {
-  height: 70vh;
-  text-align: center;
-}
-
-.bg {
-  vertical-align: middle;
-  background-size: cover;
-  background-position: left top;
-  background-repeat: no-repeat;
-}
-.movie {
-  background-image: url("/static/img/bg/cinema-3218422_1920.jpg");
-}
-
-.jenkins {
-  background-image: url("/static/img/bg/puzzle-226743_1920.jpg");
-}
-
-.selenium {
-  background-image: url("/static/img/bg/arranged-1842261_1920.jpg");
-}
-
-.swagger {
-  background-image: url("/static/img/bg/document-3268750_1920.jpg");
-}
-
-.websocket {
-  background-image: url("/static/img/bg/feedback-1825515_1920.jpg");
-}
-
-.slack {
-  background-image: url("/static/img/bg/logo-2563719_1920.jpg");
-}
-
-.home_inner {
-  display: inline-block; padding: 30px;
-}
-.home_head {
-  color: #ffffff;
-  font-size: 8vw;
-  text-align: center;
-}
-.home_content {
-  color: #f0f0f0;
-  font-size: 1.5vw;
-  direction: rtl;
-  text-align : center;
-}
-.home_more {
-  bottom: 0;
-  left: 0;
-  margin: 1vw;
-  font-size: 2vw;
-  text-align: center;
-}
-
-.home_more a {
-  margin-right: 1vw;
-}
 
 .signUpFrom {
     /* The image used */
