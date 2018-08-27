@@ -23,7 +23,7 @@ Vue.use(VueCarousel)
 Vue.use(VueGeolocation)
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyCJsKiHbnKj7wS6uTtCaJVJZrtDES57k3s',
+    key: 'AIzaSyCnxKUgnLMHMr7oAeBXRMIEmdqNTim8Z-0',
     libraries: 'places,drawing,visualization'
   }
 });
