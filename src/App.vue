@@ -29,13 +29,14 @@
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
-      <main role="main">
+      <GrepIUNav></GrepIUNav>
+      <main role="main" style="margin-top: 1rem">
         <router-view></router-view>
       </main>
       <div class="inner_footer_margin"></div>
     </div>
     <!-- Footer -->
-    <homeFooter class="footer"></homeFooter>
+    <GrepIUFooter class="footer"></GrepIUFooter>
     <!-- 소켓알람-->
     <b-modal ref="alertModar" centered title="알림" ok-only>
       {{socketMessage}}
@@ -45,17 +46,17 @@
 <script>
   import 'bootstrap/dist/css/bootstrap.css'
   import 'bootstrap-vue/dist/bootstrap-vue.css'
-  import axios from 'axios'
   import firebase from 'firebase/app'
   import "firebase/auth"
-  import homeFooter from '@/components/main/footer'
   import SockJS from 'sockjs-client'
   import Stomp from 'webstomp-client'
+  import GrepIUNav from '@/components/main/gnav'
+  import GrepIUFooter from '@/components/main/footer'
 
   export default {
     name: 'app',
     components : {
-      homeFooter
+      GrepIUFooter, GrepIUNav
     },
     directives : {
       scroll : {
@@ -170,7 +171,7 @@
         ].join(';'));
       }
       // get Menu
-      axios.get("/static/fake/headMenu.json")
+      this.$http.get("/static/fake/headMenu.json")
       .then((response) => {
         this.menuLists = response.data.menuLists;
       })
