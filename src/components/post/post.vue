@@ -6,7 +6,6 @@
           <h1 :id="item.id" class="text-dark">{{item.subject}}</h1>
           <div v-html="item.content"></div>
           <p>(최종수정:{{item.modifyDate | moment("YYYY-MM-DD HH:mm")}})</p>
-          <vue-disqus shortname="grepiu" :identifier="cPage.toString()" url="https://grepiu.disqus.com/embed.js"></vue-disqus>
         </div>
         <b-pagination align="center" size="md" :total-rows="tCount" v-model="cPage" :per-page="size" @input="getList(cPage-1)"></b-pagination>
         <!--<div align="row">-->

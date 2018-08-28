@@ -30,7 +30,6 @@
               <h3>포스트</h3>
               <h6>- 개발/일상 관련 내용 정리</h6>
               <h6>- MongoDB로 구현</h6>
-              <h6>- DISQUS 댓글</h6>
               <div class="grepb_m1">
                 <b-button to="/post" target="_blank">확인하기</b-button>
               </div>

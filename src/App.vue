@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="app">
-    <div class="wrapper" v-scroll="onScroll">
+    <div class="wrapper">
       <transition name="fade">
       <b-navbar toggleable="md" type="light" variant="write" v-bind:class="{fixedNav:isMenuHide}">
         <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
