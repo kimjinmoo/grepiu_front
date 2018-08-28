@@ -1,7 +1,8 @@
 <template>
   <div id="app" class="app">
-    <div class="wrapper">
-      <b-navbar toggleable="md" type="light" variant="write" v-scroll="scrollHandler">
+    <div class="wrapper" v-scroll="onScroll">
+      <transition name="fade">
+      <b-navbar toggleable="md" type="light" variant="write" v-bind:class="{fixedNav:isMenuHide}">
         <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
         <b-navbar-brand to="/" >GrepIU</b-navbar-brand>
         <b-collapse is-nav id="nav_collapse" right>
@@ -29,6 +30,7 @@
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
+      </transition>
       <GrepIUNav></GrepIUNav>
       <main role="main" style="margin-top: 1rem">
         <router-view></router-view>
@@ -58,21 +60,8 @@
     components : {
       GrepIUFooter, GrepIUNav
     },
-    directives : {
-      scroll : {
-        inserted : function(el, binding) {
-          let f = function(evt) {
-            if(binding.value(evt, el)) {
-              window.removeEventListener('scroll', f)
-            }
-          }
-          window.addEventListener('scroll', f);
-        }
-      }
-    },
     data : function() {
       return {
-        searchMode : false,
         // isLogin : false,
         isMenuHide : false,
         menuLists: [],
@@ -82,6 +71,7 @@
       }
     },
     watch : {
+
       // '$route' (to, from) {
       // }
     },
@@ -94,16 +84,8 @@
       }
     },
     methods: {
-      onSearch : function() {
-        this.$router.push("/search")
-      },
-      onFocusSearch : function() {
-        //console.log("onFocus");
-        this.searchMode = true;
-      },
-      onBlurSearch : function() {
-        //console.log("onBlur");
-        this.searchMode = false;
+      onScroll:function(e, position){
+        this.position = position;
       },
       send : function() {
         if (this.stompClient && this.stompClient.connected) {
@@ -136,11 +118,12 @@
         this.connected ? this.disconnect() : this.connect()
       },
       scrollHandler : function() {
-        if(window.scrollY > 80) {
-          this.isMenuHide = true;
-        } else {
-          this.isMenuHide = false;
-        }
+        console.log("window.scrollY : " + window.scrollY);
+        // if(window.scrollY > 80) {
+        //   this.isMenuHide = true;
+        // } else {
+        //   this.isMenuHide = false;
+        // }
         //console.log(this.isMenuHide);
       },
       showLoading : function(is) {
@@ -182,6 +165,15 @@
     mounted : function() {
       // Firebase Auth
       firebase.auth().onAuthStateChanged(this.loginProc);
+
     }
   }
 </script>
+<style scoped>
+  .fixedNav {
+    background-color: white;
+    border-style: none none solid none;
+    border-width: 1px;
+    border-color: #0b2e13
+  }
+</style>

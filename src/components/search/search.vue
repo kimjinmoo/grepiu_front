@@ -1,9 +1,6 @@
 <template>
   <div class="container-fluid">
-    <div class="w-100 mx-auto">
-      <div class="text-center">
-        검색하기
-      </div>
+    <div class="container w-100 h-100 mt-auto">
       <form autocomplete="off">
         <b-input-group size="mg w-75 mx-auto">
           <b-input id="search" placeholder="검색어를 입력하세요" ></b-input>

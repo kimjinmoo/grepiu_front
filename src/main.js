@@ -12,6 +12,7 @@ import store from './store'
 import VueDisqus from 'vue-disqus'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import vuescroll from 'vue-scroll'
 
 Vue.config.silent = false
 Vue.config.productionTip = false
@@ -21,6 +22,7 @@ Vue.use(VueDisqus)
 Vue.use(BootstrapVue)
 Vue.use(VueCarousel)
 Vue.use(VueGeolocation)
+Vue.use(vuescroll, {debounce: 600})
 Vue.use(VueGoogleMaps, {
   load: {
     key: '',

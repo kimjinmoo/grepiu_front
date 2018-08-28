@@ -46,12 +46,6 @@
       }
     },
     watch : {
-      // '$refs.carousel.currentPage' : function() {
-      //   console.log("watch!!");
-      //   if (this.currentPage !== this.$refs.carousel.currentPage) {
-      //     console.log(this.currentPage);
-      //   }
-      // }
     },
     methods : {
       onPageChange : function(val) {
