@@ -49,7 +49,7 @@
     <div class="container" style="padding-top: 1rem">
       <b-container>
         <b-row>
-          <b-col sm="2">
+          <b-col sm style="text-align: center">
             <h2>실험실</h2>
           </b-col>
         </b-row>
