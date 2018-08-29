@@ -36,7 +36,7 @@
               <h6>- Docker를 통한 Jenkins 세팅</h6>
               <h6>- gitlab 연동 및 브런치별 빌드</h6>
               <h6>- 슬랙을 통한 빌드</h6>
-              <b-button href="https://conf.grepiu.com/swagger-ui.html" target="_blank" variant="outline-success">확인하기
+              <b-button href="https://jenkins.grepiu.com" target="_blank" variant="outline-success">확인하기
               </b-button>
             </b-col>
           </b-row>
@@ -66,12 +66,14 @@
           <b-col sm>
             <h3>Login</h3>
             <h6>SpringBoot Oauth</h6>
+            <h6>Spring Security</h6>
           </b-col>
         </b-row>
-        <b-row>
+        <b-row style="margin-top: 1rem">
           <b-col sm>
-            <h3>BigData</h3>
+            <h3>빅데이터</h3>
             <h6>엘라스틱서치</h6>
+            <h6>fluentd</h6>
           </b-col>
           <b-col sm class="greph">
             <h3>ETC</h3>
@@ -81,6 +83,8 @@
           <b-col sm class="greph">
             <h3>Linux</h3>
             <h6>centos</h6>
+            <h6>Apache</h6>
+            <h6>Nginx</h6>
           </b-col>
         </b-row>
       </b-container>
