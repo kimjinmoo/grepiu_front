@@ -43,7 +43,7 @@
         </b-container>
       </div>
     </div>
-    <div class="container" style="padding-top: 1rem">
+    <div class="container" style="padding-top: 1rem; margin-bottom: 1rem">
       <b-container>
         <b-row>
           <b-col sm style="text-align: center">
@@ -75,12 +75,12 @@
             <h6>엘라스틱서치</h6>
             <h6>fluentd</h6>
           </b-col>
-          <b-col sm class="greph">
+          <b-col sm>
             <h3>ETC</h3>
             <h6>Socket 통신</h6>
             <h6>Android 개발</h6>
           </b-col>
-          <b-col sm class="greph">
+          <b-col sm>
             <h3>Linux</h3>
             <h6>centos</h6>
             <h6>Apache</h6>
