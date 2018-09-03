@@ -25,7 +25,7 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'HOME',
       component: Home,
       meta: {
         requiresAuth: false
@@ -33,7 +33,7 @@ const router = new Router({
     },
     {
       path: "/about",
-      name: 'About',
+      name: 'About Me',
       component: About,
       meta: {
         requiresAuth: false
@@ -41,7 +41,7 @@ const router = new Router({
     },
     {
       path: '/signUp',
-      name: 'SignUp',
+      name: 'Sign Up',
       component: SignUp,
       meta: {
         requiresAuth: false
@@ -49,7 +49,7 @@ const router = new Router({
     },
     {
       path: '/signIn',
-      name: 'SignIn',
+      name: 'Sign In',
       component: SignIn,
       meta: {
         requiresAuth: false
@@ -57,7 +57,7 @@ const router = new Router({
     },
     {
       path: '/post',
-      name: 'Post',
+      name: 'Posting',
       component: Post,
       meta: {
         requiresAuth: false
@@ -65,7 +65,7 @@ const router = new Router({
     },
     {
       path: '/admin/:id',
-      name: 'AdminView',
+      name: 'Root - Detail',
       component: AdminView,
       meta: {
         requiresAuth: true
@@ -73,7 +73,7 @@ const router = new Router({
     },
     {
       path: '/admin',
-      name : 'Admin',
+      name : 'Root',
       component: Admin,
       meta: {
         requiresAuth: true
@@ -81,7 +81,7 @@ const router = new Router({
     },
     {
       path : "/member/account",
-      name : "MyAccount",
+      name : "My Account",
       component : MyAccount,
       meta: {
         requiresAuth: true
@@ -89,7 +89,7 @@ const router = new Router({
     },
     {
       path : "/search",
-      name : "Search",
+      name : "검색",
       component : Search,
       meta: {
         requiresAuth: false
@@ -97,7 +97,7 @@ const router = new Router({
     },
     {
       path : "/lab/movie",
-      name : "Movie",
+      name : "LAB / 영화관 검색",
       component : Movie,
       meta: {
         requiresAuth: false

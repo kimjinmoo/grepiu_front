@@ -6,8 +6,38 @@ Vue.use(Vuex)
 import firebase from "firebase/app";
 import "firebase/auth"
 
+const grep = new Vuex.Store(
+  {
+    namespaced: true,
+    state: {
+      token: null
+    },
+    mutations: {
+      setToken(state, {payload}) {
+        state.token = payload;
+      }
+    },
+    actions: {
+      login({commit}, {id, password}) {
+        this.$http.post("https://conf.grepiu.com/oauth/login").then(
+          ({data})=> commit("setToken", data)
+        )
+      },
+      logout({commit}) {
+        this.$http.post("https://conf.grepiu.com/oauth/logout").then(
+          () => commit("setToken", null)
+        )
+      }
+    },
+    getters: {
+    }
+  })
+
 const store = new Vuex.Store(
   {
+    modules: {
+      grep : grep
+    },
     state: {
       user: null
     },
