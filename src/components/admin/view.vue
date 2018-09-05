@@ -62,7 +62,7 @@
           "subject" : this.subject,
           "category" : this.category,
           "content" : this.content,
-          "modifyId" : this.$store.getters.user.id
+          "modifyId" : 'grepiu'
         }).then(() => {
           this.alert = true;
         }).catch((e)=>{
