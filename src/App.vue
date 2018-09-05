@@ -77,10 +77,10 @@
     },
     computed : {
       user() {
-        return this.$store.getters.user
+        return this.$store.getters["grepiu/getToken"]
       },
       userIsAuthenticated () {
-        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+        return this.$store.getters["grepiu/getToken"]!== null && this.$store.getters["grepiu/getToken"] !== undefined
       }
     },
     methods: {
@@ -118,7 +118,6 @@
         this.connected ? this.disconnect() : this.connect()
       },
       scrollHandler : function() {
-        console.log("window.scrollY : " + window.scrollY);
         // if(window.scrollY > 80) {
         //   this.isMenuHide = true;
         // } else {
@@ -139,7 +138,7 @@
         }
       },
       signOut : function() {
-        this.$store.dispatch("logout")
+        this.$store.dispatch("grepiu/logout")
         this.$router.push("/")
       }
     },
@@ -161,11 +160,6 @@
       .catch(() => {
         // console.log("err");
       })
-    },
-    mounted : function() {
-      // Firebase Auth
-      firebase.auth().onAuthStateChanged(this.loginProc);
-
     }
   }
 </script>

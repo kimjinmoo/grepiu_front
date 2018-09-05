@@ -7,13 +7,17 @@
         <b-container style="padding-top: 1rem">
           <b-row>
             <b-col sm>
-              <input type="text" v-model="login.id"/>
+              <input type="text" v-model="login.id" placeholder="ID를 입력하세요" class="m-1"/>
             </b-col>
-            <b-col sm>
-              <input type="password" v-model="login.passwd"/>
+          </b-row>
+          <b-row>
+            <b-col>
+              <input type="password" v-model="login.passwd" placeholder="비밀번호를 입력하세요" class="m-1"/>
             </b-col>
-            <b-col sm>
-              <a class="btn btn-info" v-on:click="signInGrep">GrepIU 로그인</a>
+          </b-row>
+          <b-row>
+            <b-col>
+              <a class="btn btn-success m-2" v-on:click="signInGrep">GrepIU 로그인</a>
             </b-col>
           </b-row>
         </b-container>
@@ -53,10 +57,13 @@
     },
     methods : {
       signInGrep : function() {
-        this.$store.dispatch("grep/login", {
+        this.$store.dispatch("grepiu/login", {
           id : this.login.id,
           password : this.login.passwd
-        });
+        }).then(()=>{
+          this.$router.push("/")
+          }
+        );
       }
     }
   }

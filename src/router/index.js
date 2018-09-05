@@ -65,7 +65,7 @@ const router = new Router({
     },
     {
       path: '/admin/:id',
-      name: 'Root - Detail',
+      name: 'Admin-Detail',
       component: AdminView,
       meta: {
         requiresAuth: true
@@ -114,10 +114,13 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  if (requiresAuth && !store.getters.user) {
-    next('/signIn');
-  } else if (requiresAuth && store.getters.user) {
+  const auth = to.matched.some(record => record.meta.requiresAuth);
+  if (auth && !store.getters["grepiu/getToken"]) {
+    next({
+      path : '/signIn',
+      query: {redirect: to.fullPath}
+    });
+  } else if (auth && store.getters["grepiu/getToken"]) {
     next();
   } else {
     next();

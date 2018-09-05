@@ -2,9 +2,6 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import BootstrapVue from 'bootstrap-vue'
-import {config} from './config/firebaseConfig'
-import firebase from 'firebase/app'
-import "firebase/auth"
 import VueGeolocation from 'vue-browser-geolocation'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueCarousel from 'vue-carousel';
@@ -33,11 +30,6 @@ new Vue({
   components: { App },
   template: '<App/>',
   created() {
-    firebase.initializeApp(config)
-    firebase.auth().onAuthStateChanged((user)=>{
-      if(user) {
-        this.$store.dispatch("autoSignIn", user)
-      }
-    })
+    this.$store.dispatch("grepiu/autoLogin");
   }
 })
