@@ -2,11 +2,14 @@
   <div class="container-fluid">
     <b-container fluid>
       <div class="container">
-        <div v-for="(item) in sectionLists" :key="item.id" class="post" >
-          <h1 :id="item.id" class="text-dark">{{item.subject}}</h1>
-          <div v-html="item.content"></div>
-          <p>(최종수정:{{item.modifyDate | moment("YYYY-MM-DD HH:mm")}})</p>
+        <div class="ql-snow">
+          <div v-for="(item) in sectionLists" :key="item.id" class="post ql-editor" >
+            <h1 :id="item.id" class="text-dark">{{item.subject}}</h1>
+            <div v-html="item.content"></div>
+            <p>(최종수정:{{item.modifyDate | moment("YYYY-MM-DD HH:mm")}})</p>
+          </div>
         </div>
+
         <b-pagination align="center" size="md" :total-rows="tCount" v-model="cPage" :per-page="size" @input="getList(cPage-1)"></b-pagination>
         <!--<div align="row">-->
           <!--<div class="col-xs-4">-->

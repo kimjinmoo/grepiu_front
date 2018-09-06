@@ -24,7 +24,7 @@ main {
   height : 100%;
 }
 
-.post img {
+img {
   max-width: 100%;
   height : auto;
   height: inherit !important;
