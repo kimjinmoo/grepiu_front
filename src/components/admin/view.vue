@@ -63,8 +63,12 @@
           "category" : this.category,
           "content" : this.content,
           "modifyId" : 'grepiu'
-        }).then(() => {
-          this.alert = true;
+        }).then((res) => {
+          if(res.data.code == 400) {
+            alert(res.data.message);
+          } else {
+            this.alert = true;
+          }
         }).catch((e)=>{
           //console.log(e);
         })

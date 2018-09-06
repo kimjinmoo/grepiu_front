@@ -93,16 +93,20 @@
           "category" : this.editor.category_selected,
           "content" : this.editor.content,
           "regId" : 'grepiu'
-        }).then(() => {
-          this.initEditor();
-          this.editor.alert=true;
-          this.getList(0);
+        }).then((res) => {
+          if(res.data.code == 400) {
+              alert(res.data.message)
+          } else {
+            this.initEditor();
+            this.editor.alert=true;
+            this.getList(0);
+          }
         }).catch((e)=>{
           //console.log(e);
         })
       },
       onDelete : function(id) {
-        this.$http.delete(process.env.ROOT_API+"/grepiu/post/"+idsss)
+        this.$http.delete(process.env.ROOT_API+"/grepiu/post/"+id)
         .then((r)=> {
           this.getList(0);
         })
