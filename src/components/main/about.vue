@@ -96,7 +96,7 @@
         </carousel>
       <div>
         <h1>TODO</h1>
-        <p>플랫폼 개발</p>
+        <p class="text-center"><img src="/static/img/about/todo_grepiu.png"></p>
       </div>
     </div>
   </div>
