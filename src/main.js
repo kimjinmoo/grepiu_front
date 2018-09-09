@@ -18,8 +18,8 @@ Vue.use(VueCarousel)
 Vue.use(VueGeolocation)
 Vue.use(VueGoogleMaps, {
   load: {
-    key: '',
-    libraries: ''
+    key: 'AIzaSyBJubU9wJ7ux4DvGlcR83dKIGoFTb-EcyQ',
+    libraries: 'geometry'
   }
 });
 /* eslint-disable no-new */

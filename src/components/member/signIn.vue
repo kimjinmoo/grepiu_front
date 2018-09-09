@@ -1,28 +1,36 @@
 <template>
   <div class="container-fluid text-center">
-      <h1>#Login</h1>
-      <form class="form-signin" data-ember-action="2">
-        <p class="small m-0">아래 로그인을 지원합니다.</p>
-        <p class="small">버튼을 클릭 하세요.</p>
-        <b-container style="padding-top: 1rem">
-          <b-row>
-            <b-col sm>
-              <input type="text" v-model="login.id" placeholder="ID를 입력하세요" class="m-1"/>
+    <h1>#Login</h1>
+    <b-form>
+      <p class="small m-0">아래 로그인을 지원합니다.</p>
+      <p class="small">버튼을 클릭 하세요.</p>
+        <b-container>
+          <b-row align-h="center">
+            <b-col md="5">
+              <b-form-group label="아이디">
+                <b-form-input v-model="login.id"
+                              label="ID"
+                              type="text"
+                              placeholder="ID를 입력하세요" class="text-center m-1" style="max-width: 30rem"></b-form-input>
+              </b-form-group>
             </b-col>
           </b-row>
-          <b-row>
-            <b-col>
-              <input type="password" v-model="login.passwd" placeholder="비밀번호를 입력하세요" class="m-1"/>
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col>
-              <a class="btn btn-success m-2" v-on:click="signInGrep">GrepIU 로그인</a>
+          <b-row align-h="center">
+
+            <b-col md="5">
+              <b-form-group label="비밀번호">
+              <b-form-input v-model="login.passwd"
+                            label="비밀번호"
+                            type="password"
+                            placeholder="비밀번호를 입력하세요" class="text-center m-1" style="max-width: 30rem"></b-form-input>
+              </b-form-group>
             </b-col>
           </b-row>
         </b-container>
-      </form>
-    </div>
+
+      <b-button type="submit" variant="primary" @click="signInGrep">로그인</b-button>
+    </b-form>
+  </div>
 </template>
 <script>
   import firebase from 'firebase/app';
@@ -47,7 +55,7 @@
      },
     computed : {
       user() {
-        return this.$store.getters.user
+        return this.$store.getters["grepiu/getUser"]
       }
     },
     watch : {
@@ -60,10 +68,7 @@
         this.$store.dispatch("grepiu/login", {
           id : this.login.id,
           password : this.login.passwd
-        }).then(()=>{
-          this.$router.push("/")
-          }
-        );
+        })
       }
     }
   }

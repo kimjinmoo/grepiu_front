@@ -115,12 +115,13 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const auth = to.matched.some(record => record.meta.requiresAuth);
-  if (auth && !store.getters["grepiu/getToken"]) {
+  let user = localStorage.user;
+  if (auth && !user) {
     next({
       path : '/signIn',
       query: {redirect: to.fullPath}
     });
-  } else if (auth && store.getters["grepiu/getToken"]) {
+  } else if (auth && user) {
     next();
   } else {
     next();

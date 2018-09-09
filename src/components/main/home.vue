@@ -20,15 +20,15 @@
               <h6>- 현 위치 기준 근처 영화관 찾기(GPS 필요)</h6>
               <h6>- 상영 영화/상영시간 제공</h6>
               <div class="grepb_m1">
-                <b-button to="/lab/movie" variant="outline-success" >확인하기</b-button>
+                <b-button to="/lab/movie" variant="outline-success" class="button">확인하기</b-button>
               </div>
             </b-col>
             <b-col sm class="greph">
-              <h3>게시판</h3>
+              <h3>포스팅</h3>
               <h6>- 개발/일상 관련 작성 예정</h6>
-              <h6>- MongoDB 및 Spring Data MongoDB 를 이용해 구현</h6>
+              <h6>- NOSQL 기반</h6>
               <div class="grepb_m1">
-                <b-button to="/post" variant="outline-success">확인하기</b-button>
+                <b-button to="/post" variant="outline-success" class="button">확인하기</b-button>
               </div>
             </b-col>
             <b-col sm class="greph">
@@ -36,7 +36,7 @@
               <h6>- Docker를 통한 Jenkins 세팅</h6>
               <h6>- gitlab 연동 및 브런치별 빌드</h6>
               <h6>- 슬랙을 통한 빌드</h6>
-              <b-button href="https://jenkins.grepiu.com" target="_blank" variant="outline-success">확인하기
+              <b-button href="https://jenkins.grepiu.com" target="_blank" variant="outline-success" class="button">확인하기
               </b-button>
             </b-col>
           </b-row>
@@ -47,7 +47,7 @@
       <b-container>
         <b-row>
           <b-col sm style="text-align: center">
-            <h2>실험실</h2>
+            <h2>#하고 있는 것들</h2>
           </b-col>
         </b-row>
         <b-row>
@@ -56,16 +56,17 @@
             <h6>Java</h6>
             <h6>Python</h6>
             <h6>Node</h6>
+            <h6>Ehcache</h6>
           </b-col>
           <b-col sm>
-            <h3>Client</h3>
+            <h3>Front</h3>
             <h6>Vue</h6>
             <h6>Javascript</h6>
             <h6>freemarker</h6>
           </b-col>
           <b-col sm>
-            <h3>Login</h3>
-            <h6>SpringBoot Oauth</h6>
+            <h3>Authorization</h3>
+            <h6>SpringBoot Oauth2</h6>
             <h6>Spring Security</h6>
           </b-col>
         </b-row>
@@ -133,6 +134,11 @@
   .greph {
     height: 13rem;
     margin: 0.5rem;
+  }
+  .button{
+    position:absolute;
+    bottom : 1rem;
+    right: 45%;
   }
   .grepb_m1{
     padding:2%;

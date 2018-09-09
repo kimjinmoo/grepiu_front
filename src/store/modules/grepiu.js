@@ -1,27 +1,35 @@
 import axios from 'axios'
 
 const state = {
-  accessToken : null
+  user : null
 }
 
 const getters = {
-  getToken: (state, getters, rootState) => {
-    return state.accessToken
+  getUser: (state, getters, rootState) => {
+    return state.user
   }
 }
 
 const actions = {
   autoLogin ({commit}) {
-    const accessToken = localStorage.accessToken
-    if(accessToken != null && accessToken != undefined) {
-      commit("setToken", accessToken);
+    const user = localStorage.user
+    if(user != null && user != undefined) {
+      let u = JSON.parse(user);
+      axios.get("https://conf.grepiu.com/oauth/check?accessToken="+u.accessToken).then(r=>{
+        if(r.data.code == 200 && r.data.isValid) {
+          commit("LOGIN", u);
+        } else {
+          commit("LOGOUT");
+        }
+      })
+
     }
   },
   login ({commit}, {id,password}) {
     axios.post("https://conf.grepiu.com/oauth/login", {id, password}).then(
       (data)=> {
-        if(data.data.code != 400) {
-          commit("setToken", data.data.access_token)
+        if(data.data.code == 200) {
+          commit("LOGIN", data.data)
         } else {
           commit("removeToken")
         }
@@ -31,23 +39,22 @@ const actions = {
   logout({commit}){
     axios.post("https://conf.grepiu.com/oauth/logout").then(
       () => {
-        commit("removeToken")
+        commit("LOGOUT")
       }
     )
   }
 }
 
 const mutations = {
-  setToken(state, accessToken) {
-    state.accessToken = accessToken;
-
-    localStorage.setItem("accessToken", accessToken)
-    axios.defaults.headers.common["Authorization"] = 'Bearer '+ accessToken
+  LOGIN(state, payload) {
+    state.user = payload
+    localStorage.setItem("user", JSON.stringify(payload))
+    axios.defaults.headers.common['Authorization'] = 'Bearer '+ payload.accessToken
   },
-  removeToken(state) {
-    state.accessToken = null;
+  LOGOUT(state) {
+    state.user = null;
     axios.defaults.headers.common["Authorization"] = null;
-    delete localStorage.accessToken
+    delete localStorage.user
   }
 }
 

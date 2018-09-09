@@ -20,7 +20,7 @@
             <b-nav-item-dropdown right>
               <template slot="button-content" v-b-popover.hover="'I am popover content!'" title="Popover Title">
                 <span v-if="!userIsAuthenticated">계정</span>
-                <span v-else>{{user.name}}</span>
+                <span v-else>{{user.id}}</span>
               </template>
               <b-nav-item v-if="!userIsAuthenticated" to="/signIn">로그인</b-nav-item>
               <b-nav-item v-if="!userIsAuthenticated">도움말</b-nav-item>
@@ -77,10 +77,10 @@
     },
     computed : {
       user() {
-        return this.$store.getters["grepiu/getToken"]
+        return this.$store.getters["grepiu/getUser"]
       },
       userIsAuthenticated () {
-        return this.$store.getters["grepiu/getToken"]!== null && this.$store.getters["grepiu/getToken"] !== undefined
+        return this.$store.getters["grepiu/getUser"]!== null && this.$store.getters["grepiu/getUser"] !== undefined
       }
     },
     methods: {
