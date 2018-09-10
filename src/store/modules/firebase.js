@@ -19,9 +19,13 @@ const grep = new Vuex.Store(
     },
     actions: {
       login({commit}, {id, password}) {
-        this.$http.post("https://conf.grepiu.com/oauth/login").then(
-          ({data})=> commit("setToken", data)
-        )
+        return new promise((resolve, reject) => {
+          this.$http.post("https://conf.grepiu.com/oauth/login").then(
+            ({data})=> {
+              commit("setToken", data)
+            }
+          )
+        })
       },
       logout({commit}) {
         this.$http.post("https://conf.grepiu.com/oauth/logout").then(

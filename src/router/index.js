@@ -33,7 +33,7 @@ const router = new Router({
     },
     {
       path: "/about",
-      name: 'About Me',
+      name: 'About',
       component: About,
       meta: {
         requiresAuth: false
@@ -57,7 +57,7 @@ const router = new Router({
     },
     {
       path: '/post',
-      name: 'Posting',
+      name: 'Post',
       component: Post,
       meta: {
         requiresAuth: false
@@ -89,7 +89,7 @@ const router = new Router({
     },
     {
       path : "/search",
-      name : "검색",
+      name : "Search",
       component : Search,
       meta: {
         requiresAuth: false

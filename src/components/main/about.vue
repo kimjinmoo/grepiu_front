@@ -1,12 +1,12 @@
 <template>
   <div class="container-fluid">
     <div class="container">
-      <h1>grepIU</h1>
+      <h1>GrepIU</h1>
       <div>
         구성
       </div>
       <div>
-        <b class="c-name">Server</b>&nbsp;AWS EC2
+        <b class="c-name">Server</b>&nbsp;AWS EC2(t2.small)
       </div>
       <div>
         <b class="c-name">API</b>Spring Boot 2.0
@@ -15,10 +15,10 @@
         <b class="c-name">Front</b>Vue , Bootstrap-vue
       </div>
       <div>
-        <b class="c-name">Login</b>Spring Oauth
+        <b class="c-name">Login</b>Spring Security + Oauth2
       </div>
       <div>
-        <b class="c-name">etc</b>Google Maps
+        <b class="c-name">etc</b>Google Maps, Quill, Axios, moment
       </div>
       <div>
         <h1>TIME-LINE</h1>
