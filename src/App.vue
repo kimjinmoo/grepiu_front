@@ -48,8 +48,6 @@
 <script>
   import 'bootstrap/dist/css/bootstrap.css'
   import 'bootstrap-vue/dist/bootstrap-vue.css'
-  import firebase from 'firebase/app'
-  import "firebase/auth"
   import SockJS from 'sockjs-client'
   import Stomp from 'webstomp-client'
   import GrepIUNav from '@/components/main/gnav'
