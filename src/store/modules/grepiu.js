@@ -19,7 +19,6 @@ const getters = {
 const actions = {
   autoLogin ({commit}) {
     const user = window.localStorage.user
-    console.log("user : "+ window.localStore);
     if(user != null && user != undefined) {
       let u = JSON.parse(user);
       axios.get("https://conf.grepiu.com/oauth/check?accessToken="+u.accessToken).then(r=>{
@@ -57,7 +56,7 @@ const mutations = {
     //Web Socket Set
     this.socket = new SockJS('https://conf.grepiu.com/ws');
     this.stompClient = Stomp.over(this.socket, {
-      debug : true
+      debug : false
     });
     this.stompClient.connect({}, ()=>{
       this.connected = true;
