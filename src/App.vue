@@ -40,16 +40,12 @@
     <!-- Footer -->
     <GrepIUFooter class="footer"></GrepIUFooter>
     <!-- 소켓알람-->
-    <b-modal ref="alertModar" centered title="알림" ok-only>
-      {{socketMessage}}
-    </b-modal>
+    <b-modal ref="alertModar" centered title="알림" ok-only>{{socketMessage}}</b-modal>
   </div>
 </template>
 <script>
   import 'bootstrap/dist/css/bootstrap.css'
   import 'bootstrap-vue/dist/bootstrap-vue.css'
-  import SockJS from 'sockjs-client'
-  import Stomp from 'webstomp-client'
   import GrepIUNav from '@/components/main/gnav'
   import GrepIUFooter from '@/components/main/footer'
 
@@ -64,16 +60,20 @@
         isMenuHide : false,
         menuLists: [],
         isLoading : false,
-        label : '데이터를 읽고 있습니다.',
-        socketMessage : ""
+        label : '데이터를 읽고 있습니다.'
       }
     },
     watch : {
-
+      socketMessage() {
+        this.$refs.alertModar.show();
+      }
       // '$route' (to, from) {
       // }
     },
     computed : {
+      socketMessage() {
+        return this.$store.getters["grepiu/getMessage"]
+      },
       user() {
         return this.$store.getters["grepiu/getUser"]
       },
@@ -90,50 +90,8 @@
           this.stompClient.send('/app/chat', this.send_message, {})
         }
       },
-      connect : function() {
-        this.socket = new SockJS('https://conf.grepiu.com/ws');
-        this.stompClient = Stomp.over(this.socket, {
-          debug : true
-        });
-        this.stompClient.connect({}, ()=>{
-          this.connected = true;
-          this.stompClient.subscribe("/topic/messages", (tick) => {
-            this.socketMessage = JSON.parse(tick.body).message;
-            this.$refs.alertModar.show();
-          })
-        },(error) => {
-          //console.log(error);
-          this.connected =false;
-        })
-      },
-      disconnect () {
-        if (this.stompClient) {
-          this.stompClient.disconnect()
-        }
-        this.connected = false
-      },
-      tickleConnection () {
-        this.connected ? this.disconnect() : this.connect()
-      },
-      scrollHandler : function() {
-        // if(window.scrollY > 80) {
-        //   this.isMenuHide = true;
-        // } else {
-        //   this.isMenuHide = false;
-        // }
-        //console.log(this.isMenuHide);
-      },
       showLoading : function(is) {
         this.isLoading = is;
-      },
-      loginProc : function(user) {
-        //this.show = false;
-        if(user) {
-          // 웹소켓 접속
-          this.connect();
-        } else {
-          this.disconnect();
-        }
       },
       signOut : function() {
         this.$store.dispatch("grepiu/logout")
