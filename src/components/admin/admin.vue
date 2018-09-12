@@ -15,7 +15,11 @@
                         type="text"
                         placeholder="제목을 입력하여주십시요."></b-form-input>
           <div style="margin-top: 5pt">
-            <b-form-select v-model="editor.category_selected" :options="editor.category_options" class="mb-3" size="sm" />
+            <b-form-group label="#Hash">
+            <b-form-checkbox-group id="hashTag" name="hashTag" v-model="editor.hashTag_selected" :options="editor.hashTag_options">
+            </b-form-checkbox-group>
+            </b-form-group>
+            <!--<b-form-select v-model="editor.category_selected" :options="editor.category_options" class="mb-3" size="sm" />-->
           </div>
           <div style="margin-top: 5pt">
             <vue-editor v-model="editor.content" useCustomImageHandler @imageAdded="handleImageAdded"></vue-editor>
@@ -49,11 +53,8 @@
               imageResize: {}
             }
           },
-          category_selected : "lab",
-          category_options: [
-            {value: "lab", text: "Lab"},
-            {value: "post", text: "Post"}
-          ],
+          hashTag_selected : [],
+          hashTag_options: [],
           alert : false,
           subject : "",
           content: ''
@@ -90,9 +91,9 @@
       onCreate : function() {
         this.$http.post(process.env.ROOT_API+"/grepiu/post", {
           "subject" : this.editor.subject,
-          "category" : this.editor.category_selected,
+          "hashTag" : this.editor.hashTag_selected,
           "content" : this.editor.content,
-          "regId" : 'grepiu'
+          "regId" : this.$store.getters["grepiu/getUser"].id
         }).then((res) => {
           if(res.data.code == 400) {
               alert(res.data.message)
@@ -128,6 +129,14 @@
       }
     },
     created : function() {
+      this.$http.get(process.env.ROOT_API+"/grepiu/post/hash").then(r=>{
+        for (var index in r.data) {
+          var obj = {};
+          obj['value'] = r.data[index].name;
+          obj['text'] = r.data[index].name;
+          this.editor.hashTag_options.push(obj);
+        }
+      })
       this.getList(this.cPage);
     }
   }

@@ -3,12 +3,17 @@
     <b-card no-body>
       <b-tabs card>
         <b-tab title="상세보기" active>
-
-          <b-form-input v-model="subject"
-                        type="text"
-                        placeholder="제목을 입력하여주십시요."></b-form-input>
-          <br>
-          <b-form-select v-model="category" :options="category_options" class="mb-3" size="sm" />
+          <div class="m-lg-1">
+            <b-form-input v-model="subject"
+                          type="text"
+                          placeholder="제목을 입력하여주십시요."></b-form-input>
+          </div>
+          <div>
+            <b-form-group label="#Hash">
+              <b-form-checkbox-group id="hashTag" name="hashTag" v-model="hashTag" :options="hashTag_options">
+              </b-form-checkbox-group>
+            </b-form-group>
+          </div>
           <vue-editor v-model="content" @imageAdded="handleImageAdded"></vue-editor>
           <b-alert :show="alert">수정되었습니다.</b-alert>
           <div align="right" style="margin-top: 5pt">
@@ -36,15 +41,12 @@
     },
     data : function() {
       return {
-        category : "lab",
-        category_options: [
-          {value: "lab", text: "Lab"},
-          {value: "post", text: "Post"}
-        ],
         alert : false,
         id : "",
         subject : "",
         content : "",
+        hashTag : [],
+        hashTag_options: [],
         editorSettings: {
           modules: {
             imageDrop: true,
@@ -58,11 +60,12 @@
         this.$router.push("/admin");
       },
       onModify : function() {
+        console.log(this.hashTag);
         this.$http.put(process.env.ROOT_API+"/grepiu/post/"+this.$route.params.id, {
           "subject" : this.subject,
-          "category" : this.category,
+          "hashTag" : this.hashTag,
           "content" : this.content,
-          "modifyId" : 'grepiu'
+          "modifyId" : this.$store.getters["grepiu/getUser"].id
         }).then((res) => {
           if(res.data.code == 400) {
             alert(res.data.message);
@@ -93,9 +96,17 @@
       },
     },
     created : function(){
+      this.$http.get(process.env.ROOT_API+"/grepiu/post/hash").then(r=>{
+        for (var index in r.data) {
+          var obj = {};
+          obj['value'] = r.data[index].name;
+          obj['text'] = r.data[index].name;
+          this.hashTag_options.push(obj);
+        }
+      })
       this.$http.get(process.env.ROOT_API+"/grepiu/post/"+this.$route.params.id).then((r)=>{
         this.id = r.data.id;
-        this.category = r.data.category;
+        if(r.data.hashTag != null)  this.hashTag = r.data.hashTag;
         this.content = r.data.content;
         this.subject = r.data.subject;
       }).catch(function(e){
