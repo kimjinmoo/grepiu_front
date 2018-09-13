@@ -28,8 +28,5 @@ new Vue({
   store,
   router,
   components: { App },
-  template: '<App/>',
-  created() {
-    this.$store.dispatch("grepiu/autoLogin");
-  }
+  template: '<App/>'
 })

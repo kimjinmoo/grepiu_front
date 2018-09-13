@@ -99,7 +99,12 @@
       }
     },
     beforeCreate : function() {
-      if(window.console) {
+      // autoLogin
+      this.$store.dispatch("grepiu/autoLogin");
+      // debug
+      let ua = window.navigator.userAgent.toLowerCase();
+      let chrome = ua.indexOf("chrome");
+      if(window.console && chrome > 0) {
         console.log('%c GrepIU', [
           'font-family: "sans-serif";',
           'font-size: 40px;',
@@ -107,6 +112,8 @@
           'text-align: center',
           'font-weight: bold'
         ].join(';'));
+      } else if(window.console){
+        console.log("GrepIU")
       }
       // get Menu
       this.$http.get("/static/fake/headMenu.json")

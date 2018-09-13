@@ -18,11 +18,11 @@ const getters = {
 
 const actions = {
   autoLogin ({commit}) {
-    const user = window.localStorage.user
+    const user = localStorage.getItem("user")
     if(user != null && user != undefined) {
       let u = JSON.parse(user);
-      axios.get("https://conf.grepiu.com/oauth/check?accessToken="+u.accessToken).then(r=>{
-        if(r.data.code == 200 && r.data.isValid) {
+      axios.get("https://conf.grepiu.com/oauth/check?accessToken="+u.accessToken).then(res=>{
+        if(res.data.code == 200 && res.data.isValid) {
           commit("LOGIN", u);
         } else {
           commit("LOGOUT");
@@ -32,15 +32,17 @@ const actions = {
     }
   },
   login ({commit}, {id,password}) {
-    axios.post("https://conf.grepiu.com/oauth/login", {id, password}).then(
-      (data)=> {
-        if(data.data.code == 200) {
-          commit("LOGIN", data.data)
-        } else {
-          commit("LOGOUT")
-        }
-      }
-    )
+    return new Promise(function (resolve, reject) {
+      axios.post("https://conf.grepiu.com/oauth/login", {id, password}).then(
+        (res)=> {
+          if(res.data.code == 200) {
+            commit("LOGIN", res.data)
+          } else {
+            commit("LOGOUT", res.data)
+          }
+          resolve(res);
+        })
+    });
   },
   logout({commit}){
     axios.post("https://conf.grepiu.com/oauth/logout").then(
@@ -68,7 +70,7 @@ const mutations = {
     })
 
     state.user = payload
-    window.localStorage.setItem("user", JSON.stringify(payload))
+    localStorage.setItem("user", JSON.stringify(payload))
     axios.defaults.headers.common['Authorization'] = 'Bearer '+ payload.accessToken
   },
   LOGOUT(state) {
@@ -79,7 +81,7 @@ const mutations = {
 
     state.user = null;
     axios.defaults.headers.common["Authorization"] = null;
-    delete window.localStorage.user
+    delete localStorage.user
   },
   MESSAGE(state, message) {
     state.message = message;

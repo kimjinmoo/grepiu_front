@@ -1,31 +1,30 @@
 <template>
   <div class="container-fluid">
     <b-container fluid>
-      <div class="container">
-        <div class="ql-snow">
-          <div v-for="(item) in sectionLists" :key="item.id" class="post ql-editor" >
-            <h1 :id="item.id" class="text-dark">{{item.subject}}</h1>
-            <div v-html="item.content"></div>
-            <div>
-            <p>{{item.hashTag}}</p>
+      <b-row class="justify-content-md-center">
+        <b-col md="2">
+          <!-- 영역 1-->
+          <div>메뉴 목록</div>
+        </b-col>
+        <b-col md="8">
+          <div class="ql-snow">
+            <div v-for="(item) in posts" :key="item.id" class="post ql-editor" >
+              <h1 :id="item.id" class="text-dark">{{item.subject}}</h1>
+              <div v-html="item.content"></div>
+              <div>
+                <p class="text-left" v-html="item.h"></p>
+              </div>
+              <p class="text-black-50 text-sm-right small">{{item.regId}}/{{item.modifyDate | moment("YYYY-MM-DD HH:mm")}}</p>
+              <div class="dropdown-divider"></div>
             </div>
-            <p>(최종수정:{{item.modifyDate | moment("YYYY-MM-DD HH:mm")}})</p>
           </div>
-
-        </div>
-
-        <b-pagination align="center" size="md" :total-rows="tCount" v-model="cPage" :per-page="size" @input="getList(cPage-1)"></b-pagination>
-        <!--<div align="row">-->
-          <!--<div class="col-xs-4">-->
-            <!--<b-btn v-on:click="prevPost" v-if="this.cPage > 0">이전</b-btn>-->
-          <!--</div>-->
-          <!--<div class="col-xs-4 text-right">-->
-            <!--<b-btn v-on:click="nextPost" v-if="this.cPage < this.tCount-1">다음</b-btn>-->
-          <!--</div>-->
-        <!--</div>-->
-        <br>
-      </div>
+        </b-col>
+        <b-col md="2">
+          <!-- 여역 3-->
+        </b-col>
+      </b-row>
     </b-container>
+    <b-pagination align="center" size="md" :total-rows="tCount" v-model="cPage" :per-page="size" @input="getList(cPage-1)"></b-pagination>
   </div>
 </template>
 <script>
@@ -36,7 +35,7 @@
         sectionLists : [],
         tCount : 0,
         cPage : 0,
-        size : 1
+        size : 15
       }
     },
     created : function() {
@@ -44,8 +43,15 @@
       this.getList(this.cPage);
     },
     computed : {
-      setHash() {
-        return 'test';
+      posts() {
+        return this.sectionLists.map(v => {
+          var hashTagButton = [];
+          v.hashTag.forEach(h=>{
+            hashTagButton.push("<button type='button' class='btn btn-light btn-sm m-lg-1'>#"+h+"</button>");
+          })
+          v.h = hashTagButton.join("");
+          return v
+        })
       },
       currentIndex: {
         cache: false,
