@@ -30,15 +30,15 @@
         현재 나의 위치!!
       </gmap-info-window>
     </GmapMap>
-    <div>
-      <b-button variant="primary" v-on:click="findMyLocation">나의위치</b-button>
-      <b-button variant="primary" v-on:click="findNearLocation">영화관 찾기(100km이내)</b-button>
-      <b-button-group>
-        <b-button :disabled="isDataExists" variant="secondary" v-on:click="findPrevNearLocation">Prev</b-button>
-        <b-button :disabled="isDataExists" variant="secondary" v-on:click="findNextNearLocation">Next</b-button>
+    <div class="text-center mt-2 mb-2">
+      <b-button-group size="sm">
+        <b-button :disabled="isDataExists" variant="success" v-on:click="findPrevNearLocation">Prev</b-button>
+        <b-button variant="primary" v-on:click="findMyLocation">나의위치</b-button>
+        <b-button variant="primary" v-on:click="findNearLocation">영화관 찾기(100km이내)</b-button>
+        <b-button :disabled="isDataExists" variant="success" v-on:click="findNextNearLocation">Next</b-button>
       </b-button-group>
     </div>
-    <b-table show-empty striped hover :items="cineInfo" :fields="cineFields" empty-text="데이터가 존재하지 안습니다.">
+    <b-table class="text-black-50 small" show-empty striped hover :items="cineInfo" :fields="cineFields" empty-text="데이터가 존재하지 안습니다." caption-top>
     </b-table>
   </div>
 </template>

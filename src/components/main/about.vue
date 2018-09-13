@@ -18,7 +18,7 @@
         <b class="c-name">Login</b>Spring Security + Oauth2
       </div>
       <div>
-        <b class="c-name">etc</b>Google Maps, Quill, Axios, moment
+        <b class="c-name">etc</b>Google Maps, Vue-editor, Quill, Axios, moment
       </div>
       <div>
         <h1>TIME-LINE</h1>

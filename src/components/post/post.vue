@@ -35,7 +35,7 @@
         sectionLists : [],
         tCount : 0,
         cPage : 0,
-        size : 15
+        size : 4
       }
     },
     created : function() {

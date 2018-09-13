@@ -4,7 +4,7 @@
       <b-tabs card>
         <b-tab title="POST" active>
           <div v-for="(item) in sectionLists" :key="item.id">
-            <h3><router-link :to="{ name : 'Admin-Detail', params : {id : item.id }}">{{item.subject}}</router-link><b-button @click="onDelete(item.id)">삭제</b-button></h3>
+            <h4><router-link :to="{ name : 'Admin-Detail', params : {id : item.id }}">{{item.subject}}</router-link><b-button @click="onDelete(item.id)" variant="danger" class="ml-2">삭제</b-button></h4>
           </div>
           <b-pagination align="center" size="md" :total-rows="tCount" v-model="cPage" :per-page="size" @input="getList(cPage-1)"></b-pagination>
           page : {{cPage}}
@@ -14,15 +14,15 @@
           <b-form-input v-model="editor.subject"
                         type="text"
                         placeholder="제목을 입력하여주십시요."></b-form-input>
-          <div style="margin-top: 5pt">
+          <div>
             <b-form-group label="#Hash">
             <b-form-checkbox-group id="hashTag" name="hashTag" v-model="editor.hashTag_selected" :options="editor.hashTag_options">
             </b-form-checkbox-group>
             </b-form-group>
             <!--<b-form-select v-model="editor.category_selected" :options="editor.category_options" class="mb-3" size="sm" />-->
           </div>
-          <div style="margin-top: 5pt">
-            <vue-editor v-model="editor.content" useCustomImageHandler @imageAdded="handleImageAdded"></vue-editor>
+          <div>
+            <vue-editor id="editor-container" v-model="editor.content" useCustomImageHandler @imageAdded="handleImageAdded"></vue-editor>
           </div>
           <div align="right" style="margin-top: 5pt">
             <b-button variant="success" @click="onCreate">등록</b-button>
@@ -47,6 +47,22 @@
     data : function(){
       return {
         editor : {
+          toolbarOption:[
+            [{ 'font': [] }],
+            [{ 'header': [false, 1, 2, 3, 4, 5, 6, ] }],
+            [{ 'size': ['small', false, 'large', 'huge'] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{'align': ''}, {'align': 'center'}, {'align': 'right'}, {'align': 'justify'}],
+            [{ 'header': 1 }, { 'header': 2 }],
+            ['blockquote', 'code-block'],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+            [{ 'script': 'sub'}, { 'script': 'super' }],
+            [{ 'indent': '-1'}, { 'indent': '+1' }],
+            [{ 'color': [] }, { 'background': [] }],
+            ['link', 'image', 'video', 'formula'],
+            [{ 'direction': 'rtl' }],
+            ['clean']
+          ],
           editorSettings: {
             modules: {
               imageDrop: true,
@@ -141,3 +157,15 @@
     }
   }
 </script>
+<style type="text/css">
+  #editor-container {
+    height: 20rem;
+    width: 100%;
+  }
+
+  /*.ql-toolbar {*/
+    /*position: fixed;*/
+    /*background-color: white;*/
+    /*padding: auto;*/
+  /*}*/
+</style>

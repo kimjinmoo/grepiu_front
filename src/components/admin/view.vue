@@ -1,28 +1,32 @@
 <template>
   <div class="container-fluid">
-    <b-card no-body>
-      <b-tabs card>
-        <b-tab title="상세보기" active>
-          <div class="m-lg-1">
-            <b-form-input v-model="subject"
-                          type="text"
-                          placeholder="제목을 입력하여주십시요."></b-form-input>
-          </div>
-          <div>
-            <b-form-group label="#Hash">
-              <b-form-checkbox-group id="hashTag" name="hashTag" v-model="hashTag" :options="hashTag_options">
-              </b-form-checkbox-group>
-            </b-form-group>
-          </div>
-          <vue-editor v-model="content" @imageAdded="handleImageAdded"></vue-editor>
-          <b-alert :show="alert">수정되었습니다.</b-alert>
-          <div align="right" style="margin-top: 5pt">
-            <b-button variant="success" @click="onModify">수정</b-button>
-          </div>
-          <b-button @click="onList">목록</b-button>
-        </b-tab>
-      </b-tabs>
-    </b-card>
+    <div>
+      <b-card no-body>
+        <b-tabs card>
+          <b-tab title="상세보기" active>
+            <div class="m-lg-1">
+              <b-form-input v-model="subject"
+                            type="text"
+                            placeholder="제목을 입력하여주십시요."></b-form-input>
+            </div>
+            <div>
+              <b-form-group label="#Hash">
+                <b-form-checkbox-group id="hashTag" name="hashTag" v-model="hashTag" :options="hashTag_options">
+                </b-form-checkbox-group>
+              </b-form-group>
+            </div>
+            <vue-editor id="editor-container" v-model="content" @imageAdded="handleImageAdded"></vue-editor>
+            <b-alert :show="alert">수정되었습니다.</b-alert>
+          </b-tab>
+        </b-tabs>
+      </b-card>
+    </div>
+    <div class="mt-2 mb-2 text-right">
+      <b-button-group>
+        <b-button variant="dark" @click="onList" class="mr-2">목록</b-button>
+        <b-button variant="success" @click="onModify">수정</b-button>
+      </b-button-group>
+    </div>
   </div>
 </template>
 <script>
@@ -115,3 +119,10 @@
     }
   };
 </script>
+<style type="text/css">
+  #editor-container {
+    min-height: 20rem;
+    width: 100%;
+  }
+</style>
+
