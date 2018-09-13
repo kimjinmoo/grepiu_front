@@ -4,13 +4,13 @@
              :show="showDismissibleAlert"
              @dismissed="showDismissibleAlert=false">{{message}}</b-alert>
     <div>
-        <h3>{{selectedStoreName}}</h3>
+        <h5>{{selectedStoreName}}</h5>
     </div>
     <p style="display: none;">lat : {{currentLatLng.lat}} / lng : {{currentLatLng.lng}}</p>
     <!--@center_changed="updateCenter"-->
     <GmapMap :center="center"
              :zoom="zoom"
-             style="min-width: 300px; min-height: 400px"
+             style="width: 100%; min-height: 20rem"
              ref="mapRef"
              @drag="onDrag"
              @dragend="onDragend"
