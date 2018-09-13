@@ -15,7 +15,7 @@
                 </b-form-checkbox-group>
               </b-form-group>
             </div>
-            <vue-editor id="editor-container" v-model="content" @imageAdded="handleImageAdded"></vue-editor>
+            <vue-editor id="editor-container" v-model="content" @imageAdded="handleImageAdded" :editorOptions="editorOptions"></vue-editor>
             <b-alert :show="alert">수정되었습니다.</b-alert>
           </b-tab>
         </b-tabs>
@@ -36,7 +36,10 @@
    * https://www.npmjs.com/package/vue2-editor
    *
    */
+  import hljs from 'highlight.js'
+  import 'highlight.js/styles/monokai-sublime.css'
   import { VueEditor } from 'vue2-editor'
+
 
   export default {
     name: 'PostView',
@@ -51,6 +54,14 @@
         content : "",
         hashTag : [],
         hashTag_options: [],
+        editorOptions: {
+          modules: {
+            syntax: {
+              highlight: text =>
+                hljs.highlightAuto(text).value
+            }
+          }
+        },
         editorSettings: {
           modules: {
             imageDrop: true,
@@ -64,7 +75,6 @@
         this.$router.push("/admin");
       },
       onModify : function() {
-        console.log(this.hashTag);
         this.$http.put(process.env.ROOT_API+"/grepiu/post/"+this.$route.params.id, {
           "subject" : this.subject,
           "hashTag" : this.hashTag,

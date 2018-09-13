@@ -22,7 +22,7 @@
             <!--<b-form-select v-model="editor.category_selected" :options="editor.category_options" class="mb-3" size="sm" />-->
           </div>
           <div>
-            <vue-editor id="editor-container" v-model="editor.content" useCustomImageHandler @imageAdded="handleImageAdded"></vue-editor>
+            <vue-editor id="editor-container" v-model="editor.content" useCustomImageHandler @imageAdded="handleImageAdded" :editorOptions="editor.editorOptions"></vue-editor>
           </div>
           <div align="right" style="margin-top: 5pt">
             <b-button variant="success" @click="onCreate">등록</b-button>
@@ -37,6 +37,8 @@
   </div>
 </template>
 <script>
+  import hljs from 'highlight.js'
+  import 'highlight.js/styles/monokai-sublime.css'
   import { VueEditor, Quill} from 'vue2-editor'
 
   export default {
@@ -47,6 +49,14 @@
     data : function(){
       return {
         editor : {
+          editorOptions: {
+            modules: {
+              syntax: {
+                highlight: text =>
+                  hljs.highlightAuto(text).value
+              }
+            }
+          },
           toolbarOption:[
             [{ 'font': [] }],
             [{ 'header': [false, 1, 2, 3, 4, 5, 6, ] }],

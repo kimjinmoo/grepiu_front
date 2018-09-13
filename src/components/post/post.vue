@@ -28,6 +28,8 @@
   </div>
 </template>
 <script>
+  import 'highlight.js/styles/monokai-sublime.css'
+
   export default {
     name : "Lap",
     data : function() {
