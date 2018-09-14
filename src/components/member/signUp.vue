@@ -20,7 +20,7 @@
 </template>
 <script>
   export default {
-    name: 'signUp',
+    name: 'SignUp',
     data : function() {
       return {
         email : "",

@@ -42,7 +42,7 @@
 
 
   export default {
-    name: 'PostView',
+    name: 'Admin-Detail',
     components: {
       VueEditor
     },

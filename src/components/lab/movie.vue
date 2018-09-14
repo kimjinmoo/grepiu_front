@@ -49,7 +49,7 @@
   // ref : https://github.com/heavyy/vue2-google-maps/blob/master/API.md
 
   export default {
-    name : "movie",
+    name : "Movie",
     data : function() {
       return {
         isDataExists : true,

@@ -8,6 +8,8 @@ import SignUp from '@/components/member/signUp'
 import SignIn from '@/components/member/signIn'
 
 import Post from "@/components/post/post"
+import PostDetail from "@/components/post/postDetail"
+
 import Movie from "@/components/lab/movie"
 
 import MyAccount from "@/components/member/myAccount"
@@ -25,9 +27,10 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'HOME',
+      name: 'Home',
       component: Home,
       meta: {
+        info: "홈",
         requiresAuth: false
       }
     },
@@ -36,22 +39,25 @@ const router = new Router({
       name: 'About',
       component: About,
       meta: {
+        info: "이것저것",
         requiresAuth: false
       }
     },
     {
       path: '/signUp',
-      name: 'Sign Up',
+      name: 'SignUp',
       component: SignUp,
       meta: {
+        info: "가입하기",
         requiresAuth: false
       }
     },
     {
       path: '/signIn',
-      name: 'Sign In',
+      name: 'SignIn',
       component: SignIn,
       meta: {
+        info: "로그인",
         requiresAuth: false
       }
     },
@@ -60,30 +66,43 @@ const router = new Router({
       name: 'Post',
       component: Post,
       meta: {
+        info: "포스트",
+        requiresAuth: false
+      }
+    },
+    {
+      path: '/post/:id',
+      name: 'PostDetail',
+      component: PostDetail,
+      meta: {
+        info: "포스트-상세보기",
         requiresAuth: false
       }
     },
     {
       path: '/admin/:id',
-      name: 'Admin-Detail',
+      name: 'AdminDetail',
       component: AdminView,
       meta: {
+        info: "관리자-포스트-수정",
         requiresAuth: true
       }
     },
     {
       path: '/admin',
-      name : 'Root',
+      name : 'Admin',
       component: Admin,
       meta: {
+        info: "관리자",
         requiresAuth: true
       }
     },
     {
       path : "/member/account",
-      name : "My Account",
+      name : "MyAccount",
       component : MyAccount,
       meta: {
+        info: "내계정 정보",
         requiresAuth: true
       }
     },
@@ -92,14 +111,16 @@ const router = new Router({
       name : "Search",
       component : Search,
       meta: {
+        info: "검색",
         requiresAuth: false
       }
     },
     {
       path : "/lab/movie",
-      name : "LAB / 영화관 검색",
+      name : "Movie",
       component : Movie,
       meta: {
+        info: "Lab-영화관 찾기",
         requiresAuth: false
       }
     }

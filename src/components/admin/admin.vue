@@ -42,7 +42,7 @@
   import { VueEditor, Quill} from 'vue2-editor'
 
   export default {
-    name: "Post",
+    name: "Admin",
     components : {
       VueEditor
     },

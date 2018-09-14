@@ -42,7 +42,7 @@
 </template>
 <script>
   export default {
-    name: 'signIn',
+    name: 'SignIn',
     components:{
     },
      data : function() {

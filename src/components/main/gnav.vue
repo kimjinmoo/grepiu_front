@@ -2,7 +2,7 @@
   <div>
     <div class="container-fluid gnavi">
       <b-nav>
-        <h6 class="center">{{path}}</h6>
+        <h6 class="center">{{info}}</h6>
       </b-nav>
     </div>
   </div>
@@ -13,18 +13,18 @@
     name: "gnavi",
     data : function() {
       return {
-        path : ""
+        info : ""
       }
     },
     watch : {
       $route(to, from) {
-        this.path = to.name;
+        this.info = to.meta.info;
       }
     },
     methods : {
     },
     mounted(){
-      this.path = this.$route.name;
+      this.info = this.$route.meta.info;
     }
   }
 </script>

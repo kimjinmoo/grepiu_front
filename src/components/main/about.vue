@@ -1,104 +1,115 @@
 <template>
   <div class="container-fluid">
-    <div class="container">
-      <h1>GrepIU</h1>
-      <div>
-        구성
-      </div>
-      <div>
-        <b class="c-name">Server</b>&nbsp;AWS EC2(t2.small)
-      </div>
-      <div>
-        <b class="c-name">API</b>Spring Boot 2.0
-      </div>
-      <div>
-        <b class="c-name">Front</b>Vue , Bootstrap-vue
-      </div>
-      <div>
-        <b class="c-name">Login</b>Spring Security + Oauth2
-      </div>
-      <div>
-        <b class="c-name">etc</b>Google Maps, Vue-editor, Quill, Axios, moment
-      </div>
-      <div>
-        <h1>TIME-LINE</h1>
-        <p>2018.08</p>
-      </div>
-      <div>
-        <h1>Make</h1>
-      </div>
-        <carousel id="ca" :loop="true" :perPage="1" :spacePadding="2" :autoplay="carousel.auto" :speed="carousel.speed">
-          <b-tooltip :show.sync="carousel.tooltip" target="ca" placement="top">
-            마우스 <strong>swipe!!</strong>
-          </b-tooltip>
-          <slide class="label bg movie">
-            <div class="home_inner">
-              <div class="home_head">영화찾기</div>
-              <div class="home_content">
-                <p>좌표를 이용한 근방의 영화 찾기</p>
+    <b-container fluid>
+      <b-row>
+        <b-col md="2">
+          <!-- 영역 1-->
+          <div></div>
+        </b-col>
+        <b-col md="8">
+          <h1>GrepIU</h1>
+          <div>
+            구성
+          </div>
+          <div>
+            <b class="c-name">Server</b>&nbsp;AWS EC2(t2.small)
+          </div>
+          <div>
+            <b class="c-name">API</b>Spring Boot 2.0
+          </div>
+          <div>
+            <b class="c-name">Front</b>Vue , Bootstrap-vue
+          </div>
+          <div>
+            <b class="c-name">Login</b>Spring Security + Oauth2
+          </div>
+          <div>
+            <b class="c-name">etc</b>Google Maps, Vue-editor, Quill, Axios, moment, highlight js
+          </div>
+          <div>
+            <h1>TIME-LINE</h1>
+            <p>2018.08</p>
+          </div>
+          <div>
+            <h1>Make</h1>
+          </div>
+          <carousel id="ca" :loop="true" :perPage="1" :spacePadding="2" :autoplay="carousel.auto" :speed="carousel.speed">
+            <b-tooltip :show.sync="carousel.tooltip" target="ca" placement="top">
+              마우스 <strong>swipe!!</strong>
+            </b-tooltip>
+            <slide class="label bg movie">
+              <div class="home_inner">
+                <div class="home_head">영화찾기</div>
+                <div class="home_content">
+                  <p>좌표를 이용한 근방의 영화 찾기</p>
+                </div>
+                <div class="home_more">
+                  <b-btn variant="primary" to="/lab/movie">확인하기</b-btn>
+                </div>
               </div>
-              <div class="home_more">
-                <b-btn variant="primary" to="/lab/movie">확인하기</b-btn>
+            </slide>
+            <slide class="label bg jenkins">
+              <div class="home_inner">
+                <div class="home_head">Jenkins</div>
+                <div class="home_content">
+                  <p>CI 배포</p>
+                </div>
+                <div class="home_more">
+                  <b-btn variant="primary" href="https://jenkins.grepiu.com" target="_blank">확인하기(새창)</b-btn>
+                </div>
               </div>
-            </div>
-          </slide>
-          <slide class="label bg jenkins">
-            <div class="home_inner">
-              <div class="home_head">Jenkins</div>
-              <div class="home_content">
-                <p>CI 배포</p>
+            </slide>
+            <slide class="label bg selenium">
+              <div class="home_inner">
+                <div class="home_head">Selenium Session</div>
+                <div class="home_content">
+                  <p>크롤링 및 Test 자동화</p>
+                </div>
+                <div class="home_more"><b-btn variant="primary" href="http://sselenium.grepiu.com/wd/hub/" target="_blank">확인하기(새창)</b-btn></div>
               </div>
-              <div class="home_more">
-                <b-btn variant="primary" href="https://jenkins.grepiu.com" target="_blank">확인하기(새창)</b-btn>
+            </slide>
+            <slide class="label bg swagger">
+              <div class="home_inner">
+                <div class="home_head">스웨거 API</div>
+                <div class="home_content">
+                  <p>- API 문서 자동화</p>
+                </div>
+                <div  class="home_more"><b-btn variant="primary" href="https://conf.grepiu.com/swagger-ui.html" target="_blank">확인하기(새창)</b-btn></div>
               </div>
-            </div>
-          </slide>
-          <slide class="label bg selenium">
-            <div class="home_inner">
-              <div class="home_head">Selenium Session</div>
-              <div class="home_content">
-                <p>크롤링 및 Test 자동화</p>
+            </slide>
+            <slide class="label bg websocket">
+              <div class="home_inner">
+                <div class="home_head">WebSocket</div>
+                <div class="home_content">
+                  <p>Websocket을 이용한 Push</p>
+                </div>
+                <div class="home_more">
+                  <b-btn variant="primary" href="https://conf.grepiu.com" target="_blank">확인하기(새창)</b-btn>
+                </div>
               </div>
-              <div class="home_more"><b-btn variant="primary" href="http://sselenium.grepiu.com/wd/hub/" target="_blank">확인하기(새창)</b-btn></div>
-            </div>
-          </slide>
-          <slide class="label bg swagger">
-            <div class="home_inner">
-              <div class="home_head">스웨거 API</div>
-              <div class="home_content">
-                <p>- API 문서 자동화</p>
+            </slide>
+            <slide class="label bg slack">
+              <div class="home_inner">
+                <div class="home_head">Slack</div>
+                <div class="home_content">
+                  <p>- 개발 도구</p>
+                </div>
+                <div class="home_more">
+                  <b-btn variant="primary" href="https://iustudy.slack.com" target="_blank">확인하기(새창)</b-btn>
+                </div>
               </div>
-              <div  class="home_more"><b-btn variant="primary" href="https://conf.grepiu.com/swagger-ui.html" target="_blank">확인하기(새창)</b-btn></div>
-            </div>
-          </slide>
-          <slide class="label bg websocket">
-            <div class="home_inner">
-              <div class="home_head">WebSocket</div>
-              <div class="home_content">
-                <p>Websocket을 이용한 Push</p>
-              </div>
-              <div class="home_more">
-                <b-btn variant="primary" href="https://conf.grepiu.com" target="_blank">확인하기(새창)</b-btn>
-              </div>
-            </div>
-          </slide>
-          <slide class="label bg slack">
-            <div class="home_inner">
-              <div class="home_head">Slack</div>
-              <div class="home_content">
-                <p>- 개발 도구</p>
-              </div>
-              <div class="home_more">
-                <b-btn variant="primary" href="https://iustudy.slack.com" target="_blank">확인하기(새창)</b-btn>
-              </div>
-            </div>
-          </slide>
-        </carousel>
-      <div>
-        <h1>TODO</h1>
-        <p class="text-center"><img src="/static/img/about/todo_grepiu.png"></p>
-      </div>
-    </div>
+            </slide>
+          </carousel>
+          <div>
+            <h1>TODO</h1>
+            <p class="text-center"><img src="/static/img/about/todo_grepiu.png"></p>
+          </div>
+        </b-col>
+        <b-col md="2">
+          <!-- 여역 3-->
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 <script>

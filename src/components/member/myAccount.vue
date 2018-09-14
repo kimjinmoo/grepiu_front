@@ -13,7 +13,7 @@
 </template>
 <script>
   export default {
-    name: 'myAccount',
+    name: 'MyAcount',
     data () {
       return {
         user : {}
