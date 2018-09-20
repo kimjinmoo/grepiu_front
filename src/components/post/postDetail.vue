@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <b-container fluid>
+    <b-container fluid class="mb-lg-2">
       <b-row class="justify-content-md-center">
         <b-col md="2">
           <!-- 영역 1-->
@@ -15,13 +15,23 @@
                 <p class="text-left" v-html="post.h"></p>
               </div>
               <p class="text-black-50 text-sm-right small">{{post.regId}}/{{post.regDate | moment("YYYY-MM-DD HH:mm")}}</p>
-              <div class="dropdown-divider"></div>
             </div>
           </div>
         </b-col>
         <b-col md="2">
           <!-- 여역 3-->
         </b-col>
+      </b-row>
+      <b-row>
+          <b-col md="12">
+            <div class="text-center">
+              <b-button-group>
+                <!--<b-button variant="success" class="pull-left" v-on:click="onPrev">이전</b-button>-->
+                <b-button variant="success" class="pull-left" to="/post">리스트</b-button>
+                <!--<b-button variant="success" class="pull-right" v-on:click="onNext">다음</b-button>-->
+              </b-button-group>
+            </div>
+          </b-col>
       </b-row>
     </b-container>
   </div>
@@ -34,6 +44,8 @@
     data : function() {
       return {
         id : this.$route.params.id,
+        prev : {},
+        next : {},
         post : {}
       }
     },
@@ -58,12 +70,23 @@
         // 세션 text를 불러온다.
         this.$http.get(process.env.ROOT_API+"/grepiu/post/"+this.$route.params.id)
         .then((response) => {
-          this.post = response.data;
-          window.scrollTo(0);
+          this.prev = response.data.prev;
+          this.post = response.data.post;
+          this.next = response.data.next;
         }).catch(()=>{
           console.log("error");
           //todo error aler
         });
+      },
+      onPrev : function() {
+        if (this.prev != null) {
+          this.$router.push({name: 'PostDetail', params: {id: this.prev.id}})
+        }
+      },
+      onNext : function() {
+        if (this.next != null) {
+          this.$router.push({name: 'PostDetail', params: {id: this.next.id}});
+        }
       }
     }
   }

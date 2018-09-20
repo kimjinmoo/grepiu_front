@@ -29,6 +29,8 @@ npm install vue-moment --save
 npm install vuex --save
 * 에디터 
 npm install highlight.js -save
+* 로딩
+npm install vue-infinite-loading --save
 </pre>
 
 <h5>Git에서 받은 후 작업</h5>
