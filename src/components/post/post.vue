@@ -9,7 +9,7 @@
         <b-col md="8">
           <div>
             <div v-for="(item) in posts" :key="item.id">
-              <router-link :to="{ name : 'PostDetail', params : {id : item.id}}"><h1 :id="item.id" class="text-dark text-lg-left">{{item.subject}}</h1></router-link>
+              <router-link :to="{ name : 'PostDetail', params : {id : item.id}}"><h4 :id="item.id" class="text-dark text-lg-left">{{item.subject}}</h4></router-link>
               <!--<div v-html="item.content"></div>-->
               <div>
                 <p class="text-left" v-html="item.h"></p>
@@ -24,8 +24,13 @@
         </b-col>
       </b-row>
     </b-container>
-    <infinite-loading @infinite="infiniteHandler"></infinite-loading>
-    <b-pagination align="center" size="md" :total-rows="tCount" v-model="cPage" :per-page="size" @input="getPostList(cPage-1)"></b-pagination>
+    <div class="text-center m-3">
+      <b-button v-on:click="onMore" v-show="isMoreBtn">더보기</b-button>
+      <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
+        <span slot="no-more"></span>
+      </infinite-loading>
+    </div>
+    <!--<b-pagination align="center" size="md" :total-rows="tCount" v-model="cPage" :per-page="size" @input="getPostList(cPage-1)"></b-pagination>-->
   </div>
 </template>
 <script>
@@ -40,19 +45,19 @@
     data : function() {
       return {
         sectionLists : [],
-        tCount : 0,
         cPage : 0,
-        size : 5
+        size : 1,
+        isMoreBtn: false
       }
     },
     created : function() {
       // post를 불러온다.
-       this.getPostList(this.cPage);
+      // this.getPostList(this.cPage);
     },
     computed : {
       posts() {
         return this.sectionLists.map(v => {
-          var hashTagButton = [];
+          let hashTagButton = [];
           v.hashTag.forEach(h => {
             hashTagButton.push(
               "<button type='button' class='btn btn-light btn-sm m-lg-1'>#" + h + "</button>");
@@ -72,37 +77,32 @@
     },
     methods : {
       infiniteHandler($state) {
-      },
-      onPageChange : function(val) {
-        //console.log('change', val)
-      },
-      handleSlideClick : function(dataset) {
-        //console.log(dataset.index, dataset.name);
-      },
-      getPostList : function(page) {
         // 세션 text를 불러온다.
         this.$http.get(process.env.ROOT_API+"/grepiu/post",{
           params : {
-            currentPage : page,
+            currentPage : this.cPage++,
             size : this.size
           }
         })
         .then((response) => {
-          this.sectionLists = response.data.list;
-          this.tCount = response.data.tCount;
-        }).catch(()=>{
+          if(response.data.list.length) {
+            this.sectionLists = this.sectionLists.concat(response.data.list);
+            $state.loaded();
+            this.isMoreBtn = true;
+          }  else {
+            this.isMoreBtn = false;
+            $state.complete();
+          }
+        }).catch((e)=>{
+          console.log(e);
           //todo 오류 alter
         });
       },
-      prevPost : function() {
-        if(this.tCount < this.cPage){
-          this.getPostList(--this.cPage);
-        }
-
-      },
-      nextPost : function() {
-        if(this.tCount > this.cPage)
-          this.getPostList(++this.cPage);
+      onMore : function(page) {
+        this.page = page;
+        this.$nextTick(() => {
+          this.$refs.infiniteLoading.attemptLoad();
+        });
       }
     }
   }

@@ -12,7 +12,7 @@
               <h1 :id="post.id" class="text-dark">{{post.subject}}</h1>
               <div v-html="post.content"></div>
               <div>
-                <p class="text-left" v-html="post.h"></p>
+                <p class="text-left" v-html="hash"></p>
               </div>
               <p class="text-black-50 text-sm-right small">{{post.regId}}/{{post.regDate | moment("YYYY-MM-DD HH:mm")}}</p>
             </div>
@@ -23,12 +23,19 @@
         </b-col>
       </b-row>
       <b-row>
+        <b-col>
+          <div class="text-center">
+            관련글
+            <router-link :to="{ name : 'PostDetail', params : {id : prevPost.id}}"><h4 class="text-dark text-lg-center">{{prevPost.subject}}</h4></router-link>
+            <router-link :to="{ name : 'PostDetail', params : {id : nextPost.id}}"><h4 class="text-dark text-lg-center">{{nextPost.subject}}</h4></router-link>
+          </div>
+        </b-col>
+      </b-row>
+      <b-row>
           <b-col md="12">
-            <div class="text-center">
+            <div class="text-center m-3">
               <b-button-group>
-                <!--<b-button variant="success" class="pull-left" v-on:click="onPrev">이전</b-button>-->
-                <b-button variant="success" class="pull-left" to="/post">리스트</b-button>
-                <!--<b-button variant="success" class="pull-right" v-on:click="onNext">다음</b-button>-->
+                <b-button variant="success" class="pull-left" to="/post">목록으로</b-button>
               </b-button-group>
             </div>
           </b-col>
@@ -38,56 +45,55 @@
 </template>
 <script>
   import 'highlight.js/styles/monokai-sublime.css'
-
   export default {
     name : "postDetail",
     data : function() {
       return {
         id : this.$route.params.id,
-        prev : {},
-        next : {},
-        post : {}
+        prevPost : {
+          id : 0,
+          subject : "",
+        },
+        nextPost : {
+          id : 0,
+          subject : "",
+        },
+        post : {
+          id : 0,
+          subject : ""
+        },
+        hashTags : []
       }
     },
     created : function() {
-      // post를 불러온다.
-      this.getPost();
+      // Post를 불러온다.
+      this.init();
     },
     computed : {
-      posts() {
-        return this.post.map(v => {
-          var hashTagButton = [];
-          v.hashTag.forEach(h=>{
-            hashTagButton.push("<button type='button' class='btn btn-light btn-sm m-lg-1'>#"+h+"</button>");
-          })
-          v.h = hashTagButton.join("");
-          return v
-        })
+      hash() {
+        return this.hashTags.join("");
       }
     },
     methods : {
-      getPost : function() {
-        // 세션 text를 불러온다.
-        this.$http.get(process.env.ROOT_API+"/grepiu/post/"+this.$route.params.id)
+      init() {
+        this.$http.get(process.env.ROOT_API+"/grepiu/post/"+this.id)
         .then((response) => {
-          this.prev = response.data.prev;
+          this.prevPost = Object.keys(response.data.prev).length > 0?response.data.prev:this.prevPost;
           this.post = response.data.post;
-          this.next = response.data.next;
-        }).catch(()=>{
-          console.log("error");
-          //todo error aler
+          //Set hash
+          response.data.post.hashTag.forEach(h=>{
+            this.hashTags.push("<button type='button' class='btn btn-light btn-sm m-lg-1'>#"+h+"</button>");
+          });
+          this.nextPost = Object.keys(response.data.next).length > 0?response.data.next:this.nextPost;
+        }).catch((e)=>{
+          console.log("error e :" + e);
         });
-      },
-      onPrev : function() {
-        if (this.prev != null) {
-          this.$router.push({name: 'PostDetail', params: {id: this.prev.id}})
-        }
-      },
-      onNext : function() {
-        if (this.next != null) {
-          this.$router.push({name: 'PostDetail', params: {id: this.next.id}});
-        }
       }
+    },
+    beforeRouteUpdate(to, from, next) {
+      console.log("id : "+to.params.id);
+      this.id = to.params.id;
+      next();
     }
   }
 </script>
