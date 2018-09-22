@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="app">
+  <div id="app" class="app" @touchmove="prevent">
     <div class="wrapper">
       <transition name="fade">
       <b-navbar toggleable="md" type="light" variant="write" v-bind:class="{fixedNav:isMenuHide}">
@@ -82,6 +82,11 @@
       }
     },
     methods: {
+      prevent (event) {
+        console.log('something happened')
+        event.preventDefault()
+        event.stopPropagation()
+      },
       onScroll:function(e, position){
         this.position = position;
       },
