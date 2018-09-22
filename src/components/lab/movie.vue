@@ -40,6 +40,12 @@
     </div>
     <b-table class="text-black-50 small" show-empty striped hover :items="cineInfo" :fields="cineFields" empty-text="데이터가 존재하지 안습니다." caption-top>
     </b-table>
+
+    <div>
+      <p>관련 포스트<p>
+      <router-link to="/post/18" class="sm">Selenium을 통한 롯데시네마 데이터 수집</router-link>
+    </p>
+    </div>
   </div>
 </template>
 <script>
