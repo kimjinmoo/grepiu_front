@@ -46,7 +46,7 @@
       return {
         sectionLists : [],
         cPage : 0,
-        size : 1,
+        size : 5,
         isMoreBtn: false
       }
     },
@@ -88,10 +88,13 @@
           if(response.data.list.length) {
             this.sectionLists = this.sectionLists.concat(response.data.list);
             $state.loaded();
-            this.isMoreBtn = true;
           }  else {
-            this.isMoreBtn = false;
             $state.complete();
+          }
+          if(this.cPage>=response.data.tPage) {
+            this.isMoreBtn = false;
+          } else {
+            this.isMoreBtn = true;
           }
         }).catch((e)=>{
           console.log(e);

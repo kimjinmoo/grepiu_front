@@ -4,7 +4,7 @@
       <b-tabs card>
         <b-tab title="POST" active>
           <div v-for="(item) in sectionLists" :key="item.id">
-            <h4><router-link :to="{ name : 'Admin-Detail', params : {id : item.id }}">{{item.subject}}</router-link><b-button @click="onDelete(item.id)" variant="danger" class="ml-2">삭제</b-button></h4>
+            <h4><router-link :to="{ name : 'AdminDetail', params : {id : item.id }}">{{item.subject}}</router-link><b-button @click="onDelete(item.id)" variant="danger" class="ml-2">삭제</b-button></h4>
           </div>
           <b-pagination align="center" size="md" :total-rows="tCount" v-model="cPage" :per-page="size" @input="getList(cPage-1)"></b-pagination>
           page : {{cPage}}

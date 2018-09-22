@@ -119,10 +119,10 @@
         }
       })
       this.$http.get(process.env.ROOT_API+"/grepiu/post/"+this.$route.params.id).then((r)=>{
-        this.id = r.data.id;
-        if(r.data.hashTag != null)  this.hashTag = r.data.hashTag;
-        this.content = r.data.content;
-        this.subject = r.data.subject;
+        this.id = r.data.post.id;
+        if(r.data.hashTag != null)  this.hashTag = r.data.post.hashTag;
+        this.content = r.data.post.content;
+        this.subject = r.data.post.subject;
       }).catch(function(e){
         //console.log(e);
       })
