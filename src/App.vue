@@ -1,8 +1,8 @@
 <template>
-  <div id="app" class="app" @touchmove="prevent">
+  <div id="app" class="app">
     <div class="wrapper">
       <transition name="fade">
-      <b-navbar toggleable="md" type="light" variant="write" v-bind:class="{fixedNav:isMenuHide}">
+      <b-navbar toggleable="md" type="light" variant="write" v-bind:class="{fixedNav:isMenuHide}" @touchmove="prevent">
         <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
         <b-navbar-brand to="/" >GrepIU</b-navbar-brand>
         <b-collapse is-nav id="nav_collapse" right>
@@ -83,7 +83,6 @@
     },
     methods: {
       prevent (event) {
-        console.log('something happened')
         event.preventDefault()
         event.stopPropagation()
       },
