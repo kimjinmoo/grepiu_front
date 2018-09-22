@@ -33,7 +33,9 @@
         </b-row>
         <b-row>
           <b-col>
-            <b-button type="button" variant="primary" @click="signInGrep">로그인</b-button>
+            <div>
+              <b-button type="button" variant="primary" @click="signInGrep" class="mb-3">로그인</b-button>
+            </div>
           </b-col>
         </b-row>
       </b-container>
