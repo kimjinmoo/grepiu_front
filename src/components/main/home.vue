@@ -1,6 +1,6 @@
 <template>
-  <div class="container-fluid h-100 ">
-    <div class="home_up_bg">
+  <div class="container-fluid">
+    <div class="home_up_bg m-2">
       <div class="container">
         <b-container>
           <b-row>
@@ -46,7 +46,7 @@
         </b-container>
       </div>
     </div>
-    <div class="home_etc_bg home_margin_standard">
+    <div class="home_etc_bg home_margin_standard m-2">
       <b-container class="container">
         <b-row>
           <b-col sm style="text-align: center">

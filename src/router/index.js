@@ -126,7 +126,10 @@ const router = new Router({
     }
   ],
   scrollBehavior(to, from, savedPosition) {
-    // vue-router 스크롤 제어
+    // 포스트 상세보기 처리
+    if(to.name == 'PostDetail') {
+      document.getElementById('app').scrollIntoView();
+    }
     if (savedPosition) {
       return savedPosition
     } else {
