@@ -29,8 +29,8 @@
       <b-row>
         <b-col>
           <div class="text-center container">
-            <router-link :to="{ name : 'PostDetail', params : {id : prevPost.id}}"><h6 class="text-dark text-sm-left" v-show="isPrevExist">이전글 - {{prevPost.subject}}</h6></router-link>
             <router-link :to="{ name : 'PostDetail', params : {id : nextPost.id}}"><h6 class="text-dark text-sm-left" v-show="isNextExist">다음글 - {{nextPost.subject}}</h6></router-link>
+            <router-link :to="{ name : 'PostDetail', params : {id : prevPost.id}}"><h6 class="text-dark text-sm-left" v-show="isPrevExist">이전글 - {{prevPost.subject}}</h6></router-link>
           </div>
         </b-col>
       </b-row>
@@ -58,6 +58,10 @@
     data : function() {
       return {
         id : this.$route.params.id,
+        defaultPost: {
+          id : 0,
+          subject : "",
+        },
         prevPost : {
           id : 0,
           subject : "",
@@ -73,8 +77,6 @@
         hash : ""
       }
     },
-    created : function() {
-    },
     computed : {
       isPrevExist() {
         return (this.prevPost.id !=0)
@@ -83,11 +85,13 @@
         return (this.nextPost.id !=0)
       }
     },
+    watch: {
+    },
     methods : {
       infiniteHandler($state) {
         this.$http.get(process.env.ROOT_API+"/grepiu/post/"+this.id)
           .then((response) => {
-            this.prevPost = (response.data.prev != null) > 0?response.data.prev:this.prevPost;
+            this.prevPost = (response.data.prev != null) > 0?response.data.prev:this.defaultPost;
             this.post = response.data.post;
             //Set hash
             let makeHashTag = [];
@@ -95,7 +99,7 @@
               makeHashTag.push("<button type='button' class='btn btn-light btn-sm m-lg-1'>#"+h+"</button>");
             });
             this.hash = makeHashTag.join("");
-            this.nextPost = (response.data.next != null) > 0?response.data.next:this.nextPost;
+            this.nextPost = (response.data.next != null) > 0?response.data.next:this.defaultPost;
             $state.complete()
           }).catch((e)=>{
           console.log("error e :" + e);
@@ -105,6 +109,9 @@
     beforeRouteUpdate(to, from, next) {
       this.id = to.params.id;
       next();
+      this.$nextTick(() => {
+        this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+      });
     }
   }
 </script>

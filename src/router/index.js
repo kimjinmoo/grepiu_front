@@ -126,6 +126,7 @@ const router = new Router({
     }
   ],
   scrollBehavior(to, from, savedPosition) {
+    // vue-router 스크롤 제어
     if (savedPosition) {
       return savedPosition
     } else {

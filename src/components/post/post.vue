@@ -65,18 +65,13 @@
           v.h = hashTagButton.join("");
           return v
         })
-      },
-      currentIndex: {
-        cache: false,
-        get() {
-          return this.$refs.carousel ? this.$refs.carousel.currentPage : 0;
-        }
       }
     },
     watch : {
     },
     methods : {
       infiniteHandler($state) {
+        // 자동은 안되서 수동으로 적용
         // 세션 text를 불러온다.
         this.$http.get(process.env.ROOT_API+"/grepiu/post",{
           params : {
@@ -87,6 +82,9 @@
         .then((response) => {
           if(response.data.list.length) {
             this.sectionLists = this.sectionLists.concat(response.data.list);
+            if(this.cPage==response.data.tPage){
+              $state.complete();
+            }
             $state.loaded();
           }  else {
             $state.complete();
@@ -101,8 +99,7 @@
           //todo 오류 alter
         });
       },
-      onMore : function(page) {
-        this.page = page;
+      onMore : function() {
         this.$nextTick(() => {
           this.$refs.infiniteLoading.attemptLoad();
         });
