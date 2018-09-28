@@ -2,24 +2,28 @@
   <div class="container-fluid">
     <b-container fluid>
       <b-row class="justify-content-md-center">
-        <b-col md="2">
+        <b-col md="2" class="d-none d-lg-block">
           <!-- 영역 1-->
-          <div></div>
+          <div><a href="#" @click="onSearchByHashTag(null)">등록된 HashTag({{hashTotalCount}})</a></div>
+          <div v-for="(hashTag) in hashLists" :key="hashTag.name">
+            <div class="ml-4"><a href="#" @click="onSearchByHashTag(hashTag.name)">{{hashTag.name}}({{hashTag.count}})</a></div>
+          </div>
         </b-col>
         <b-col md="8">
           <div>
-            <div v-for="(item) in posts" :key="item.id">
+            <div v-for="(item) in sectionLists" :key="item.id">
               <router-link :to="{ name : 'PostDetail', params : {id : item.id}}"><h4 :id="item.id" class="text-dark text-lg-left">{{item.subject}}</h4></router-link>
-              <!--<div v-html="item.content"></div>-->
               <div>
-                <p class="text-left" v-html="item.h"></p>
+                <span v-for="(hash) in item.hashTag">
+                  <button type='button' class='btn btn-light btn-sm m-lg-1' @click="onSearchByHashTag(hash)">#{{hash}}</button>
+                </span>
               </div>
               <p class="text-black-50 text-sm-right small">{{item.regId}}/{{item.regDate | moment("YYYY-MM-DD HH:mm")}}</p>
               <div class="dropdown-divider"></div>
             </div>
           </div>
         </b-col>
-        <b-col md="2">
+        <b-col md="2" class="d-none d-lg-block">
           <!-- 여역 3-->
         </b-col>
       </b-row>
@@ -45,9 +49,12 @@
     data : function() {
       return {
         sectionLists : [],
+        hashLists : [],
+        tCount : 0,
         cPage : 0,
         size : 5,
-        isMoreBtn: false
+        isMoreBtn: false,
+        searchHashTag: null
       }
     },
     created : function() {
@@ -55,46 +62,58 @@
       // this.getPostList(this.cPage);
     },
     computed : {
-      posts() {
-        return this.sectionLists.map(v => {
-          let hashTagButton = [];
-          v.hashTag.forEach(h => {
-            hashTagButton.push(
-              "<button type='button' class='btn btn-light btn-sm m-lg-1'>#" + h + "</button>");
-          })
-          v.h = hashTagButton.join("");
-          return v
-        })
+      hashTotalCount() {
+        return this.hashLists.reduce((a, b) => a.count + b.count, 0)
       }
     },
     watch : {
     },
+    created() {
+      this.initHashTags();
+    },
     methods : {
+      initHashTags() {
+        this.$http.get(process.env.ROOT_API + "/grepiu/post/hash/statistics").then((response) => {
+          this.hashLists = response.data;
+        })
+      },
+      onSearchByHashTag(tag) {
+        console.log("call! search")
+        this.cPage = 0;
+        this.sectionLists = []
+        this.searchHashTag = tag;
+        this.$nextTick(() => {
+          console.log("call nextTick!")
+          this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+        });
+      },
       infiniteHandler($state) {
         // 자동은 안되서 수동으로 적용
         // 세션 text를 불러온다.
-        this.$http.get(process.env.ROOT_API+"/grepiu/post",{
-          params : {
-            currentPage : this.cPage++,
-            size : this.size
+        this.$http.get(process.env.ROOT_API + "/grepiu/post", {
+          params: {
+            currentPage: this.cPage++,
+            size: this.size,
+            hashTags: this.searchHashTag
           }
         })
         .then((response) => {
-          if(response.data.list.length) {
+          if (response.data.list.length) {
+            this.tCount = response.data.tCount;
             this.sectionLists = this.sectionLists.concat(response.data.list);
-            if(this.cPage==response.data.tPage){
+            if (this.cPage == response.data.tPage) {
               $state.complete();
             }
             $state.loaded();
-          }  else {
+          } else {
             $state.complete();
           }
-          if(this.cPage>=response.data.tPage) {
+          if (this.cPage >= response.data.tPage) {
             this.isMoreBtn = false;
           } else {
             this.isMoreBtn = true;
           }
-        }).catch((e)=>{
+        }).catch((e) => {
           console.log(e);
           //todo 오류 alter
         });
