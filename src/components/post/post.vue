@@ -1,9 +1,5 @@
 <template>
   <div class="container-fluid">
-    <div v-show="searchHashTag != null">
-      <h2>Search</h2>
-      <p>{{searchHashTag}}</p>
-    </div>
     <b-container fluid>
       <b-row class="justify-content-md-center">
         <b-col md="2" class="d-none d-lg-block">
@@ -14,6 +10,10 @@
           </div>
         </b-col>
         <b-col md="8">
+          <div v-show="searchHashTag != null">
+            <h2>Search</h2>
+            <p>{{searchHashTag}}</p>
+          </div>
           <div>
             <div v-for="(item, index) in sectionLists" :key="item.id">
               <router-link :to="{ name : 'PostDetail', params : {id : item.id}}"><h4 :id="item.id" class="text-dark text-lg-left">{{item.subject}}</h4></router-link>
@@ -39,7 +39,7 @@
       <b-button v-on:click="onMore" class="m-2" v-show="isMoreBtn">더보기</b-button>
       <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
         <span slot="no-more"></span>
-        <span slot="no-results">등록된 포스트가 없습니다.</span>
+        <span slot="no-results"></span>
       </infinite-loading>
     </div>
     <!--<b-pagination align="center" size="md" :total-rows="tCount" v-model="cPage" :per-page="size" @input="getPostList(cPage-1)"></b-pagination>-->
