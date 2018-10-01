@@ -1,5 +1,9 @@
 <template>
   <div class="container-fluid">
+    <div v-show="searchHashTag != null">
+      <h2>Search</h2>
+      <p>{{searchHashTag}}</p>
+    </div>
     <b-container fluid>
       <b-row class="justify-content-md-center">
         <b-col md="2" class="d-none d-lg-block">
@@ -29,6 +33,9 @@
       </b-row>
     </b-container>
     <div class="text-center">
+      <div class="d-lg-none" v-show="searchHashTag != null">
+        <a href="#" @click="onSearchByHashTag(null)">All Tag</a>
+      </div>
       <b-button v-on:click="onMore" class="m-2" v-show="isMoreBtn">더보기</b-button>
       <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
         <span slot="no-more"></span>

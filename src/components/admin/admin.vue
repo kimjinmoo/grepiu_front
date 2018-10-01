@@ -3,11 +3,18 @@
     <b-card no-body>
       <b-tabs card>
         <b-tab title="POST" active>
-          <div v-for="(item) in sectionLists" :key="item.id">
-            <h4><router-link :to="{ name : 'AdminDetail', params : {id : item.id }}">{{item.subject}}</router-link><b-button @click="onDelete(item.id)" variant="danger" class="ml-2">삭제</b-button></h4>
-          </div>
-          <b-pagination align="center" size="md" :total-rows="tCount" v-model="cPage" :per-page="size" @input="getList(cPage-1)"></b-pagination>
-          page : {{cPage}}
+          <b-table responsive  :items="sectionLists" :fields="fields" class="small">
+            <template slot="subject" slot-scope="post">
+              <router-link :to="{ name : 'AdminDetail', params : {id : post.item.id }}">{{post.value}}</router-link>
+            </template>
+            <template slot="regDate" slot-scope="post">
+              {{post.item.regDate|moment("YYYY-MM-DD HH:mm")}}
+            </template>
+            <template slot="delete" slot-scope="post">
+              <b-button @click="onDelPostBtn(post.item.id)" variant="danger" size="sm" class="mr-2">삭제</b-button>
+            </template>
+          </b-table>
+          <b-pagination align="center" size="md" :total-rows="tCount" v-model="cPage" :per-page="size" @input="getPostList(cPage-1)"></b-pagination>
         </b-tab>
         <b-tab title="Post 쓰기">
           <b-alert :show="editor.alert">등록되었습니다.</b-alert>
@@ -24,13 +31,24 @@
           <div>
             <vue-editor id="editor-container" v-model="editor.content" useCustomImageHandler @imageAdded="handleImageAdded" :editorOptions="editor.editorOptions"></vue-editor>
           </div>
-          <div align="right" style="margin-top: 5pt">
-            <b-button variant="success" @click="onCreate">등록</b-button>
+          <div class="m-2">
+            <b-button variant="success" @click="onAddPostBtn">등록</b-button>
           </div>
         </b-tab>
-        <b-tab title="#구분">
-          <div v-for="(item) in sectionLists" :key="item.id">
-          </div>
+        <b-tab title="#해쉬태그">
+          <!-- 해쉬 관리-->
+          <b-input-group size="mx-auto" class="m-2">
+            <b-form-input id="hash" v-model="newHash" size="sm" type="text" placeholder="해쉬태그 명 추가" :state="nameState" aria-describedby="infoLeast"></b-form-input>
+            <b-input-group-append>
+              <b-button variant="success" @click="onAddHash">등록</b-button>
+            </b-input-group-append>
+            <b-form-invalid-feedback id="infoLeast">
+              적어도 1글자이상 입력해주세요
+            </b-form-invalid-feedback>
+          </b-input-group>
+          <span v-for="(item) in hashLists" class="mr-2">
+            {{item.name}}<b-button @click="onDeleteHash(item.name)" size="sm" variant="outline-success" class="m-1">X</b-button>
+          </span>
         </b-tab>
       </b-tabs>
     </b-card>
@@ -48,6 +66,22 @@
     },
     data : function(){
       return {
+        fields: [{
+          key: 'id',
+          label: 'No',
+          class: 'd-none d-lg-block'
+        }, {
+          key: 'subject',
+          label: '제목'
+        }, {
+          key: 'regDate',
+          label: '생성일',
+          class: 'd-none d-lg-block'
+        }, {
+          key: 'delete',
+          label: '삭제'
+        }
+        ],
         editor : {
           editorOptions: {
             modules: {
@@ -88,7 +122,14 @@
         tCount : 0,
         cPage : 0,
         size : 15,
-        sectionLists: []
+        sectionLists: [],
+        hashLists: [],
+        newHash: ''
+      }
+    },
+    computed: {
+      nameState() {
+        return this.newHash.length > 1? true: false
       }
     },
     methods : {
@@ -97,13 +138,10 @@
         this.editor.subject = "";
       },
       handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
-        // An example of using FormData
-        // NOTE: Your key could be different such as:
-        // formData.append('file', file)
-
+        // 파일
         var formData = new FormData();
         formData.append('file', file)
-
+        // API 호출
         this.$http.post(process.env.ROOT_API+'/api/ver1/upload/file', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then((result) => {
           let url = "https://data.grepiu.com/"+result.data.path+result.data.fileName // Get url from response
@@ -114,7 +152,8 @@
           //console.log(err);
         })
       },
-      onCreate : function() {
+      onAddPostBtn : function() {
+        // Post
         this.$http.post(process.env.ROOT_API+"/grepiu/post", {
           "subject" : this.editor.subject,
           "hashTag" : this.editor.hashTag_selected,
@@ -126,19 +165,37 @@
           } else {
             this.initEditor();
             this.editor.alert=true;
-            this.getList(0);
+            this.getPostList(0);
           }
         }).catch((e)=>{
           //console.log(e);
         })
       },
-      onDelete : function(id) {
-        this.$http.delete(process.env.ROOT_API+"/grepiu/post/"+id)
-        .then((r)=> {
-          this.getList(0);
+      onDelPostBtn : function(id) {
+        if(confirm("복구가 불가능합니다. 삭제하시겠습니까?")){
+          this.$http.delete(process.env.ROOT_API+"/grepiu/post/"+id)
+          .then((r)=> {
+            this.getPostList(0);
+          })
+        }
+
+
+      },
+      onAddHash: function() {
+        if(this.nameState)
+          this.$http.post(process.env.ROOT_API+"/grepiu/post/hash/",{
+            name : this.newHash
+          }).then((r)=>{
+            this.newHash = "";
+            this.initHashList();
+          })
+      },
+      onDeleteHash: function(name) {
+        this.$http.delete(process.env.ROOT_API+"/grepiu/post/hash/"+name).then((r)=>{
+          this.initHashList();
         })
       },
-      getList : function(page) {
+      getPostList : function(page) {
         // 세션 text를 불러온다.
         this.$http.get(process.env.ROOT_API+"/grepiu/post",{
           params : {
@@ -152,18 +209,25 @@
         }).catch(()=>{
 
         });
+      },
+      initHashList: function() {
+        this.$http.get(process.env.ROOT_API+"/grepiu/post/hash").then(r=>{
+          for (var index in r.data) {
+            var obj = {};
+            obj['value'] = r.data[index].name;
+            obj['text'] = r.data[index].name;
+            this.editor.hashTag_options.push(obj);
+          }
+        })
+        // Hash
+        this.$http.get(process.env.ROOT_API+"/grepiu/post/hash").then((res)=>{
+          this.hashLists = res.data;
+        })
       }
     },
     created : function() {
-      this.$http.get(process.env.ROOT_API+"/grepiu/post/hash").then(r=>{
-        for (var index in r.data) {
-          var obj = {};
-          obj['value'] = r.data[index].name;
-          obj['text'] = r.data[index].name;
-          this.editor.hashTag_options.push(obj);
-        }
-      })
-      this.getList(this.cPage);
+      this.initHashList();
+      this.getPostList(this.cPage);
     }
   }
 </script>
