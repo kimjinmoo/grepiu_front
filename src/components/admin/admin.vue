@@ -211,6 +211,7 @@
         });
       },
       initHashList: function() {
+        this.editor.hashTag_options = [];
         this.$http.get(process.env.ROOT_API+"/grepiu/post/hash").then(r=>{
           for (var index in r.data) {
             var obj = {};
