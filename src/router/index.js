@@ -10,6 +10,7 @@ import SignIn from '@/components/member/signIn'
 import Post from "@/components/post/post"
 import PostDetail from "@/components/post/postDetail"
 
+import Lab from "@/components/lab/lab"
 import Movie from "@/components/lab/movie"
 
 import MyAccount from "@/components/member/myAccount"
@@ -116,11 +117,20 @@ const router = new Router({
       }
     },
     {
+      path : "/lab",
+      name : "Lab",
+      component : Lab,
+      meta: {
+        info: "내창고",
+        requiresAuth: false
+      }
+    },
+    {
       path : "/lab/movie",
       name : "Movie",
       component : Movie,
       meta: {
-        info: "Lab-영화관 찾기",
+        info: "내창고-영화관 찾기",
         requiresAuth: false
       }
     }

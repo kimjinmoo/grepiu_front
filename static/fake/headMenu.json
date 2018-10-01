@@ -8,6 +8,12 @@
     },
     {
       "id" : 2,
+      "name" : "집창고",
+      "url" : "/lab",
+      "requiresAuth" : false
+    },
+    {
+      "id" : 3,
       "name" : "관리자",
       "url" : "/admin",
       "requiresAuth" : true
