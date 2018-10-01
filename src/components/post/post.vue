@@ -4,14 +4,14 @@
       <b-row class="justify-content-md-center">
         <b-col md="2" class="d-none d-lg-block">
           <!-- 영역 1-->
-          <div><a href="#" @click="onSearchByHashTag(null)">등록된 HashTag({{hashTotalCount}})</a></div>
-          <div v-for="(hashTag) in hashLists" :key="hashTag.name">
-            <div class="ml-4"><a href="#" @click="onSearchByHashTag(hashTag.name)">{{hashTag.name}}({{hashTag.count}})</a></div>
+          <div><a href="#" @click="onSearchByHashTag(null)">All Tag</a></div>
+          <div v-for="(hashTag) in hashLists" :key="hashTag.name" class="small">
+            <div><a href="#" @click="onSearchByHashTag(hashTag.name)">#{{hashTag.name}}({{hashTag.count}})</a></div>
           </div>
         </b-col>
         <b-col md="8">
           <div>
-            <div v-for="(item) in sectionLists" :key="item.id">
+            <div v-for="(item, index) in sectionLists" :key="item.id">
               <router-link :to="{ name : 'PostDetail', params : {id : item.id}}"><h4 :id="item.id" class="text-dark text-lg-left">{{item.subject}}</h4></router-link>
               <div>
                 <span v-for="(hash) in item.hashTag">
@@ -19,7 +19,7 @@
                 </span>
               </div>
               <p class="text-black-50 text-sm-right small">{{item.regId}}/{{item.regDate | moment("YYYY-MM-DD HH:mm")}}</p>
-              <div class="dropdown-divider"></div>
+              <div class="dropdown-divider" v-show="sectionLists.length > index+1"></div>
             </div>
           </div>
         </b-col>
@@ -28,10 +28,11 @@
         </b-col>
       </b-row>
     </b-container>
-    <div class="text-center m-3">
-      <b-button v-on:click="onMore" v-show="isMoreBtn">더보기</b-button>
+    <div class="text-center">
+      <b-button v-on:click="onMore" class="m-2" v-show="isMoreBtn">더보기</b-button>
       <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
         <span slot="no-more"></span>
+        <span slot="no-results">등록된 포스트가 없습니다.</span>
       </infinite-loading>
     </div>
     <!--<b-pagination align="center" size="md" :total-rows="tCount" v-model="cPage" :per-page="size" @input="getPostList(cPage-1)"></b-pagination>-->
