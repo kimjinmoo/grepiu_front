@@ -86,12 +86,10 @@
         })
       },
       onSearchByHashTag(tag) {
-        console.log("call! search")
         this.cPage = 0;
         this.sectionLists = []
         this.searchHashTag = tag;
         this.$nextTick(() => {
-          console.log("call nextTick!")
           this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
         });
       },
