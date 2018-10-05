@@ -5,7 +5,8 @@
     <h4 class="headline mb-0"><b class="red--text">authorities :</b> {{ user.authorities}}</h4>
     <br>
     <div>
-      <button>탈퇴</button>
+      <b-button @click="leave">비밀번호변경</b-button>
+      <b-button @click="leave">탈퇴</b-button>
     </div>
     <h2>#History</h2>
     -
@@ -16,17 +17,32 @@
     name: 'MyAcount',
     data () {
       return {
-        user : {}
+        user : {
+        }
       }
+    },
+    computed: {
     },
     components:{
     },
     methods : {
+      leave : function() {
+        this.axios.get(process.env.ROOT_API+"/oauth/users/leave").then(r=>{
+        })
+      },
+      me: function() {
+        this.axios.get(process.env.ROOT_API+"/oauth/users/me").then(u=>{
+          this.user = u.data.principal;
+        })
+      }
     },
-    created () {
-      this.$http.get("https://conf.grepiu.com/oauth/users/me").then(u=>{
-        this.user = u.data.principal;
-      })
+    mounted () {
+      let user = localStorage.user;
+      if(user){
+        this.me();
+      } else {
+
+      }
     }
   }
 </script>

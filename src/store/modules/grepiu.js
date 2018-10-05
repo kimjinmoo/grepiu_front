@@ -2,6 +2,10 @@ import axios from 'axios'
 import SockJS from 'sockjs-client'
 import Stomp from 'webstomp-client'
 
+const setCommonAuthorizationHeader = (token) => {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
+
 const state = {
   user : null,
   message : null
@@ -21,7 +25,9 @@ const actions = {
     const user = localStorage.getItem("user")
     if(user != null && user != undefined) {
       let u = JSON.parse(user);
-      axios.get("https://conf.grepiu.com/oauth/check?accessToken="+u.accessToken).then(res=>{
+      //set Token
+      setCommonAuthorizationHeader(u.accessToken);
+      axios.get(process.env.ROOT_API+"/oauth/check?accessToken="+u.accessToken).then(res=>{
         if(res.data.code == 200 && res.data.isValid) {
           commit("LOGIN", u);
         } else {
@@ -33,9 +39,12 @@ const actions = {
   },
   login ({commit}, {id,password}) {
     return new Promise(function (resolve, reject) {
-      axios.post("https://conf.grepiu.com/oauth/login", {id, password}).then(
+      axios.post(process.env.ROOT_API+"/oauth/login", {id, password}).then(
         (res)=> {
           if(res.data.code == 200) {
+            // set Token
+            setCommonAuthorizationHeader(res.data.accessToken);
+            // Commit
             commit("LOGIN", res.data)
           } else {
             commit("LOGOUT", res.data)
@@ -45,8 +54,11 @@ const actions = {
     });
   },
   logout({commit}){
-    axios.post("https://conf.grepiu.com/oauth/logout").then(
+    axios.post(process.env.ROOT_API+"/oauth/logout").then(
       () => {
+        // set Token
+        setCommonAuthorizationHeader(null);
+        // Commit
         commit("LOGOUT")
       }
     )
@@ -68,19 +80,15 @@ const mutations = {
     },(error) => {
       //console.log(error);
     })
-
     state.user = payload
     localStorage.setItem("user", JSON.stringify(payload))
-    axios.defaults.headers.common['Authorization'] = 'Bearer '+ payload.accessToken
   },
   LOGOUT(state) {
     //Set disconnected
     if (this.stompClient) {
       this.stompClient.disconnect()
     }
-
     state.user = null;
-    axios.defaults.headers.common["Authorization"] = null;
     delete localStorage.user
   },
   MESSAGE(state, message) {
