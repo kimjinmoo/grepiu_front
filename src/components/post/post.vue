@@ -11,8 +11,8 @@
         </b-col>
         <b-col md="8">
           <div v-show="searchHashTag != null">
-            <h2>Search</h2>
-            <p>{{searchHashTag}}</p>
+            <h1>Selected</h1>
+            <p><b-badge>{{searchHashTag}}</b-badge></p>
           </div>
           <div>
             <div v-for="(item, index) in sectionLists" :key="item.id">
