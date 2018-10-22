@@ -100,9 +100,11 @@
               </div>
             </slide>
           </carousel>
-          <div>
-            <h1>TODO</h1>
-            <p class="text-center"><img src="/static/img/about/todo_grepiu.png"></p>
+          <div class="mb-2">
+            <h1>blackboard</h1>
+            <b-container fluid class="p-4" style="background-color: #ffffff; border: 1px solid #555555; border-radius: 4px;">
+              <p class="text-center"><img src="/static/img/about/todo_grepiu.png"></p>
+            </b-container>
           </div>
         </b-col>
         <b-col md="2">
