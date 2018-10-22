@@ -5,11 +5,21 @@
     <h4 class="headline mb-0"><b class="red--text">authorities :</b> {{ user.authorities}}</h4>
     <br>
     <div>
-      <b-button @click="leave">비밀번호변경</b-button>
-      <b-button @click="leave">탈퇴</b-button>
+      <b-btn v-b-modal.modalPassword>비밀번호변경</b-btn>
+      <b-btn @click="leave">탈퇴</b-btn>
     </div>
     <h2>#History</h2>
     -
+    <b-modal id="modalPassword"
+             ref="modal"
+             title="비밀번호를 입력하세요"
+             @ok="changePW"
+             @shown="change = {}">
+      <form @submit.stop.prevent="changePW">
+        <b-form-input class="m-2" type="password" placeholder="이전 비밀번호를 입력하세요" v-model="change.currentPassword"></b-form-input>
+        <b-form-input class="m-2" type="password" placeholder="변경 할 비밀번호를 입력하세요" v-model="change.changePassword"></b-form-input>
+      </form>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -17,7 +27,11 @@
     name: 'MyAcount',
     data () {
       return {
-        user : {
+        user: {
+        },
+        change: {
+          currentPassword: "",
+          changePassword: ""
         }
       }
     },
@@ -26,9 +40,14 @@
     components:{
     },
     methods : {
-      leave : function() {
-        this.axios.get(process.env.ROOT_API+"/oauth/users/leave").then(r=>{
-        })
+      leave: function() {
+        if (confirm("탈퇴하면 모든 데이터를 복구 할 수 없습니다. 탈퇴 하시겠습니까?")) {
+          this.axios.post(process.env.ROOT_API + "/oauth/users/leave").then(r => {
+          })
+        }
+      },
+      changePW: function() {
+
       },
       me: function() {
         this.axios.get(process.env.ROOT_API+"/oauth/users/me").then(u=>{

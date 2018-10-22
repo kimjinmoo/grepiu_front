@@ -14,7 +14,6 @@
             <b-nav-item v-if="userIsAuthenticated && menu.requiresAuth==true" :to="menu.url" v-for="menu in menuLists"
                         v-bind:key="menu.id">{{menu.name}}
             </b-nav-item>
-            <b-nav-item to="/search">검색</b-nav-item>
           </b-navbar-nav>
           <b-navbar-nav class="ml-auto">
             <b-nav-item-dropdown right>

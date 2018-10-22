@@ -15,8 +15,6 @@ import Movie from "@/components/lab/movie"
 
 import MyAccount from "@/components/member/myAccount"
 
-import Search from "@/components/search/search"
-
 import Admin from "@/components/admin/admin"
 import AdminView from '@/components/admin/view'
 
@@ -105,15 +103,6 @@ const router = new Router({
       meta: {
         info: "내계정 정보",
         requiresAuth: true
-      }
-    },
-    {
-      path : "/search",
-      name : "Search",
-      component : Search,
-      meta: {
-        info: "검색",
-        requiresAuth: false
       }
     },
     {
