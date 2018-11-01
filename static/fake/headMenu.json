@@ -14,6 +14,12 @@
     },
     {
       "id" : 3,
+      "name" : "클라우드",
+      "url" : "/cloud",
+      "requiresAuth" : true
+    },
+    {
+      "id" : 4,
       "name" : "관리자",
       "url" : "/admin",
       "requiresAuth" : true

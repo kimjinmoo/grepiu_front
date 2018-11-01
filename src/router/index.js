@@ -18,7 +18,7 @@ import MyAccount from "@/components/member/myAccount"
 import Admin from "@/components/admin/admin"
 import AdminView from '@/components/admin/view'
 
-import store from "../store"
+import cloud from "@/components/cloud/cloud"
 
 Vue.use(Router)
 
@@ -89,7 +89,7 @@ const router = new Router({
     },
     {
       path: '/admin',
-      name : 'Admin',
+      name: 'Admin',
       component: Admin,
       meta: {
         info: "관리자",
@@ -97,42 +97,53 @@ const router = new Router({
       }
     },
     {
-      path : "/member/account",
-      name : "MyAccount",
-      component : MyAccount,
+      path: "/member/account",
+      name: "MyAccount",
+      component: MyAccount,
       meta: {
         info: "내계정 정보",
         requiresAuth: true
       }
     },
     {
-      path : "/lab",
-      name : "Lab",
-      component : Lab,
+      path: "/lab",
+      name: "Lab",
+      component: Lab,
       meta: {
         info: "내창고",
         requiresAuth: false
       }
     },
     {
-      path : "/lab/movie",
-      name : "Movie",
-      component : Movie,
+      path: "/lab/movie",
+      name: "Movie",
+      component: Movie,
       meta: {
         info: "내창고-영화관 찾기",
         requiresAuth: false
       }
+    },
+    {
+      path: "/cloud",
+      name: "Cloud",
+      component: cloud,
+      meta: {
+        info: "클라우드-저장소",
+        requiresAuth: true
+      }
+
+
     }
   ],
   scrollBehavior(to, from, savedPosition) {
     // 포스트 상세보기 처리
-    if(to.name == 'PostDetail') {
+    if (to.name == 'PostDetail') {
       document.getElementById('app').scrollIntoView();
     }
     if (savedPosition) {
       return savedPosition
     } else {
-      return { x: 0, y: 0 }
+      return {x: 0, y: 0}
     }
   }
 })
@@ -142,7 +153,7 @@ router.beforeEach((to, from, next) => {
   let user = localStorage.user;
   if (auth && !user) {
     next({
-      path : '/signIn',
+      path: '/signIn',
       query: {redirect: to.fullPath}
     });
   } else if (auth && user) {
