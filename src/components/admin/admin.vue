@@ -121,7 +121,7 @@
         },
         tCount : 0,
         cPage : 0,
-        size : 15,
+        size : 10,
         sectionLists: [],
         hashLists: [],
         newHash: ''

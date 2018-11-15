@@ -42,7 +42,7 @@
     methods : {
       leave: function() {
         if (confirm("탈퇴하면 모든 데이터를 복구 할 수 없습니다. 탈퇴 하시겠습니까?")) {
-          this.axios.post(process.env.ROOT_API + "/oauth/users/leave").then(r => {
+          this.$http.post(process.env.ROOT_API + "/oauth/users/leave").then(r => {
           })
         }
       },
@@ -50,7 +50,7 @@
 
       },
       me: function() {
-        this.axios.get(process.env.ROOT_API+"/oauth/users/me").then(u=>{
+        this.$http.get(process.env.ROOT_API+"/oauth/users/me").then(u=>{
           this.user = u.data.principal;
         })
       }
