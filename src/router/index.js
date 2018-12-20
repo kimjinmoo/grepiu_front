@@ -152,6 +152,7 @@ router.beforeEach((to, from, next) => {
   const auth = to.matched.some(record => record.meta.requiresAuth);
   let user = localStorage.user;
   if (auth && !user) {
+    // router.push("/signIn");
     next({
       path: '/signIn',
       query: {redirect: to.fullPath}

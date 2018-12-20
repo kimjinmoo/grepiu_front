@@ -4,12 +4,14 @@
     <div>경로 : {{currentDir}}</div>
     <b-button-group size="sm">
       <b-button variant="success" @click="createNewFolder">폴더 생성</b-button>
+      <b-button variant="success" @click="moveUp">위로</b-button>
       <b-button variant="success" @click="moveTop">최상위경로</b-button>
+      <div @dragover="allowDrop" @drop="drop">휴지통</div>
     </b-button-group>
-    <div style="height: 50vh;" class="border border-danger bg-light">
+    <div style="height: 50vh;" class="border border-danger bg-light" @click.right="right">
       <ul v-for="item in folders" style="float: left;list-style:none;padding:5px;">
         <li v-if="item.attribute == 'P'" style="float:left; margin-top: 5px">
-          <img src="/static/img/cloud/folder.png" style="width: 64px; height: auto;" @click="read(item.id, item.attribute, item.name)">
+          <img :id="item.id" src="/static/img/cloud/folder.png" style="width: 64px; height: auto;" @click="read(item.id, item.attribute, item.name)" draggable="true" @dragstart="drag">
           <div style="text-align: center"><label>{{item.name}}</label></div>
           <!--<input type="text" style="text-align: center" v-model="item.name" @blur="updateFolder(item.id, item.name)"></input>-->
         </li>
@@ -31,6 +33,7 @@
     data : function(){
       return {
         obj: [],
+        pidQueue: [],
         pid: "",
         preDir: "",
         currentDir: "/",
@@ -54,26 +57,52 @@
       }
     },
     methods: {
+      drag: function(ev) {
+        ev.dataTransfer.setData("text", ev.target.id)
+      },
+      drop: function(ev) {
+        let id = ev.dataTransfer.getData("text");
+        if (confirm(id + " 삭제하시겠습니까?")) {
+            this.$http.delete(process.env.ROOT_API + "/grepiu/cloud/"+id).then(r=>{
+              this.getFolder();
+            })
+        }
+      },
+      allowDrop: function(ev) {
+        ev.preventDefault()
+      },
       moveTop: function() {
         this.pid = "";
-        this.currentDir = "/";
+        this.currentDir = "/"
         this.getFolder();
       },
-      movePre : function() {
-        this.currentDir = this.upDir();
-        this.getFolder();
+      moveUp: function() {
+        if(this.pidQueue.length > 0) {
+          this.pidQueue = this.pidQueue.slice(0,this.pidQueue.length-1)
+          console.log(this.pidQueue.length)
+          if(this.pidQueue.length <= 1) {
+              this.pid = ""
+          } else {
+            console.log(JSON.stringify(this.pidQueue[this.pidQueue.length]))
+            this.pid = "";
+          }
+          this.getFolder();
+        }
       },
       getFolder : function() {
         this.$http.get(process.env.ROOT_API + "/grepiu/cloud/", {
           params: {
-            pid: this.pid
+            pid: this.pid,
           }
         }).then((response) => {
           this.folders = response.data;
-        })
+        }).catch(v=>{
+          console.log(v);
+        });
       },
       read : function(pid, type, name) {
-        this.pid = pid;
+        this.pidQueue.push(pid)
+        this.pid = pid
         switch (type) {
           case "P" :
             this.currentDir+=name+"/";
@@ -96,7 +125,6 @@
         })
       },
       updateFolder: function(fid, name) {
-        console.log("들어옴");
         const querystring = require('querystring');
 
         this.$http.put(process.env.ROOT_API + "/grepiu/cloud/",{

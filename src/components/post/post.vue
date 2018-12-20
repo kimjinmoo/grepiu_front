@@ -10,9 +10,16 @@
           </div>
         </b-col>
         <b-col md="8">
+          <div class="input-group mb-3">
+            <input type="text" v-model="filter" class="form-control" placeholder="검색" aria-label="Search" aria-describedby="basic-addon2" @keyup="onSearchByFilter">
+          </div>
           <div v-show="searchHashTag != null">
             <h1>Selected</h1>
             <p><b-badge>{{searchHashTag}}</b-badge></p>
+          </div>
+          <div v-show="filter != ''">
+            <h1>Filter</h1>
+            <p><b-badge>{{filter}}</b-badge></p>
           </div>
           <div>
             <div v-for="(item, index) in sectionLists" :key="item.id">
@@ -56,6 +63,7 @@
     },
     data : function() {
       return {
+        filter: '',
         sectionLists : [],
         hashLists : [],
         tCount : 0,
@@ -93,6 +101,13 @@
           this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
         });
       },
+      onSearchByFilter() {
+        this.cPage = 0;
+        this.sectionLists = []
+        this.$nextTick(() => {
+          this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+        });
+      },
       infiniteHandler($state) {
         // 자동은 안되서 수동으로 적용
         // 세션 text를 불러온다.
@@ -100,7 +115,8 @@
           params: {
             currentPage: this.cPage++,
             size: this.size,
-            hashTags: this.searchHashTag
+            hashTags: this.searchHashTag,
+            filter: this.filter
           }
         })
         .then((response) => {
