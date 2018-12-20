@@ -20,9 +20,12 @@ import AdminView from '@/components/admin/view'
 
 import cloud from "@/components/cloud/cloud"
 
+import error_404 from "@/components/error/404.vue"
+
 Vue.use(Router)
 
 const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -97,7 +100,7 @@ const router = new Router({
       }
     },
     {
-      path: "/member/account",
+      path: '/member/account',
       name: "MyAccount",
       component: MyAccount,
       meta: {
@@ -106,17 +109,17 @@ const router = new Router({
       }
     },
     {
-      path: "/lab",
-      name: "Lab",
+      path: '/lab',
+      name: 'Lab',
       component: Lab,
       meta: {
-        info: "내창고",
+        info: '내창고',
         requiresAuth: false
       }
     },
     {
-      path: "/lab/movie",
-      name: "Movie",
+      path: '/lab/movie',
+      name: 'Movie',
       component: Movie,
       meta: {
         info: "내창고-영화관 찾기",
@@ -124,16 +127,16 @@ const router = new Router({
       }
     },
     {
-      path: "/cloud",
-      name: "Cloud",
+      path: '/cloud',
+      name: 'Cloud',
       component: cloud,
       meta: {
         info: "클라우드-저장소",
         requiresAuth: true
       }
+    },
+    { path: '*', component: error_404}
 
-
-    }
   ],
   scrollBehavior(to, from, savedPosition) {
     // 포스트 상세보기 처리
