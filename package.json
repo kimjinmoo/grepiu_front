@@ -30,7 +30,7 @@
     "vue-moment": "^4.0.0",
     "vue-router": "^3.0.1",
     "vue2-editor": "^2.6.6",
-    "vue2-google-maps": "^0.9.8",
+    "vue2-google-maps": "^0.10.5",
     "vuex": "^3.0.1",
     "webstomp-client": "^1.2.4"
   },
@@ -50,7 +50,7 @@
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.22.0",
-    "chalk": "^2.0.1",
+    "chalk": "^2.4.2",
     "chromedriver": "^2.42.0",
     "copy-webpack-plugin": "^4.5.2",
     "cross-spawn": "^5.0.1",
@@ -78,7 +78,7 @@
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.1.6",
     "postcss-url": "^7.2.1",
-    "rimraf": "^2.6.0",
+    "rimraf": "^2.6.3",
     "selenium-server": "^3.14.0",
     "semver": "^5.5.1",
     "shelljs": "^0.7.6",
@@ -87,11 +87,11 @@
     "vue-jest": "^1.0.2",
     "vue-loader": "^13.7.3",
     "vue-style-loader": "^3.0.1",
-    "vue-template-compiler": "^2.5.17",
+    "vue-template-compiler": "^2.5.21",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.11.3",
-    "webpack-merge": "^4.1.4"
+    "webpack-merge": "^4.2.1"
   },
   "engines": {
     "node": ">= 6.0.0",
