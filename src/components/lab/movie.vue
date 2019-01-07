@@ -2,9 +2,10 @@
   <div class="container-fluid">
     <b-alert dismissible
              :show="showDismissibleAlert"
-             @dismissed="showDismissibleAlert=false">{{message}}</b-alert>
+             @dismissed="showDismissibleAlert=false">{{message}}
+    </b-alert>
     <div>
-        <h5>{{selectedStoreName}}</h5>
+      <h5>{{selectedStoreName}}</h5>
     </div>
     <p style="display: none;">lat : {{currentLatLng.lat}} / lng : {{currentLatLng.lng}}</p>
     <!--@center_changed="updateCenter"-->
@@ -15,7 +16,8 @@
              @drag="onDrag"
              @dragend="onDragend"
     >
-      <GmapMarker
+      <gmap-cluster>
+        <GmapMarker
           :key="m.id"
           v-for="(m) in markers"
           :position="m.position"
@@ -25,7 +27,8 @@
           :draggable="false"
           :InfoWindow="m.storeName"
           @click="onMarker(m.storeName, m.position)">
-      </GmapMarker>
+        </GmapMarker>
+      </gmap-cluster>
       <gmap-info-window :position="myPosition">
         현재 나의 위치!!
       </gmap-info-window>
