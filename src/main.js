@@ -18,7 +18,7 @@ Vue.use(VueCarousel)
 Vue.use(VueGeolocation)
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyBJubU9wJ7ux4DvGlcR83dKIGoFTb-EcyQ',
+    key: '',
     libraries: 'geometry'
   }
 });
