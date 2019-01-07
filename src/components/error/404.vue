@@ -7,7 +7,7 @@
     </div>
   </div>
 </template>
-<style type="text/css">
+<style type="text/css" scoped>
   * {
     transition: all 0.6s;
   }
