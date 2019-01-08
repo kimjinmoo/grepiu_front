@@ -16,7 +16,7 @@
              @drag="onDrag"
              @dragend="onDragend"
     >
-      <gmap-cluster>
+      <GmapCluster>
         <GmapMarker
           :key="m.id"
           v-for="(m) in markers"
@@ -28,7 +28,7 @@
           :InfoWindow="m.storeName"
           @click="onMarker(m.storeName, m.position)">
         </GmapMarker>
-      </gmap-cluster>
+      </GmapCluster>
       <gmap-info-window :position="myPosition">
         현재 나의 위치!!
       </gmap-info-window>
@@ -52,12 +52,17 @@
   </div>
 </template>
 <script>
+  import GmapCluster from 'vue2-google-maps/dist/components/cluster'
+
   var MobileDetect = require('mobile-detect'),md = new MobileDetect(navigator.userAgent);
   // vue google map
   // ref : https://developers.google.com/maps/documentation/javascript/events?hl=ko
   // ref : https://github.com/heavyy/vue2-google-maps/blob/master/API.md
 
   export default {
+    components: {
+      GmapCluster:  GmapCluster
+    },
     name : "Movie",
     data : function() {
       return {
