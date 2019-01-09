@@ -7,7 +7,7 @@ html {
 body {
   height: 100%;
   padding: 0;
-  overflow: auto;
+  overflow-x: hidden; /* Prevent scroll on narrow devices */
   margin: 0;
   -webkit-overflow-scrolling: touch;
 }

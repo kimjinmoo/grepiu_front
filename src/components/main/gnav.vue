@@ -30,14 +30,10 @@
 </script>
 
 <style scoped>
-  .spacing {
-    Margin-right: 10px;
-  }
-
   .gnavi {
     border-width: 1px;
     border-color: #c6c8ca;
-    border-style: solid none solid none;
+    border-style: none none solid none;
     height: 3rem;
     margin: auto
   }

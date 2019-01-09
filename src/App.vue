@@ -2,9 +2,9 @@
   <div id="app" class="app">
     <div class="wrapper">
       <transition name="fade">
-      <b-navbar toggleable="md" type="light" variant="write" v-bind:class="{fixedNav:isMenuHide}">
-        <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-        <b-navbar-brand to="/" >GrepIU</b-navbar-brand>
+      <b-navbar toggleable="md" type="light" variant="write" :class="{'fixed-theme':myNavBar.isFixed,'fixed-off-theme': !myNavBar.isFixed}" class="fixed-top grep-nav">
+        <b-navbar-toggle target="nav_collapse" ></b-navbar-toggle>
+        <b-navbar-brand to="/" :class="{'fixed-theme':myNavBar.isFixed,'fixed-off-theme': !myNavBar.isFixed}">GrepIU</b-navbar-brand>
         <b-collapse is-nav id="nav_collapse" right>
           <b-navbar-nav>
             <b-nav-item to="/about">관하여..</b-nav-item>
@@ -15,7 +15,7 @@
                         v-bind:key="menu.id">{{menu.name}}
             </b-nav-item>
           </b-navbar-nav>
-          <b-navbar-nav class="ml-auto">
+          <b-navbar-nav class="ml-auto" :class="{'fixed-theme':myNavBar.isFixed}">
             <b-nav-item-dropdown right>
               <template slot="button-content" v-b-popover.hover="'I am popover content!'" title="Popover Title">
                 <span v-if="!userIsAuthenticated">계정</span>
@@ -30,11 +30,13 @@
         </b-collapse>
       </b-navbar>
       </transition>
-      <GrepIUNav></GrepIUNav>
-      <main role="main" style="margin-top: 1rem">
-        <router-view></router-view>
-      </main>
-      <div class="inner_footer_margin"></div>
+      <div class="grep-container">
+        <GrepIUNav></GrepIUNav>
+        <main role="main" style="margin-top: 1rem" @scroll="handleScroll">
+          <router-view></router-view>
+        </main>
+        <div class="inner_footer_margin"></div>
+      </div>
     </div>
     <!-- Footer -->
     <GrepIUFooter class="footer"></GrepIUFooter>
@@ -48,6 +50,8 @@
   import GrepIUNav from '@/components/main/gnav'
   import GrepIUFooter from '@/components/main/footer'
 
+
+
   export default {
     name: 'app',
     components : {
@@ -55,8 +59,24 @@
     },
     data : function() {
       return {
+        scrollPosition: 0,
+        myNavBar: {
+          isFixed: false,
+          flagAdd: true,
+          elements: [],
+          add: function() {
+            if(this.flagAdd) {
+              this.isFixed = true
+            }
+            this.flagAdd = false
+          },
+
+          remove: function() {
+            this.isFixed = false
+            this.flagAdd = true
+          }
+        },
         // isLogin : false,
-        isMenuHide : false,
         menuLists: [],
         isLoading : false,
         label : '데이터를 읽고 있습니다.'
@@ -65,7 +85,7 @@
     watch : {
       socketMessage() {
         this.$refs.alertModar.show();
-      }
+      },
       // '$route' (to, from) {
       // }
     },
@@ -81,6 +101,16 @@
       }
     },
     methods: {
+      handleScroll: function(e) {
+        let yOffset = 0;
+        let currentScroll = e.target.scrollTop;
+        if(yOffset < currentScroll) {
+          this.myNavBar.add();
+        }
+        else if(currentScroll == yOffset){
+          this.myNavBar.remove();
+        }
+      },
       prevent (event) {
         event.preventDefault()
         event.stopPropagation()
@@ -126,14 +156,66 @@
       .catch(() => {
         // console.log("err");
       })
+    },
+
+    created () {
+      window.document.body.onscroll = this.handleScroll
+      document.addEventListener('scroll', onscroll, true)
+      // this.offSetManager()
+    },
+    destroyed () {
+      document.removeEventListener('scroll', onscroll, true)
     }
   }
 </script>
 <style scoped>
-  .fixedNav {
-    background-color: white;
-    border-style: none none solid none;
+  .grep-nav {
     border-width: 1px;
-    border-color: #0b2e13
+    border-color: #c6c8ca;
+    border-style: none none solid none;
+    margin: auto
+  }
+
+  .grep-container {
+    padding-top: 68px;
+  }
+  /*
+   * Custom styles
+   */
+  .navbar-brand {
+    font-size: 26px;
+  }
+
+  .navbar-container {
+    padding: 20px 0 20px 0;
+  }
+  .fixed-theme {
+    font-size: 14px;
+    color: #0b2e13;
+    background-color: #20c997;
+  }
+  .fixed-off-theme {
+    font-size: 16px;
+    color: #0b2e13;
+    background-color: white;
+  }
+
+  .navbar-brand.fixed-theme {
+    font-size: 14px;
+  }
+
+  .navbar-brand.fixed-off-theme {
+    font-size: 20px;
+  }
+
+  .navbar-container.fixed-theme {
+    padding: 0;
+  }
+
+  .fixed-theme,.fixed-off-theme {
+    transition: 0.8s;
+    -webkit-transition:  0.8s;
+    -moz-transition: transform 0.8s;
+    -o-transition: transform 0.8s;
   }
 </style>
