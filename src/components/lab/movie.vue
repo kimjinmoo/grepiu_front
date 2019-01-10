@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid grepIU_container">
     <b-alert dismissible
              :show="showDismissibleAlert"
              @dismissed="showDismissibleAlert=false">{{message}}

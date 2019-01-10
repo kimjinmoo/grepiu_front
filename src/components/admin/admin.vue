@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid grepIU_container">
     <b-card no-body>
       <b-tabs card>
         <b-tab title="POST" active>

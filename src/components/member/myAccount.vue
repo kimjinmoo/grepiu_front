@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid text-center">
+  <div class="container-fluid text-center grepIU_container">
     <h2>#로그인</h2>
     <h4 class="headline mb-0"><b class="red--text">성명 :</b> {{ user.username}}</h4>
     <h4 class="headline mb-0"><b class="red--text">authorities :</b> {{ user.authorities}}</h4>

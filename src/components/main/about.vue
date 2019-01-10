@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid grepIU_container">
     <b-container fluid>
       <b-row>
         <b-col md="2">
@@ -24,7 +24,7 @@
             <b class="c-name">Login</b>Spring Security + Oauth2
           </div>
           <div>
-            <b class="c-name">etc</b>Google Maps, Vue-editor, Quill, Axios, moment, highlight js
+            <b class="c-name">etc</b>Google Maps, Vue-editor,vue-router, Quill, Axios, moment, highlight js, marker-clusterer-plus, vue-carousel, webstomp-client
           </div>
           <div>
             <h1>TIME-LINE</h1>

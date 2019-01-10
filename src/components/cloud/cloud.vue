@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid grepIU_container">
     <h2>Cloud</h2>
     <div>경로 : {{currentDir}}</div>
     <b-button-group size="sm">

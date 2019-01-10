@@ -32,7 +32,7 @@
       </transition>
       <div class="grep-container">
         <GrepIUNav></GrepIUNav>
-        <main role="main" style="margin-top: 1rem" @scroll="handleScroll">
+        <main role="main">
           <router-view></router-view>
         </main>
         <div class="inner_footer_margin"></div>
@@ -103,7 +103,8 @@
     methods: {
       handleScroll: function(e) {
         let yOffset = 0;
-        let currentScroll = e.target.scrollTop;
+        let currentScroll = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
+
         if(yOffset < currentScroll) {
           this.myNavBar.add();
         }
@@ -159,12 +160,12 @@
     },
 
     created () {
-      window.document.body.onscroll = this.handleScroll
-      document.addEventListener('scroll', onscroll, true)
-      // this.offSetManager()
+      // document.body.onscroll = this.handleScroll
+      // document.addEventListener("touchmove", this.handleScroll, true)
+      document.addEventListener('scroll', this.handleScroll, true)
     },
     destroyed () {
-      document.removeEventListener('scroll', onscroll, true)
+      document.removeEventListener('scroll', this.handleScroll, true)
     }
   }
 </script>

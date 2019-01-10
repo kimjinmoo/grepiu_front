@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid grepIU_container">
     <b-container fluid>
       <b-row class="justify-content-md-center">
         <b-col md="2" class="d-none d-lg-block">

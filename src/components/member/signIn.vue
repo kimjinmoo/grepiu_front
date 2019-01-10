@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid text-center">
+  <div class="container-fluid text-center grepIU_container">
     <h1>#Login</h1>
     <b-form>
       <p class="small m-0">아래 로그인을 지원합니다.</p>
