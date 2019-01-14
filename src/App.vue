@@ -2,7 +2,7 @@
   <div id="app" class="app">
     <div class="wrapper">
       <transition name="fade">
-      <b-navbar toggleable="md" type="light" variant="write" :class="{'fixed-theme':myNavBar.isFixed,'fixed-off-theme': !myNavBar.isFixed}" class="fixed-top grep-nav">
+      <b-navbar toggleable="md" type="light" variant="write" :class="{'fixed-theme':myNavBar.isFixed,'fixed-off-theme': !myNavBar.isFixed}" class="fixed-top grepIU-underline">
         <b-navbar-toggle target="nav_collapse" ></b-navbar-toggle>
         <b-navbar-brand to="/" :class="{'fixed-theme':myNavBar.isFixed,'fixed-off-theme': !myNavBar.isFixed}">GrepIU</b-navbar-brand>
         <b-collapse is-nav id="nav_collapse" right>
@@ -170,12 +170,6 @@
   }
 </script>
 <style scoped>
-  .grep-nav {
-    border-width: 1px;
-    border-color: #c6c8ca;
-    border-style: none none solid none;
-    margin: auto
-  }
 
   .grep-container {
     padding-top: 68px;

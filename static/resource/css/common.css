@@ -11,6 +11,13 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+.grepIU-underline {
+  border-width: 1px;
+  border-color: #c6c8ca;
+  border-style: none none solid none;
+  margin: auto
+}
+
 .grepIU_container {
   min-height: 73vh;width:100%;padding-top: 5px;
 }

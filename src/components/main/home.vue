@@ -1,59 +1,69 @@
 <template>
   <div>
     <!-- Step1 Contents-->
-    <div style="min-height: 100vh;width:100%; background: url('/static/img/bg/bg.jpg') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
-      <div style="margin: auto; width:50%; font-size: 10em;color: white;text-align: center;" class="blink">
-        _
+    <div class="main_bg">
+      <div style="margin: auto; height:50%; width:50%; font-size: 7em;color: white;text-align: center;">
+        {{home_text}}<span class="blink">_</span>
       </div>
     </div>
-    <div class="container-fluid">
-      <div class="home_up_bg m-2">
-        <div class="container">
+    <!-- End Step1 -->
 
-        </div>
-      </div>
-      <!-- End Step1 -->
-
+    <div class="container-fluid mt-3">
       <!-- Step2 Contents-->
-      <div class="home_middle_bg" style="min-height: 50vh;width:100%;">
-        <div class="container">
-          <b-container style="padding-top: 1rem">
-            <b-row>
-              <b-col sm class="b-col_standard">
-                <h3>크롤링</h3>
-                <h6>- Selenium을 통한 롯데시네마 데이터 크롤링</h6>
-                <h6>- 현 위치 기준 근처 영화관 찾기(GPS 필요)</h6>
-                <h6>- 상영 영화/상영시간 제공</h6>
-                <div class="home_middle_bottom">
-                  <b-button to="/lab/movie" variant="success" >확인하기</b-button>
-                </div>
-              </b-col>
-              <b-col sm class="b-col_standard">
+      <div class="home_middle_bg">
+        <b-container>
+          <b-row>
+            <b-col sm class="b-col_standard grepIU-underline">
+              <div>
+                <img src="/static/img/home/social-media.jpg" class="mb-5 main_photo img_center">
                 <h3>포스팅</h3>
-                <h6>- 개발/일상 관련 작성 예정</h6>
-                <h6>- NOSQL 기반(Mongo-DB)</h6>
-                <div class="home_middle_bottom">
-                  <b-button to="/post" variant="success">확인하기</b-button>
+                <p>
+                  - 개발/일상 관련 작성<br>
+                  - NOSQL 기반(Mongo-DB)<br>
+                  - Filter 적용으로 Tag및 검색어 조회 가능<br>
+                  - 자동 스크롤 펴짐<br>
+                </p>
+                <div class="home_middle_bottom pb-3">
+                  <b-button to="/post" variant="success">이동</b-button>
                 </div>
-              </b-col>
-              <b-col sm class="b-col_standard">
-                <h3>CI 구성</h3>
-                <h6>- Docker를 통한 Jenkins 세팅</h6>
-                <h6>- gitlab 연동 및 브런치별 빌드</h6>
-                <h6>- 슬랙을 통한 빌드 정보 획득</h6>
-                <div class="home_middle_bottom">
+              </div>
+            </b-col>
+            <b-col sm class="b-col_standard grepIU-underline">
+              <div>
+                <img src="/static/img/home/computer.png" class="mb-5 main_photo img_center">
+                <h3>크롤링</h3>
+                <p>
+                  - 현 위치 기준 근처 영화관 찾기(with Google Map)<br>
+                  - 롯데 시내마 상영 영화/상영시간 크롤링<br>
+                  - Selenium 이용하여 구연<br>
+                  - 프럭시 서버로 크롤링해야됨(aws 접근문제)<br>
+                </p>
+                <div class="home_middle_bottom pb-3">
+                  <b-button to="/lab/movie" variant="success" >이동</b-button>
+                </div>
+              </div>
+            </b-col>
+            <b-col sm class="b-col_standard grepIU-underline">
+              <div>
+                <img src="/static/img/home/network.png" class="mb-5 main_photo img_center">
+                <h3>CI</h3>
+                <p>
+                  - Docker를 통한 Jenkins 구동<br>
+                  - Github 연동 및 브런치별 빌드<br>
+                  - 슬랙으로 빌드 정보 확인<br>
+                </p>
+                <div class="home_middle_bottom pb-3">
                   <b-button href="https://jenkins.grepiu.com" target="_blank" variant="success">확인하기</b-button>
                 </div>
-              </b-col>
-            </b-row>
-          </b-container>
-        </div>
+              </div>
+            </b-col>
+          </b-row>
+        </b-container>
       </div>
       <!-- End Step2-->
-
     </div>
-    <div class="home_use_bg home_margin_standard p-2">
-      <b-container class="container">
+    <div class="home_use_bg p-2">
+      <b-container class="container-fluid">
         <b-row>
           <b-col sm style="text-align: center">
             <h2>#하고 있는 것들</h2>
@@ -110,6 +120,7 @@
     },
     data : function() {
       return {
+        home_text: '',
         carousel : {
           tooltip : false,
           nextLabel : ">",
@@ -120,9 +131,14 @@
         slideLists: []
       }
     },
-    mounted : function() {
+    methods : {
+      homeText() {
+        const text = [":-)",":-(",":-/"]
+        setInterval(()=>{
+          this.home_text = text[Math.floor(Math.random() * 3) + 1]
+        },4000)
+      }
     },
-    methods : {},
     created : function(){
       // 슬라이드 화면을 불러온다.
       this.$http.get("/static/fake/slideData.json")
@@ -132,6 +148,7 @@
       .catch(()=>{
         //console.log("err");
       });
+      this.homeText();
     }
   }
 </script>
@@ -149,24 +166,39 @@
   .home_middle_bg {
     background-color: white;
   }
-  .home_middle_bottom{
-    position: absolute;
-    margin: 0.5rem;
-    right:    0;
-    bottom:   0;
-    text-align: center;
-    /*padding:2%;*/
-    /*display: table-cell;*/
-    /*text-align: center;*/
-    /*vertical-align: bottom;*/
+  .main_bg {
+    min-height: 90vh;
+    width: 100%;
+    background: url('/static/img/bg/bg.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-attachment:scroll
   }
   .home_use_bg {
     background-color: #32383e;
     color: #f0f0f0;
   }
+  .main_photo {
+    max-height: 15em;
+    padding: 10px;
+  }
   .b-col_standard {
-    height: 13rem;
-    margin: 0.5rem;
+    position: relative;
+    height: 36em;
+    /*margin: 0.5rem;*/
+  }
+  .home_middle_bottom{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    bottom:   0;
+  }
+  .img_center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
   .blink {
     animation: blink-animation 1.3s steps(5, start) infinite;

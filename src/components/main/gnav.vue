@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="container-fluid gnavi">
+    <div class="container-fluid grepIU-underline gnavi">
       <b-nav>
-        <h6 class="center">{{info}}</h6>
+        <h6 class="info_center">{{info}}</h6>
       </b-nav>
     </div>
   </div>
@@ -31,13 +31,9 @@
 
 <style scoped>
   .gnavi {
-    border-width: 1px;
-    border-color: #c6c8ca;
-    border-style: none none solid none;
     height: 3rem;
-    margin: auto
   }
-  .center {
+  .info_center {
     height: 2.5rem;
     line-height: 2.5rem;
     text-align: center;
