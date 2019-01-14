@@ -21,7 +21,7 @@ Vue.use(VueGeolocation)
 // Vue.component('GmapCluster', GmapCluster)
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyBJubU9wJ7ux4DvGlcR83dKIGoFTb-EcyQ',
+    key: process.env.GOOGLE_API_KEY,
     libraries: 'geometry'
   }
 })

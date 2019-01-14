@@ -22,11 +22,11 @@
           v-for="(m) in markers"
           :position="m.position"
           :title="m.storeName"
-          :icon="{url: m.url, scaledSize: {width: 52, height: 45, f: 'px', b: 'px'}}"
+          :icon="{url: m.url, scaledSize: {width: 48, height: 48, f: 'px', b: 'px'}}"
           :clickable="true"
           :draggable="false"
           :InfoWindow="m.storeName"
-          @click="onMarker(m.storeName, m.position)">
+          @click="onMarker(m.type, m.storeName, m.position)">
         </GmapMarker>
       </GmapCluster>
       <gmap-info-window :position="myPosition">
@@ -116,8 +116,8 @@
       updateCenter : function() {
         // Map 센터값 변경시 이벤트 처리
       },
-      onMarker : function(storeName, position) {
-        this.selectedStoreName = storeName;
+      onMarker : function(type, storeName, position) {
+        this.selectedStoreName = type + "-" + storeName
         this.$refs.mapRef.panTo(position);
         this.setCurrentLanLng(position.lat, position.lng);
         this.$http.get(process.env.ROOT_API+"/grepiu/lab/crawler/cine/screen/"+storeName).then((res)=>{
@@ -147,30 +147,25 @@
         }).then((res)=>{
           this.nearCine = res.data;
           let item = this.nearCine[this.nearIndex];
-          let lat = item.location == null?0:item.location.y;
-          let lng = item.location == null?0:item.location.x;
-          let storeName = item.storeName;
-          let position = {"lat" : lat , "lng" : lng};
-          this.onMarker(storeName, position);
+          this.setMovieLocation(item);
         }).catch((e)=>{
           //console.log(e);
         })
       },
       findPrevNearLocation : function() {
         let item = this.nearCine[this.nearIndex==0?0:--this.nearIndex];
-        let lat = item.location == null?0:item.location.y;
-        let lng = item.location == null?0:item.location.x;
-        let storeName = item.storeName;
-        let position = {"lat" : lat , "lng" : lng};
-        this.onMarker(storeName, position);
+        this.setMovieLocation(item);
       },
       findNextNearLocation : function() {
         let item = this.nearCine[this.nearIndex>this.nearIndex.length?this.nearIndex:++this.nearIndex];
+        this.setMovieLocation(item);
+      },
+      setMovieLocation: function(item) {
         let lat = item.location == null?0:item.location.y;
         let lng = item.location == null?0:item.location.x;
         let storeName = item.storeName;
         let position = {"lat" : lat , "lng" : lng};
-        this.onMarker(storeName, position);
+        this.onMarker(item.type, storeName, position);
       },
       initLocation : function() {
         if(navigator.geolocation){
@@ -197,16 +192,11 @@
       this.$http.get(process.env.ROOT_API+"/grepiu/lab/crawler/cine/locale")
       .then((response) => {
         let map = [];
-        for(var inx in response.data) {
+        for(let inx in response.data) {
           let item = response.data[inx];
           let lat = item.location == null?0:item.location.y;
           let lng = item.location == null?0:item.location.x;
-          // todo. 로직 수정해야됨
-          if(item.type == 'lotte') {
-            map.push({"position" : {"lng" : lng, "lat" : lat}, "storeName" : item.storeName, "type" : item.type, "url" : "/static/img/cinema_lotte_icon.png"})
-          } else {
-            map.push({"position" : {"lng" : lng, "lat" : lat}, "storeName" : item.storeName, "type" : item.type, "url" : "/static/img/cinema_cgv_icon.png"})
-          }
+          map.push({"position" : {"lng" : lng, "lat" : lat}, "storeName" : item.storeName, "type" : item.type, "url" : "/static/img/cinema_"+item.type+"_icon.png"})
         }
         this.markers = map;
       })
