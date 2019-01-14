@@ -14,10 +14,9 @@
              ref="modal"
              title="비밀번호를 입력하세요"
              @ok="changePW"
-             @shown="change = {}">
-      <form @submit.stop.prevent="changePW">
-        <b-form-input class="m-2" type="password" placeholder="이전 비밀번호를 입력하세요" v-model="change.currentPassword"></b-form-input>
-        <b-form-input class="m-2" type="password" placeholder="변경 할 비밀번호를 입력하세요" v-model="change.changePassword"></b-form-input>
+             @shown="data = {}">
+      <form>
+        <b-form-input type="password" placeholder="변경 할 비밀번호를 입력하세요" v-model="userPassword.changedPassword" autocomplete="off"></b-form-input>
       </form>
     </b-modal>
   </div>
@@ -29,9 +28,8 @@
       return {
         user: {
         },
-        change: {
-          currentPassword: "",
-          changePassword: ""
+        userPassword: {
+          changedPassword: ""
         }
       }
     },
@@ -43,11 +41,26 @@
       leave: function() {
         if (confirm("탈퇴하면 모든 데이터를 복구 할 수 없습니다. 탈퇴 하시겠습니까?")) {
           this.$http.post(process.env.ROOT_API + "/oauth/users/leave").then(r => {
+            if(r.data.code == 200) {
+              alert('탈퇴처리 되었습니다.')
+              this.$store.dispatch("grepiu/logout")
+              this.$router.replace("/")
+            } else {
+              alert(r.data.message);
+            }
           })
         }
       },
       changePW: function() {
-
+        this.$http.put(process.env.ROOT_API + "/oauth/users/password",this.userPassword).then(r => {
+          let code = r.data.code;
+          console.log("reslut : " + JSON.stringify(r.data))
+          if(r.data.code == 200) {
+            alert("성공적으로 변경 하였습니다.")
+          } else {
+            alert(r.data.message);
+          }
+        })
       },
       me: function() {
         this.$http.get(process.env.ROOT_API+"/oauth/users/me").then(u=>{
