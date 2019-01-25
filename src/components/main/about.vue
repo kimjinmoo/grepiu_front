@@ -7,10 +7,12 @@
           <div></div>
         </b-col>
         <b-col md="8">
-          <h1>GrepIU</h1>
-          <div>
-            구성
+          <h1>Dev, JM</h1>
+          <h3>Developer career TIME-LINE</h3>
+          <div style="text-align: center;">
+            <img src="/static/img/about/timeline.png">
           </div>
+          <h3>grepiu.com</h3>
           <div>
             <b class="c-name">Server</b>&nbsp;AWS EC2(t2.small)
           </div>
@@ -25,10 +27,6 @@
           </div>
           <div>
             <b class="c-name">etc</b>Google Maps, Vue-editor,vue-router, Quill, Axios, moment, highlight js, marker-clusterer-plus, vue-carousel, webstomp-client
-          </div>
-          <div>
-            <h1>TIME-LINE</h1>
-            <p>2018.08</p>
           </div>
           <div>
             <h1>Make</h1>
