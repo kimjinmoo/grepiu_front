@@ -3034,6 +3034,10 @@ file-loader@^1.1.4:
     loader-utils "^1.0.2"
     schema-utils "^0.4.5"
 
+file-saver@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/file-saver/-/file-saver-2.0.0.tgz#74eef7748159503b60008a15af2f1930fb5df7ab"
+
 file-uri-to-path@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/file-uri-to-path/-/file-uri-to-path-1.0.0.tgz#553a7b8446ff6f684359c445f1e37a05dacc33dd"
@@ -7802,9 +7806,9 @@ vue-style-loader@^3.0.0, vue-style-loader@^3.0.1:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
-vue-template-compiler@^2.5.21:
-  version "2.5.21"
-  resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.5.21.tgz#a57ceb903177e8f643560a8d639a0f8db647054a"
+vue-template-compiler@^2.5.22:
+  version "2.5.22"
+  resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.5.22.tgz#c3d3c02c65f1908205c4fbd3b0ef579e51239955"
   dependencies:
     de-indent "^1.0.2"
     he "^1.1.0"

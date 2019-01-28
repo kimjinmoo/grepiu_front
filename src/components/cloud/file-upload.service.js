@@ -1,4 +1,5 @@
 import axios from 'axios'
+import saveAs from 'file-saver';
 
 const BASE_URL = process.env.ROOT_API
 
@@ -25,13 +26,13 @@ function getCloud(jsonBody) {
   .then(x=>x.data)
 }
 
-function readFileCloud(id) {
+function readFileCloud(id, fileName) {
   const url = `${BASE_URL}`+"/grepiu/cloud/"+ id
   return axios.get(url,{responseType: 'blob'}).then((response)=>{
-    let blob = new Blob([response], { type: 'application/octet-stream' }),
-      url = window.URL.createObjectURL(blob)
-
-    window.open(url)
+    const blob = new Blob([response.data]);
+    saveAs(blob, fileName);
+  }).catch(e=>{
+    alert(e);
   })
 }
 

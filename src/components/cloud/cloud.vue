@@ -1,32 +1,37 @@
 <template>
   <div class="container-fluid grepIU_container">
     <div>경로 : {{currentDir}}</div>
-    <b-button-group size="sm">
+    <b-button-group size="sm" class="m-1">
       <b-button variant="success" @click="createNewFolder">폴더 생성</b-button>
-      <b-button variant="success" @click="moveUp">위로</b-button>
+      <!--<b-button variant="success" @click="moveUp">위로</b-button>-->
       <b-button variant="success" @click="moveTop">최상위경로</b-button>
-      <input type="file" multiple :name="uploadFieldName" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept="image/*" class="input-file">
-      <div @dragover="allowDrop" @drop="drop">휴지통</div>
+      <!--<div @dragover="allowDrop" @drop="drop">휴지통</div>-->
     </b-button-group>
-      <div style="height: 50vh;" class="border border-danger bg-light" @click.right="right">
-        <ul v-for="item in folders" style="float: left;list-style:none;padding:5px;">
+      <div class="border border-danger bg-light" @click.right="right" style="height: 60vh; overflow-y: auto">
+        <ul v-for="item in folders" style="float: left;list-style:none;padding:5px; cursor: pointer;">
           <li v-if="item.attribute == 'P'" style="float:left; margin-top: 5px">
             <img :id="item.id" src="/static/img/cloud/folder.png" style="width: 64px; height: auto;"
                  @click="read(item)" draggable="true"
                  @dragstart="drag">
-            <div>
-              <!--<label v-if="item != null">{{item.name}}</label>-->
+            <div style="text-align: center;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 75px;">
+              <p>{{item.name}}</p>
             </div>
 
           </li>
-          <li v-else style="float:left; margin-top: 5px" @click="read(item)">
-            <img src="/static/img/cloud/file.png" style="width: 64px; height: auto;">
-            <div style="text-align: center">
-              <!--<lable v-if="item != null">{{item.name}}</lable>-->
+          <li v-else style="float:left; margin-top: 5px;" @click="read(item)">
+            <img src="/static/img/cloud/file.png" style="width: 64px; height: auto; cursor: pointer;">
+            <div style="text-align: center;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 75px;">
+              <p>{{item.files.fileName}}</p>
             </div>
           </li>
         </ul>
       </div>
+    <div>
+      <b-button-group size="sm" class="m-1">
+        <b-button variant="success">파일업로드</b-button>
+        <input type="file" multiple :name="uploadFieldName" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" class="input-file">
+      </b-button-group>
+    </div>
   </div>
 </template>
 <script>
@@ -42,7 +47,6 @@
       return {
         file: '',
         obj: [],
-        pidQueue: [],
         pid: "/",
         preDir: "",
         currentDir: "/",
@@ -95,12 +99,10 @@
         Array
         .from(Array(fileList.length).keys())
         .map(x => {
-          console.log(fileList[x].name)
           formData.append(fieldName, fileList[x], fileList[x].name)
         });
         formData.append("name","test")
         formData.append("path","/")
-        console.log(formData);
         // save it
         this.save(formData);
       },
@@ -109,13 +111,13 @@
         this.currentStatus = STATUS_SAVING;
         createCloud(formData)
         .then(x => {
-          console.log("rr : "+JSON.stringify(x))
           // this.uploadedFiles = [].concat(x);
-          this.currentStatus = STATUS_SUCCESS;
+          this.currentStatus = STATUS_SUCCESS
+          this.load()
         })
         .catch(err => {
           // this.uploadError = err.response;
-          this.currentStatus = STATUS_FAILED;
+          this.currentStatus = STATUS_FAILED
         });
       },
       drag: function(ev) {
@@ -138,17 +140,16 @@
         this.load();
       },
       moveUp: function() {
-        if(this.pidQueue.length > 0) {
-          this.pidQueue = this.pidQueue.slice(0,this.pidQueue.length-1)
-          console.log(this.pidQueue.length)
-          if(this.pidQueue.length <= 1) {
-              this.pid = ""
-          } else {
-            console.log(JSON.stringify(this.pidQueue[this.pidQueue.length]))
-            this.pid = "";
+          let path = this.currentDir.split("/");
+          if(path.length > 0) {
+            path.slice(0, path.length-2).forEach(v=>{
+              console.log(v);
+              if(v.trim().length > 0)
+                this.currentDir = this.pid+"";
+            })
+            this.pid=this.currentDir.trim();
           }
           this.load();
-        }
       },
       load : function() {
         getCloud({
@@ -160,8 +161,6 @@
         })
       },
       read : function(item) {
-        console.log(JSON.stringify(item))
-        this.pidQueue.push(item.pid)
         this.pid = item.pid+"/"+item.name
         switch (item.attribute) {
           case "P" :
@@ -169,7 +168,9 @@
             this.load();
             break;
           case "F" :
-            readFileCloud(item.id);
+            if(confirm('파일을 다운로드 합니다.')) {
+              readFileCloud(item.id, item.name);
+            }
             break;
         }
       },
@@ -199,3 +200,11 @@
   }
 </script>
 
+<style>
+  .input-file {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    cursor: pointer;
+  }
+</style>
