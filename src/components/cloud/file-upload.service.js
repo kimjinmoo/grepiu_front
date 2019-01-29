@@ -36,6 +36,12 @@ function readFileCloud(id, fileName) {
   })
 }
 
+function readBlobCloud(id) {
+  const url = `${BASE_URL}`+"/grepiu/cloud/"+ id
+  return axios.get(url,{responseType: 'blob'}).then((response)=>response.data).catch(e=>{
+    alert(e);
+  })
+}
 
 
-export {createCloud, getCloud, readFileCloud}
+export {createCloud, getCloud, readFileCloud, readBlobCloud}

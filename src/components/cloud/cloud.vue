@@ -1,5 +1,7 @@
 <template>
   <div class="container-fluid grepIU_container">
+    <image-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></image-reader>
+    <text-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></text-reader>
     <div>경로 : {{currentDir}}</div>
     <b-button-group size="sm" class="m-1">
       <b-button variant="success" @click="createNewFolder">폴더 생성</b-button>
@@ -16,9 +18,8 @@
             <div style="text-align: center;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 75px;">
               <p>{{item.name}}</p>
             </div>
-
           </li>
-          <li v-else style="float:left; margin-top: 5px;" @click="read(item)">
+          <li v-else-if="item.attribute == 'F'" style="float:left; margin-top: 5px;" @click="read(item)">
             <img src="/static/img/cloud/file.png" style="width: 64px; height: auto; cursor: pointer;">
             <div style="text-align: center;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 75px;">
               <p>{{item.files.fileName}}</p>
@@ -29,50 +30,45 @@
     <div>
       <b-button-group size="sm" class="m-1">
         <b-button variant="success">파일업로드</b-button>
-        <input type="file" multiple :name="uploadFieldName" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" class="input-file">
+        <input type="file" id="file" @change="filesChange($event)" class="input-file">
       </b-button-group>
     </div>
   </div>
 </template>
 <script>
-  import {getCloud, createCloud, readFileCloud} from './file-upload.service'
-  import Lab from "../lab/lab";
+  import imageReader from './reader/imageReader'
+  import textReader from './reader/textReader'
+  import {getCloud, createCloud, readFileCloud, readBlobCloud} from './file-upload.service'
 
-  const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
+  function isImage(fileName) {
+    return (/\.(gif|jpg|jpeg|tiff|png)$/i).test(fileName)
+  }
+
+  function isText(fileName) {
+    return (/\.(txt)$/i).test(fileName)
+  }
 
   export default {
     name: "cloud",
-    components: {Lab},
+    components: {imageReader, textReader},
     data : function(){
       return {
+        preview: {
+          type: '',
+          url: null
+        },
         file: '',
         obj: [],
         pid: "/",
         preDir: "",
         currentDir: "/",
         folders: [],
-        currentStatus: null,
-        uploadError: null,
-        uploadedFiles: [],
-        uploadFieldName: 'file'
       }
     },
     created() {
       this.load();
     },
     computed: {
-      isInitial() {
-        return this.currentStatus === STATUS_INITIAL;
-      },
-      isSaving() {
-        return this.currentStatus === STATUS_SAVING;
-      },
-      isSuccess() {
-        return this.currentStatus === STATUS_SUCCESS;
-      },
-      isFailed() {
-        return this.currentStatus === STATUS_FAILED;
-      },
       upDir : function() {
         let folders = [];
         let pos = 0, end=0;
@@ -86,39 +82,19 @@
       }
     },
     methods: {
-      reset() {
-        this.currentStatus = STATUS_INITIAL;
-        this.uploadedFiles = [];
-        this.uploadError = null;
+      onClosePreview() {
+        this.preview.url = null;
+        this.preview.type = ''
       },
-      filesChange(fieldName, fileList) {
+      filesChange(e) {
         // handle file changes
         const formData = new FormData();
-        if (!fileList.length) return;
         // append the files to FormData
-        Array
-        .from(Array(fileList.length).keys())
-        .map(x => {
-          formData.append(fieldName, fileList[x], fileList[x].name)
-        });
+        formData.append("file", e.target.files[0])
         formData.append("name","test")
-        formData.append("path","/")
+        formData.append("path",this.pid)
         // save it
         this.save(formData);
-      },
-      save(formData) {
-        // upload data to the server
-        this.currentStatus = STATUS_SAVING;
-        createCloud(formData)
-        .then(x => {
-          // this.uploadedFiles = [].concat(x);
-          this.currentStatus = STATUS_SUCCESS
-          this.load()
-        })
-        .catch(err => {
-          // this.uploadError = err.response;
-          this.currentStatus = STATUS_FAILED
-        });
       },
       drag: function(ev) {
         ev.dataTransfer.setData("text", ev.target.id)
@@ -152,6 +128,7 @@
           this.load();
       },
       load : function() {
+        // 클라우드 스토어 데이터를 가져온다.
         getCloud({
           params: {
             pid: this.pid,
@@ -161,6 +138,7 @@
         })
       },
       read : function(item) {
+        // 파일을 읽는다.
         this.pid = item.pid+"/"+item.name
         switch (item.attribute) {
           case "P" :
@@ -168,11 +146,42 @@
             this.load();
             break;
           case "F" :
-            if(confirm('파일을 다운로드 합니다.')) {
-              readFileCloud(item.id, item.name);
+            if(isImage(item.files.fileName)) {
+              readBlobCloud(item.id)
+              .then(v=>{
+                const blob = new Blob([v]);
+                let reader = new FileReader();
+                reader.onloadend = e => this.preview.url = e.target.result
+                reader.readAsDataURL(blob)
+                this.preview.type = 'IMG'
+              })
+            } else if(isText(item.files.fileName)){
+              readBlobCloud(item.id)
+              .then(v=>{
+                const blob = new Blob(["\ufeff",v]);
+                let reader = new FileReader();
+                reader.onloadend = e => this.preview.url = e.target.result
+                reader.readAsText(blob)
+                this.preview.type = 'TEXT'
+              })
+            } else {
+              if(confirm('파일을 다운로드 합니다.')) {
+                readFileCloud(item.id, item.name);
+              }
             }
             break;
         }
+      },
+      save(formData) {
+        // 파일을 저장한다.
+        createCloud(formData)
+        .then(x => {
+          // this.uploadedFiles = [].concat(x);
+          this.load()
+        })
+        .catch(err => {
+          // this.uploadError = err.response;
+        });
       },
       createNewFolder: function() {
         let formData = new FormData();
@@ -186,7 +195,6 @@
         })
       },
       updateFolder: function(fid, name) {
-        const querystring = require('querystring');
         this.$http.put(process.env.ROOT_API + "/grepiu/cloud/",{
           id: fid,
           name: name
@@ -195,7 +203,6 @@
         })
       }
     }, mounted() {
-      this.reset();
     }
   }
 </script>
