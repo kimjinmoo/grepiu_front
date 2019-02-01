@@ -2,7 +2,7 @@
   <div class="container-fluid grepIU_container">
     <image-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></image-reader>
     <text-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></text-reader>
-    <div>경로 : {{currentDir}}</div>
+    <div>경로 : ${{pid}}${{currentDir}}$</div>
     <b-button-group size="sm" class="m-1">
       <b-button variant="success" @click="createNewFolder">폴더 생성</b-button>
       <!--<b-button variant="success" @click="moveUp">위로</b-button>-->
@@ -46,6 +46,15 @@
 
   function isText(fileName) {
     return (/\.(txt)$/i).test(fileName)
+  }
+
+  function getPid(currentDir) {
+    let pid = "/";
+    let path = currentDir.split("/");
+    for(let i = 0; i > path.length; i++) {
+      console.log(pid)
+    }
+    return pid
   }
 
   export default {
@@ -92,7 +101,8 @@
         // append the files to FormData
         formData.append("file", e.target.files[0])
         formData.append("name","test")
-        formData.append("path",this.pid)
+        formData.append("pid", this.pid);
+        formData.append("path", this.currentDir);
         // save it
         this.save(formData);
       },
@@ -139,7 +149,8 @@
       },
       read : function(item) {
         // 파일을 읽는다.
-        this.pid = item.pid+"/"+item.name
+        this.pid = getPid(this.currentDir)+item.name;
+        console.log(this.pid)
         switch (item.attribute) {
           case "P" :
             this.currentDir+=item.name+"/";
@@ -185,7 +196,7 @@
       },
       createNewFolder: function() {
         let formData = new FormData();
-        formData.append('attribute', "P");
+        formData.append('attribute', "D");
         formData.append('name', "새폴더");
         formData.append("pid", this.pid);
         formData.append("path", this.currentDir);
