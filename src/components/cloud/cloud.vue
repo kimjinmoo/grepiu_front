@@ -2,16 +2,16 @@
   <div class="container-fluid grepIU_container">
     <image-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></image-reader>
     <text-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></text-reader>
-    <div>경로 : ${{pid}}${{currentDir}}$</div>
+    <div>경로 : ${{pid}}$</div>
     <b-button-group size="sm" class="m-1">
       <b-button variant="success" @click="createNewFolder">폴더 생성</b-button>
-      <!--<b-button variant="success" @click="moveUp">위로</b-button>-->
+      <b-button variant="success" @click="moveUp">위로</b-button>
       <b-button variant="success" @click="moveTop">최상위경로</b-button>
       <!--<div @dragover="allowDrop" @drop="drop">휴지통</div>-->
     </b-button-group>
       <div class="border border-danger bg-light" @click.right="right" style="height: 60vh; overflow-y: auto">
         <ul v-for="item in folders" style="float: left;list-style:none;padding:5px; cursor: pointer;">
-          <li v-if="item.attribute == 'P'" style="float:left; margin-top: 5px">
+          <li v-if="item.attribute == 'D'" style="float:left; margin-top: 5px">
             <img :id="item.id" src="/static/img/cloud/folder.png" style="width: 64px; height: auto;"
                  @click="read(item)" draggable="true"
                  @dragstart="drag">
@@ -50,7 +50,6 @@
 
   function getPid(currentDir) {
     let pid = "/";
-    let path = currentDir.split("/");
     for(let i = 0; i > path.length; i++) {
       console.log(pid)
     }
@@ -69,8 +68,6 @@
         file: '',
         obj: [],
         pid: "/",
-        preDir: "",
-        currentDir: "/",
         folders: [],
       }
     },
@@ -78,33 +75,60 @@
       this.load();
     },
     computed: {
-      upDir : function() {
-        let folders = [];
-        let pos = 0, end=0;
-
-        while ((end = this.currentDir.indexOf("/", pos)) >= 0) {
-          folders.push(this.currentDir.substring(pos, end));
-          pos= end+1;
-        }
-        folders.pop();
-        return folders.join("/")+"/";
-      }
     },
     methods: {
+      // 최상위 폴더 이동
+      moveTop: function() {
+        this.pid = "/"
+        this.load();
+      },
+      // 상위 경로도 이동
+      moveUp: function() {
+        //todo 위로 가기
+        let path = this.pid.replace("/","$").split("$")
+        let top = [];
+        console.log(path.length)
+        path.forEach(v=>{
+          if(v.trim().length >0) {
+            console.log(v);
+            top.push(v);
+          }
+        })
+        console.log(top.join("/"))
+      },
+      // preview 닫기
       onClosePreview() {
         this.preview.url = null;
         this.preview.type = ''
       },
+      // 폴더 이름 변경
+      renameFolder: function(fid, name) {
+        this.$http.put(process.env.ROOT_API + "/grepiu/cloud/",{
+          id: fid,
+          name: name
+        }).then(v=>{
+          this.load();
+        })
+      },
+      // 파일 저장
       filesChange(e) {
-        // handle file changes
-        const formData = new FormData();
-        // append the files to FormData
+        const formData = new FormData()
         formData.append("file", e.target.files[0])
-        formData.append("name","test")
+        formData.append("name","file")
         formData.append("pid", this.pid);
-        formData.append("path", this.currentDir);
         // save it
         this.save(formData);
+      },
+      // 폴더생성
+      createNewFolder: function() {
+        let formData = new FormData();
+        formData.append('attribute', "D");
+        formData.append('name', "새폴더");
+        formData.append("pid", this.pid);
+        createCloud(formData)
+        .then(x=>{
+          this.load();
+        })
       },
       drag: function(ev) {
         ev.dataTransfer.setData("text", ev.target.id)
@@ -120,23 +144,6 @@
       allowDrop: function(ev) {
         ev.preventDefault()
       },
-      moveTop: function() {
-        this.pid = "/"
-        this.currentDir = "/"
-        this.load();
-      },
-      moveUp: function() {
-          let path = this.currentDir.split("/");
-          if(path.length > 0) {
-            path.slice(0, path.length-2).forEach(v=>{
-              console.log(v);
-              if(v.trim().length > 0)
-                this.currentDir = this.pid+"";
-            })
-            this.pid=this.currentDir.trim();
-          }
-          this.load();
-      },
       load : function() {
         // 클라우드 스토어 데이터를 가져온다.
         getCloud({
@@ -149,11 +156,9 @@
       },
       read : function(item) {
         // 파일을 읽는다.
-        this.pid = getPid(this.currentDir)+item.name;
-        console.log(this.pid)
         switch (item.attribute) {
-          case "P" :
-            this.currentDir+=item.name+"/";
+          case "D" :
+            this.pid+=item.name+"/";
             this.load();
             break;
           case "F" :
@@ -187,31 +192,10 @@
         // 파일을 저장한다.
         createCloud(formData)
         .then(x => {
-          // this.uploadedFiles = [].concat(x);
           this.load()
         })
         .catch(err => {
-          // this.uploadError = err.response;
         });
-      },
-      createNewFolder: function() {
-        let formData = new FormData();
-        formData.append('attribute', "D");
-        formData.append('name', "새폴더");
-        formData.append("pid", this.pid);
-        formData.append("path", this.currentDir);
-        createCloud(formData)
-        .then(x=>{
-          this.load();
-        })
-      },
-      updateFolder: function(fid, name) {
-        this.$http.put(process.env.ROOT_API + "/grepiu/cloud/",{
-          id: fid,
-          name: name
-        }).then(v=>{
-          this.load();
-        })
       }
     }, mounted() {
     }
