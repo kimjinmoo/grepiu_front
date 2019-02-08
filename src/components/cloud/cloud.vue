@@ -2,7 +2,7 @@
   <div class="container-fluid grepIU_container">
     <image-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></image-reader>
     <text-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></text-reader>
-    <div>경로 : ${{pid}}$</div>
+    <div>경로 : {{pid}}</div>
     <b-button-group size="sm" class="m-1">
       <b-button variant="success" @click="createNewFolder">폴더 생성</b-button>
       <b-button variant="success" @click="moveUp">위로</b-button>
