@@ -2,30 +2,28 @@
   <div class="container-fluid grepIU_container">
     <image-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></image-reader>
     <text-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></text-reader>
-    <div>경로 : {{pid}}</div>
     <b-button-group size="sm" class="m-1">
       <b-button variant="success" @click="createNewFolder">폴더 생성</b-button>
       <b-button variant="success" @click="moveUp">위로</b-button>
       <b-button variant="success" @click="moveTop">최상위경로</b-button>
       <!--<div @dragover="allowDrop" @drop="drop">휴지통</div>-->
     </b-button-group>
-      <div class="border border-danger bg-light" @click.right="right" style="height: 60vh; overflow-y: auto">
-        <ul v-for="item in folders" style="float: left;list-style:none;padding:5px; cursor: pointer;">
-          <li v-if="item.attribute == 'D'" style="float:left; margin-top: 5px">
-            <img :id="item.id" src="/static/img/cloud/folder.png" style="width: 64px; height: auto;"
-                 @click="read(item)" draggable="true"
-                 @dragstart="drag">
-            <div style="text-align: center;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 75px;">
-              <p>{{item.name}}</p>
+      <div class="border border-danger bg-light" @click.right="right" style="height: 60vh;overflow-y: scroll">
+        <div class="m-2">
+          <p><b>디렉토리</b></p>
+          <div style="display: grid;grid-template-columns: auto auto auto auto auto;">
+            <div v-for="item in getDir" @click="read(item)">{{item.name}}</div>
+          </div>
+        </div>
+        <div class="m-2">
+          <p><b>파일</b></p>
+          <div style="display: grid;grid-template-columns: auto auto auto auto auto;">
+            <div v-for="item in getFiles" @click="read(item)">
+              <img src="/static/img/cloud/file.png" style="width: 64px; height: auto; cursor: pointer;">
+              <p style="max-width: 5em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;font-size: 9pt">{{item.files.fileName}}</p>
             </div>
-          </li>
-          <li v-else-if="item.attribute == 'F'" style="float:left; margin-top: 5px;" @click="read(item)">
-            <img src="/static/img/cloud/file.png" style="width: 64px; height: auto; cursor: pointer;">
-            <div style="text-align: center;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 75px;">
-              <p>{{item.files.fileName}}</p>
-            </div>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
     <div>
       <b-button-group size="sm" class="m-1">
@@ -67,19 +65,25 @@
         },
         file: '',
         obj: [],
-        pid: "/",
-        folders: [],
+        pid: "",
+        items: [],
       }
     },
     created() {
       this.load();
     },
     computed: {
+      getDir() {
+        return this.items.filter(item => item.attribute == 'D')
+      },
+      getFiles() {
+        return this.items.filter(item => item.attribute =='F')
+      }
     },
     methods: {
       // 최상위 폴더 이동
       moveTop: function() {
-        this.pid = "/"
+        this.pid = ""
         this.load();
       },
       // 상위 경로도 이동
@@ -151,15 +155,25 @@
             pid: this.pid,
           }
         }).then(x=>{
-          this.folders = x;
+          console.log(JSON.stringify(x))
+
+          this.items = x;
         })
       },
       read : function(item) {
         // 파일을 읽는다.
         switch (item.attribute) {
           case "D" :
-            this.pid+=item.name+"/";
-            this.load();
+            this.pid = item.id
+            getCloud({
+              params: {
+                pid: this.pid,
+              }
+            }).then(x=>{
+              this.items = x;
+            }).catch(e=>{
+              alert('오류발생'+JSON.stringify(e));
+            })
             break;
           case "F" :
             if(isImage(item.files.fileName)) {
