@@ -2,59 +2,57 @@
   <div>
     <!-- Step1 Contents-->
     <div class="main_bg">
-      <div style="margin: auto; height:50%; width:50%; font-size: 7em;color: white;text-align: center;">
+      <div style="margin: auto; height:50%; width:50%; font-size: 5vw;color: white;text-align: center;">
         {{home_text}}<span class="blink">_</span>
       </div>
     </div>
     <!-- End Step1 -->
 
-    <div class="container-fluid mt-3">
+    <div class="container-fluid mb-3 mt-3">
       <!-- Step2 Contents-->
-      <div class="home_middle_bg">
+      <div class="home_white_bg">
         <b-container>
           <b-row>
-            <b-col sm class="b-col_standard grepIU-underline">
-              <div>
-                <img src="/static/img/home/social-media.jpg" class="mb-5 main_photo img_center">
-                <h3>포스팅</h3>
-                <p>
-                  - 개발/일상 관련 작성<br>
-                  - NOSQL 기반(Mongo-DB)<br>
-                  - Filter 적용으로 Tag및 검색어 조회 가능<br>
-                  - 자동 스크롤 펴짐<br>
-                </p>
-                <div class="home_middle_bottom pb-3">
-                  <b-button to="/post" variant="success">이동</b-button>
-                </div>
+            <b-col sm>
+              <h1 style="color:#1c7430">포스팅</h1>
+              <h3 style="color:#868e96">개발/일상/생각나느것들 작성</h3>
+              <p>
+                - 분류는 Tag로 구분, Tag 분류 보기 가능, 반응형<br>
+                - MongoDB 사용, 빠른 검색<br>
+                - 검색 기능(대소문자 가림)<br>
+                - 자동 스크롤 펴짐<br>
+              </p>
+              <div class="ml-5 mb-3">
+                <b-button to="/post" variant="outline-success">확인하기</b-button>
               </div>
             </b-col>
-            <b-col sm class="b-col_standard grepIU-underline">
-              <div>
-                <img src="/static/img/home/computer.png" class="mb-5 main_photo img_center">
-                <h3>집창고</h3>
-                <p>
-                  - 크롤링 구현, 현 위치 기준 근처 영화관 찾기(with Google Map)<br>
-                  - 롯데 시내마 상영 영화/상영시간 크롤링<br>
-                  - Selenium 이용하여 구연<br>
-                  - 프럭시 서버로 크롤링해야됨(aws 접근문제)<br>
-                </p>
-                <div class="home_middle_bottom pb-3">
-                  <b-button to="/lab/movie" variant="success" >이동</b-button>
-                </div>
+            <b-col sm>
+              <h1 style="color:#dd4b39">집창고</h1>
+              <h3 style="color:#868e96">이것저것 해보고 싶은 것들</h3>
+              <h3></h3>
+              <p>
+                - 크롤링 구현, 현 위치 기준 근처 영화관 찾기(with Google Map)<br>
+                - 롯데 시내마 상영 영화/상영시간 크롤링<br>
+                - Selenium 이용하여 구연<br>
+                - 프럭시 서버로 크롤링해야됨(aws 접근문제)<br>
+              </p>
+              <div class="ml-5 mb-3">
+                <b-button to="/lab" variant="outline-success" >확인하기</b-button>
               </div>
             </b-col>
-            <b-col sm class="b-col_standard grepIU-underline">
-              <div>
-                <img src="/static/img/home/network.png" class="mb-5 main_photo img_center">
-                <h3>클라우드(구현중)</h3>
-                <p>
-                  - 개인 파일 관리<br>
-                  - 외부 공유<br>
-                  - 바로 읽기(이미지, text)<br>
-                </p>
-                <div class="home_middle_bottom pb-3">
-                  <b-button href="https://jenkins.grepiu.com" target="_blank" variant="success">확인하기</b-button>
-                </div>
+          </b-row>
+          <b-row class="p-3" style="background-color: #c8cbcf">
+            <b-col sm>
+              <h1 style="color:#0b2e13">프로필</h1>
+              <h3 style="color:#868e96">경력 타임 라인/홈페이지 설명</h3>
+              <p>
+                - 경력 타임 라인<br>
+                - 사이트 소개<br>
+                - 추가 기능들<br>
+                - 생각<br>
+              </p>
+              <div class="ml-5 mb-3">
+                <b-button to="/about" variant="outline-success">확인하기</b-button>
               </div>
             </b-col>
           </b-row>
@@ -66,7 +64,7 @@
       <b-container class="container-fluid">
         <b-row>
           <b-col sm style="text-align: center">
-            <h2>#하고 있는 것들, #관심 있는 것들</h2>
+            <h2>#</h2>
           </b-col>
         </b-row>
         <b-row>
@@ -133,10 +131,12 @@
     },
     methods : {
       homeText() {
-        const text = [":-)",":-(",":-/"]
+        const text = ["H","He","Hell","Hell","Hello","Hello W","Hello Wor","Hello Worl","Hello World"]
+        let cnt = 0;
         setInterval(()=>{
-          this.home_text = text[Math.floor(Math.random() * 3) + 1]
-        },4000)
+          if(cnt > text.length) cnt = 0;
+          this.home_text = text[cnt++]
+        },1200)
       }
     },
     created : function(){
@@ -163,7 +163,7 @@
     background-size: auto;
     background-position: center;
   }
-  .home_middle_bg {
+  .home_white_bg {
     background-color: white;
   }
   .main_bg {
