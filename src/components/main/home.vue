@@ -31,9 +31,9 @@
             <b-col sm class="b-col_standard grepIU-underline">
               <div>
                 <img src="/static/img/home/computer.png" class="mb-5 main_photo img_center">
-                <h3>크롤링</h3>
+                <h3>집창고</h3>
                 <p>
-                  - 현 위치 기준 근처 영화관 찾기(with Google Map)<br>
+                  - 크롤링 구현, 현 위치 기준 근처 영화관 찾기(with Google Map)<br>
                   - 롯데 시내마 상영 영화/상영시간 크롤링<br>
                   - Selenium 이용하여 구연<br>
                   - 프럭시 서버로 크롤링해야됨(aws 접근문제)<br>
@@ -46,11 +46,11 @@
             <b-col sm class="b-col_standard grepIU-underline">
               <div>
                 <img src="/static/img/home/network.png" class="mb-5 main_photo img_center">
-                <h3>CI</h3>
+                <h3>클라우드(구현중)</h3>
                 <p>
-                  - Docker를 통한 Jenkins 구동<br>
-                  - Github 연동 및 브런치별 빌드<br>
-                  - 슬랙으로 빌드 정보 확인<br>
+                  - 개인 파일 관리<br>
+                  - 외부 공유<br>
+                  - 바로 읽기(이미지, text)<br>
                 </p>
                 <div class="home_middle_bottom pb-3">
                   <b-button href="https://jenkins.grepiu.com" target="_blank" variant="success">확인하기</b-button>
