@@ -66,7 +66,7 @@
       <b-container class="container-fluid">
         <b-row>
           <b-col sm style="text-align: center">
-            <h2>#하고 있는 것들</h2>
+            <h2>#하고 있는 것들, #관심 있는 것들</h2>
           </b-col>
         </b-row>
         <b-row>
