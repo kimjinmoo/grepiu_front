@@ -91,7 +91,20 @@
         },
         zoom : 15, // 지도의 Zoom 값
         message : "",
-        showDismissibleAlert : false
+        showDismissibleAlert : false,
+        cineFilter: {
+          selected: 'ALL',
+          options: [
+            { text: '전체', value: 'ALL' },
+            { text: 'Lotte', value: 'LOTTE' },
+            { text: 'CGV', value: 'CGV' }
+          ]
+        }
+      }
+    },
+    computed: {
+      getCineLocationLength() {
+        return this.markers.length
       }
     },
     methods : {
