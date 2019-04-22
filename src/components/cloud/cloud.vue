@@ -9,6 +9,9 @@
       <b-button variant="success" @click="moveTop" v-show="items.data.upperId.length>0">최상위경로</b-button>
       <b-button variant="success" @click="moveUp" v-show="items.data.upperId.length>0">위로</b-button>
       <b-button variant="success" @click="moveTop"v-show="items.data.upperId.length>0">현재경로 이름 변경</b-button>
+      <div class="m-3">
+        parentId : {{parentId}}
+      </div>
     </b-button-group>
       <div class="border border-danger bg-light" style="height: 60vh;overflow-y: scroll;">
         <div class="m-2">
@@ -98,6 +101,7 @@
           }
         }).then(x=>{
           this.items = x;
+          this.parentId = x.data.upperId
         })
       },
       // preview 닫기
@@ -126,7 +130,7 @@
           this.load()
         })
         .catch(err => {
-          console.log(this);
+          // console.log(this);
         });
       },
       // 폴더생성
@@ -171,7 +175,6 @@
                 parentId: this.parentId,
               }
             }).then(x=>{
-              console.log(JSON.stringify(x))
               this.items = x;
             }).catch(e=>{
               alert('오류발생'+JSON.stringify(e));
