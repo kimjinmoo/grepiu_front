@@ -3,18 +3,15 @@
     <image-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></image-reader>
     <text-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></text-reader>
     <event-menu></event-menu>
-
-    <b-button-group size="sm" class="m-1">
-      <b-button variant="success" @click="createNewFolder">폴더 생성</b-button>
-      <b-button variant="success" @click="moveTop" v-show="items.data.upperInfo.hasOwnProperty('parentId')">최상위경로</b-button>
-      <b-button variant="success" @click="moveUp" v-show="items.data.upperInfo.hasOwnProperty('parentId')">위로</b-button>
-      <b-button variant="success" @click="moveTop"v-show="items.data.upperInfo.hasOwnProperty('parentId')">현재경로 이름 변경</b-button>
-      <div v-show="items.data.upperInfo.hasOwnProperty('name')">
-        폴더명 :
-        <input type="text" v-model="items.data.upperInfo.name">
-        <button @click="rename">변경</button>
-      </div>
-    </b-button-group>
+      <b-button-group size="sm" class="mr-1" >
+        <b-button variant="success" @click="createNewFolder">폴더 생성</b-button>
+        <b-button variant="success" @click="moveTop" v-show="items.data.upperInfo.hasOwnProperty('parentId')">최상위경로</b-button>
+        <b-button variant="success" @click="moveUp" v-show="items.data.upperInfo.hasOwnProperty('parentId')">위로</b-button>
+        <b-input-group size="sm" v-show="items.data.upperInfo.hasOwnProperty('name')&&items.data.upperInfo.name!=null">
+          <b-form-input v-model="items.data.upperInfo.name" class="text-right"></b-form-input>
+        </b-input-group>
+        <b-button variant="success" @click="rename" v-show="items.data.upperInfo.hasOwnProperty('name')&&items.data.upperInfo.name!=null">변경</b-button>
+      </b-button-group>
       <div class="border border-danger bg-light" style="height: 60vh;overflow-y: scroll;">
         <div class="m-2">
           <p><b>디렉토리</b></p>
@@ -106,6 +103,7 @@
       // 최상위 폴더 이동
       moveTop: function() {
         this.parentId = ""
+        this.items.data.upperInfo = {}
         this.load();
       },
       // 상위 경로도 이동
