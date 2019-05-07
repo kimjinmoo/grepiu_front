@@ -6,11 +6,13 @@
 
     <b-button-group size="sm" class="m-1">
       <b-button variant="success" @click="createNewFolder">폴더 생성</b-button>
-      <b-button variant="success" @click="moveTop" v-show="items.data.upperId.length>0">최상위경로</b-button>
-      <b-button variant="success" @click="moveUp" v-show="items.data.upperId.length>0">위로</b-button>
-      <b-button variant="success" @click="moveTop"v-show="items.data.upperId.length>0">현재경로 이름 변경</b-button>
-      <div class="m-3">
-        parentId : {{parentId}}
+      <b-button variant="success" @click="moveTop" v-show="items.data.upperInfo.hasOwnProperty('parentId')">최상위경로</b-button>
+      <b-button variant="success" @click="moveUp" v-show="items.data.upperInfo.hasOwnProperty('parentId')">위로</b-button>
+      <b-button variant="success" @click="moveTop"v-show="items.data.upperInfo.hasOwnProperty('parentId')">현재경로 이름 변경</b-button>
+      <div v-show="items.data.upperInfo.hasOwnProperty('name')">
+        폴더명 :
+        <input type="text" v-model="items.data.upperInfo.name">
+        <button @click="rename">변경</button>
       </div>
     </b-button-group>
       <div class="border border-danger bg-light" style="height: 60vh;overflow-y: scroll;">
@@ -24,7 +26,7 @@
           <p><b>파일</b></p>
           <div style="display: grid;grid-template-columns: 25% 25% 25% 25%; text-align: center;">
             <div v-for="item in getFiles" style="padding: 5% 5% 5% 5%">
-              <img src="/static/img/cloud/file.png" style="width: 64px; height: auto; cursor: pointer;" @click="read(item)">
+              <img v-bind:src="getIcon(item.files.fileName)" style="width: 64px; height: auto; cursor: pointer;" @click="read(item)">
               <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;font-size: 9pt;">{{item.files.fileName}}</p>
             </div>
           </div>
@@ -69,10 +71,24 @@
         items: {
           code:"",
           data:{
-            upperId:"",
+            upperInfo: {
+            },
             list:[]
           }
         },
+        getIcon: function(filename) {
+          let src = '/static/img/cloud/file.png'
+          if((/\.(gif|jpg|jpeg|tiff|png)$/i).test(filename)) {
+            src = "/static/img/cloud/file_i.png"
+          }
+          if((/\.(mp3|mp4)$/i).test(filename)) {
+            src = "/static/img/cloud/file_m.png"
+          }
+          if((/\.(text)$/i).test(filename)) {
+            src = "/static/img/cloud/file_d.png"
+          }
+          return src
+        }
       }
     },
     created() {
@@ -97,11 +113,11 @@
         // 클라우드 스토어 데이터를 가져온다.
         getCloud({
           params: {
-            parentId: this.items.data.upperId
+            parentId: this.items.data.upperInfo.hasOwnProperty('parentId')?this.items.data.upperInfo.parentId:""
           }
         }).then(x=>{
           this.items = x;
-          this.parentId = x.data.upperId
+          this.parentId = x.data.upperInfo.hasOwnProperty('parentId')?x.data.upperInfo.parentId:''
         })
       },
       // preview 닫기
@@ -110,9 +126,15 @@
         this.preview.type = ''
       },
       // 폴더 이름 변경
-      rename: function(id, name) {
+      rename: function() {
+        let id = this.parentId
+        let name = this.items.data.upperInfo.name
+        console.log(id);
+        console.log(name);
         renameCloud(id, name).then(res=>{
           this.load();
+        }).then(x => {
+          console.log(JSON.stringify(x));
         })
       },
       // 파일 저장
@@ -166,10 +188,12 @@
         })
       },
       read : function(item) {
-        this.parentId = item.id;
         // 파일을 읽는다.
         switch (item.attribute) {
           case "D" :
+            // 폴더인경우 parentId를 변경한다.
+            this.parentId = item.id;
+
             getCloud({
               params: {
                 parentId: this.parentId,
