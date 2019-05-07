@@ -68,7 +68,7 @@
         hashLists : [],
         tCount : 0,
         cPage : 0,
-        size : 5,
+        size : 9,
         isMoreBtn: false,
         searchHashTag: null
       }
