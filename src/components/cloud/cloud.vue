@@ -12,6 +12,7 @@
           <b-form-input v-model="items.data.upperInfo.name" class="text-right"></b-form-input>
         </b-input-group>
         <b-button variant="success" @click="rename" v-show="items.data.upperInfo.hasOwnProperty('name')&&items.data.upperInfo.name!=null">변경</b-button>
+        <b-button class="ml-1" variant="success" @click="deleteFolder" v-show="items.data.upperInfo.hasOwnProperty('parentId')">삭제</b-button>
       </b-button-group>
       <div class="border border-danger bg-light" style="height: 60vh;overflow-y: scroll;">
         <div class="m-2">
@@ -134,8 +135,6 @@
       rename: function() {
         let id = this.parentId
         let name = this.items.data.upperInfo.name
-        console.log(id);
-        console.log(name);
         renameCloud(id, name).then(res=>{
           this.load();
         }).then(x => {
@@ -154,6 +153,7 @@
           this.uploadPercentage = parseInt( Math.round( ( progressEvent.loaded * 100 ) / progressEvent.total ) )
         })
         .then(x => {
+          this.uploadPercentage = 0
           this.load()
         })
         .catch(err => {
@@ -175,10 +175,11 @@
         .catch(err => {
         });
       },
-      delete: function(id) {
-        if (confirm(id + " 삭제하시겠습니까?")) {
+      deleteFolder: function() {
+        let id = this.parentId
+        if (confirm(this.items.data.upperInfo.name + " 삭제하시겠습니까?")) {
           deleteCloud(id).then(res=>{
-            this.load();
+            this.moveUp()
           })
         }
       },

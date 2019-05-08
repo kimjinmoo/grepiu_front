@@ -7,9 +7,11 @@
         <source :src="url" type="audio/mp3">
         Your browser does not support the audio element.
       </audio>
+      <h2>{{loop}}</h2>
       <h4>{{fileName}}</h4>
       <b-button @click="onPlay">재생</b-button>
       <b-button @click="onPause">정지</b-button>
+      <b-button @click="onRepeat">반복</b-button>
     </div>
   </div>
 </template>
@@ -19,7 +21,8 @@
     name: "audioPreview",
     data() {
       return {
-        currentPlayTime: 0
+        currentPlayTime: 0,
+        loop: 'Play'
       }
     },
     props: ['url','t', 'fileName'],
@@ -31,6 +34,15 @@
       },
       onPause() {
         this.$refs.audio.pause()
+      },
+      onRepeat() {
+        if (this.$refs.audio.loop) {
+          this.loop = "Play"
+          this.$refs.audio.loop = false
+        } else {
+          this.loop = "Repeat"
+          this.$refs.audio.loop = true
+        }
       },
       onClosePreview() {
         this.$emit("close");
