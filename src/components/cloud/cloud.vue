@@ -2,6 +2,7 @@
   <div class="container-fluid grepIU_container">
     <image-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></image-reader>
     <text-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></text-reader>
+    <audio-reader :url="preview.url" :t="preview.type" :file-name="preview.fileName" @close="onClosePreview"></audio-reader>
     <event-menu></event-menu>
       <b-button-group size="sm" class="mr-1" >
         <b-button variant="success" @click="createNewFolder">폴더 생성</b-button>
@@ -41,6 +42,7 @@
 <script>
   import imageReader from './reader/imageReader'
   import textReader from './reader/textReader'
+  import audioReader from './reader/audioReader'
   import eventMenu from './event/menu'
   import {getCloud, createCloud, createFileCloud, readFileCloud, readBlobCloud, deleteCloud, renameCloud} from './file-upload.service'
 
@@ -52,15 +54,20 @@
     return (/\.(txt)$/i).test(fileName)
   }
 
+  function isAudio(fileName) {
+    return (/\.(mp3|mp4|wav)$/i).test(fileName)
+  }
+
   export default {
     name: "cloud",
-    components: {imageReader, textReader, eventMenu},
+    components: {imageReader, textReader, audioReader, eventMenu},
     data : function(){
       return {
         uploadPercentage: 0,
         preview: {
           type: '',
-          url: null
+          url: null,
+          fileName: ''
         },
         file: '',
         obj: [],
@@ -206,25 +213,39 @@
             if(isImage(item.files.fileName)) {
               readBlobCloud(item.id)
               .then(v=>{
-                const blob = new Blob([v]);
-                let reader = new FileReader();
+                const blob = new Blob([v])
+                let reader = new FileReader()
                 reader.onloadend = e => this.preview.url = e.target.result
                 reader.readAsDataURL(blob)
                 this.preview.type = 'IMG'
               })
-            } else if(isText(item.files.fileName)){
+              return true;
+            }
+            if(isText(item.files.fileName)){
               readBlobCloud(item.id)
               .then(v=>{
-                const blob = new Blob(["\ufeff",v]);
-                let reader = new FileReader();
+                const blob = new Blob(["\ufeff",v])
+                let reader = new FileReader()
                 reader.onloadend = e => this.preview.url = e.target.result
                 reader.readAsText(blob)
                 this.preview.type = 'TEXT'
               })
-            } else {
-              if(confirm('파일을 다운로드 합니다.')) {
-                readFileCloud(item.id, item.name);
-              }
+              return true;
+            }
+            if(isAudio(item.files.fileName)) {
+              readBlobCloud(item.id)
+              .then(v=>{
+                const blob = new Blob([v], {type: 'audio/ogg'});
+                let reader = new FileReader()
+                reader.onloadend = e => this.preview.url = e.target.result
+                reader.readAsDataURL(blob)
+                this.preview.fileName = item.files.fileName
+                this.preview.type = 'AUDIO'
+              })
+              return true;
+            }
+            if(confirm('파일을 다운로드 합니다.')) {
+              readFileCloud(item.id, item.name);
             }
             break;
         }
