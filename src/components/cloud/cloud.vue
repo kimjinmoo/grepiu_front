@@ -233,6 +233,7 @@
               return true;
             }
             if(isAudio(item.files.fileName)) {
+              this.preview.type = 'AUDIO'
               readBlobCloud(item.id)
               .then(v=>{
                 const blob = new Blob([v], {type: 'audio/ogg'});
@@ -240,7 +241,6 @@
                 reader.onloadend = e => this.preview.url = e.target.result
                 reader.readAsDataURL(blob)
                 this.preview.fileName = item.files.fileName
-                this.preview.type = 'AUDIO'
               })
               return true;
             }
