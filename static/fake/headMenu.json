@@ -1,28 +1,32 @@
 {
-  "menuLists" : [
+  "menuLists": [
     {
-      "id" : 1,
-      "name" : "포스트",
-      "url" : "/post",
-      "requiresAuth" : false
+      "id": 1,
+      "name": "포스트",
+      "url": "/post",
+      "requiresAuth": false,
+      "admin": false
     },
     {
-      "id" : 2,
-      "name" : "집창고",
-      "url" : "/lab",
-      "requiresAuth" : false
+      "id": 2,
+      "name": "집창고",
+      "url": "/lab",
+      "requiresAuth": false,
+      "admin": false
     },
     {
-      "id" : 3,
-      "name" : "클라우드",
-      "url" : "/cloud",
-      "requiresAuth" : true
+      "id": 3,
+      "name": "클라우드",
+      "url": "/cloud",
+      "requiresAuth": true,
+      "admin": false
     },
     {
-      "id" : 4,
-      "name" : "관리자",
-      "url" : "/admin",
-      "requiresAuth" : true
+      "id": 4,
+      "name": "관리자",
+      "url": "/admin",
+      "requiresAuth": true,
+      "admin": true
     }
   ]
 }

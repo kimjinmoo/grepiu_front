@@ -11,7 +11,10 @@
             <b-nav-item v-if="menu.requiresAuth==false" :to="menu.url" v-for="menu in menuLists"
                         v-bind:key="menu.id">{{menu.name}}
             </b-nav-item>
-            <b-nav-item v-if="userIsAuthenticated && menu.requiresAuth==true" :to="menu.url" v-for="menu in menuLists"
+            <b-nav-item v-if="userIsAuthenticated && menu.requiresAuth==true && menu.admin==false" :to="menu.url" v-for="menu in menuLists"
+                        v-bind:key="menu.id">{{menu.name}}
+            </b-nav-item>
+            <b-nav-item v-show="user.role=='SUPER_ADMIN'" v-if="userIsAuthenticated && menu.requiresAuth==true && menu.admin==true" :to="menu.url" v-for="menu in menuLists"
                         v-bind:key="menu.id">{{menu.name}}
             </b-nav-item>
           </b-navbar-nav>
