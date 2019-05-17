@@ -14,7 +14,7 @@
           </div>
           <h3>grepiu.com</h3>
           <div>
-            <b class="c-name">Server</b>&nbsp;AWS EC2(t2.small)
+            <b class="c-name">Server</b>&nbsp;AWS EC2(t3.small)
           </div>
           <div>
             <b class="c-name">API</b>Spring Boot 2.0
@@ -26,7 +26,7 @@
             <b class="c-name">Login</b>Spring Security + Oauth2
           </div>
           <div>
-            <b class="c-name">etc</b>Google Maps, Vue-editor,vue-router, Quill, Axios, moment, highlight js, marker-clusterer-plus, vue-carousel, webstomp-client
+            <b class="c-name">lib</b>Google Maps, Vue-editor,vue-router, Quill, Axios, moment, highlight js, marker-clusterer-plus, vue-carousel, webstomp-client
           </div>
           <div>
             <h1>Make</h1>
