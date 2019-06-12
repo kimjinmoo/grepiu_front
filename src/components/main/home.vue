@@ -7,26 +7,30 @@
       </div>
     </div>
     <!-- End Step1 -->
-
-    <div class="container-fluid mb-3 mt-3">
-      <!-- Step2 Contents-->
+    <div class="container-fluid">
       <div class="home_white_bg">
-        <b-container>
+        <div class="text-center p-4">
+          <h2># 하는것들</h2>
+        </div>
+        <b-container style="min-height: 350px;">
           <b-row>
             <b-col sm>
+              <div style="height: 250px;">
               <h1 style="color:#1c7430">포스팅</h1>
-              <h3 style="color:#868e96">개발/일상/생각나느것들 작성</h3>
+              <h3 style="color:#868e96">개발/일상/쓰고싶은거</h3>
               <p>
                 - 분류는 Tag로 구분, Tag 분류 보기 가능, 반응형<br>
-                - MongoDB 사용, 빠른 검색<br>
+                - MongoDB 사용<br>
                 - 검색 기능(대소문자 가림)<br>
                 - 자동 스크롤 펴짐<br>
               </p>
+              </div>
               <div class="ml-5 mb-3">
                 <b-button to="/post" variant="outline-success">확인하기</b-button>
               </div>
             </b-col>
             <b-col sm>
+              <div style="height: 250px;">
               <h1 style="color:#dd4b39">집창고</h1>
               <h3 style="color:#868e96">이것저것 해보고 싶은 것들</h3>
               <h3></h3>
@@ -36,14 +40,40 @@
                 - Selenium 이용하여 구연<br>
                 - 프럭시 서버로 크롤링해야됨(aws 접근문제)<br>
               </p>
+              </div>
               <div class="ml-5 mb-3">
                 <b-button to="/lab" variant="outline-success" >확인하기</b-button>
               </div>
             </b-col>
-          </b-row>
-          <b-row class="p-3" style="background-color: #c8cbcf">
             <b-col sm>
-              <h1 style="color:#0b2e13">프로필</h1>
+              <div style="height: 250px;">
+                <h1 style="color:#344e86">웹폴더</h1>
+                <h3 style="color:#868e96">개인 저장함(로그인필요)</h3>
+                <p>
+                  - HTML5를 통한 파일 제어<br>
+                  - Web을 통한 자료 공유<br>
+                  - 음악 및 Text 읽기<br>
+                  - 추후 S3로 변경해서 저장 해볼 예정<br>
+                </p>
+              </div>
+              <div class="ml-5 mb-3">
+                <b-button to="/cloud" variant="outline-success" >확인하기</b-button>
+              </div>
+            </b-col>
+          </b-row>
+        </b-container>
+      </div>
+    </div>
+    <div class="container-fluid" style="background-color: #eeeeee">
+      <b-container>
+        <!-- Step2 Contents-->
+        <b-row>
+          <b-col>
+            <img src="/static/img/bg/post.png"></img>
+          </b-col>
+          <b-col sm class="align-content-center">
+            <div class="mt-5">
+              <h1 style="color:#0b2e13">개발자 프로필</h1>
               <h3 style="color:#868e96">경력 타임 라인/홈페이지 설명</h3>
               <p>
                 - 경력 타임 라인<br>
@@ -54,11 +84,14 @@
               <div class="ml-5 mb-3">
                 <b-button to="/about" variant="outline-success">확인하기</b-button>
               </div>
-            </b-col>
-          </b-row>
-        </b-container>
-      </div>
+            </div>
+          </b-col>
+        </b-row>
+      </b-container>
       <!-- End Step2-->
+    </div>
+    <div>
+
     </div>
     <div class="home_use_bg p-2">
       <b-container class="container-fluid">
@@ -78,6 +111,7 @@
           <b-col sm>
             <h3>Front</h3>
             <h6>Vue</h6>
+            <h6>React</h6>
             <h6>Javascript</h6>
             <h6>freemarker</h6>
           </b-col>
@@ -92,11 +126,12 @@
             <h3>빅데이터</h3>
             <h6>엘라스틱서치</h6>
             <h6>fluentd</h6>
+            <h6>logstash</h6>
           </b-col>
           <b-col sm>
             <h3>ETC</h3>
             <h6>Socket 통신</h6>
-            <h6>Android 개발</h6>
+            <h6>Android</h6>
           </b-col>
           <b-col sm>
             <h3>Linux</h3>
@@ -170,6 +205,16 @@
     min-height: 90vh;
     width: 100%;
     background: url('/static/img/bg/bg.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-attachment:scroll
+  }
+  .main_post {
+    min-height: 90vh;
+    width: 100%;
+    background: url('/static/img/bg/post.png') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
