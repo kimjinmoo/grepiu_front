@@ -3,44 +3,49 @@
 2018.03.12 최초 생성
 2018.06.26 vue cli-3.0으로 변경 
 
-<h5>설치된 플로그인 목록<h5>
+<h5>dependency library<h5>
 <pre>
-npm i bootstrap-vue --save
-npm install vue-router —save
-npm install axios vue-axios --save
-npm install --save glyphicons
-npm install -g npm-install-peers
-npm install --save firebase
-npm install --save vue-browser-geolocation
-npm install --save vue2-google-maps
+bootstrap-vue
+vue-router
+axios vue-axios
+glyphicons
+file-saver
+npm-install-peers
+firebase
+vue-browser-geolocation
+vue2-google-maps
+marker-clusterer-plus
+opencollective
 *editor
-npm install --save vue2-editor
+vue2-editor
 => https://www.npmjs.com/package/vue2-editor
+quill-image-drop-module
+quill-image-resize-module
 * Socket 통신
-npm install --save vue-carousel webstomp-client
+vue-carousel webstomp-client
 * 모바일
-npm install mobile-detect --save
+mobile-detect 
 * 웹 호환성 entries 지원
-npm install --save babel-polyfill
+babel-polyfill
 => entry: ["babel-polyfill", "./app/js"]};
 * 날짜
-npm install vue-moment --save
+vue-moment 
 * 관리
-npm install vuex --save
+vuex
 * 에디터 
-npm install highlight.js -save
+highlight.js 
 * 로딩
-npm install vue-infinite-loading --save
+vue-infinite-loading
 </pre>
 
-<h5>Git에서 받은 후 작업</h5>
+##Start</h5>
 <pre>
 npm install or yarn install
-npm install -g yarn (yarn이 설치 안되어 있을 경우)
-yarn run dev [개발 버전 실행]
+*npm install -g yarn (yarn이 설치 안되어 있을 경우)
+yarn start [개발 버전 실행]
 </pre>
 
-<h5>디렉토리 구조<h5>
+##디렉토리 구조
 <pre>
 [+]build 빌드파일
 [+]config 설정파일 
