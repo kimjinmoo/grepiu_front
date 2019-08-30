@@ -10,6 +10,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 //import GmapCluster from 'vue2-google-maps/dist/components/cluster'
 import vuescroll from 'vue-scroll'
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 Vue.config.silent = false
 Vue.config.productionTip = false
@@ -31,6 +33,13 @@ Vue.use(vuescroll)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  created() {
+    AOS.init({
+      easing: 'ease-out-back',
+      //once: true,
+      disable: "phone"
+    });
+  },
   store,
   router,
   components: { App },

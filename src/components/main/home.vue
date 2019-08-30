@@ -10,9 +10,9 @@
     <div class="container-fluid">
       <div class="home_white_bg">
         <div class="text-center p-4">
-          <h2># 하는것들</h2>
+          <h2 data-aos="fade-right"># 하는것들</h2>
         </div>
-        <b-container style="min-height: 350px;">
+        <b-container style="min-height: 550px;" data-aos="zoom-in-down" data-aos-duration="2000">
           <b-row>
             <b-col sm>
               <div style="height: 250px;">
@@ -64,15 +64,15 @@
         </b-container>
       </div>
     </div>
-    <div class="container-fluid" style="background-color: #eeeeee">
+    <div class="container-fluid" style="background-color: #eeeeee; min-height: 550px;">
       <b-container>
         <!-- Step2 Contents-->
         <b-row>
           <b-col>
-            <img src="/static/img/bg/post.png"></img>
+            <img data-aos="fade-zoom-in" data-aos-delay="300" src="/static/img/bg/post.png"></img>
           </b-col>
           <b-col sm class="align-content-center">
-            <div class="mt-5">
+            <div class="mt-5" data-aos="fade-left" data-aos-duration="3000">
               <h1 style="color:#0b2e13">개발자 프로필</h1>
               <h3 style="color:#868e96">경력 타임 라인/홈페이지 설명</h3>
               <p>

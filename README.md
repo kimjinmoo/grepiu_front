@@ -36,6 +36,8 @@ vuex
 highlight.js 
 * 로딩
 vue-infinite-loading
+* scroll
+AOS
 </pre>
 
 ##Start</h5>
