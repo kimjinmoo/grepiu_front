@@ -35,9 +35,9 @@ new Vue({
   el: '#app',
   created() {
     AOS.init({
-      easing: 'ease-out-back',
+      easing: 'ease-out-back'
       //once: true,
-      disable: "phone"
+      //disable: "phone"
     });
   },
   store,
