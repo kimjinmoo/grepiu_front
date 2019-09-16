@@ -11,13 +11,13 @@
         </b-col>
         <b-col md="8">
           <div class="input-group mb-3">
-            <input type="text" v-model="searchFilter" class="form-control" placeholder="검색" aria-label="Search" aria-describedby="basic-addon2" @keyup="onSearchByFilter">
+            <input type="text" v-on:input="searchFilter = $event.target.value" class="form-control" placeholder="검색" aria-label="Search" aria-describedby="basic-addon2" @keyup="onSearchByFilter">
           </div>
           <div v-show="searchHashTag != null">
             <h1>Selected</h1>
             <p><b-badge>{{searchHashTag}}</b-badge></p>
           </div>
-          <div v-show="searchFilter != ''">
+          <div v-show="searchFilter != null && searchFilter.length > 0">
             <h1>Filter</h1>
             <p><b-badge>{{searchFilter}}</b-badge></p>
           </div>
@@ -95,20 +95,21 @@
       },
       onSearchByHashTag(tag) {
         this.cPage = 0;
-        this.sectionLists = []
         this.searchHashTag = tag;
         this.$nextTick(() =>{
-          this.infiniteHandler();
-          // this.$refs.infiniteLoading.stateChanger.loaded();
+          //this.infiniteHandler();
+          this.$refs.infiniteLoading.stateChanger.reset();
+          this.sectionLists = []
         });
       },
       onSearchByFilter() {
         this.cPage = 0;
-        this.sectionLists = []
         this.$nextTick(() => {
-          this.infiniteHandler();
-          // this.$refs.infiniteLoading.stateChanger.loaded();
-        });;
+          //this.infiniteHandler();
+          //this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+          this.$refs.infiniteLoading.stateChanger.reset();
+          this.sectionLists = []
+        });
       },
       infiniteHandler($state) {
         // 자동은 안되서 수동으로 적용
