@@ -1,8 +1,8 @@
 <template>
   <div class="container-fluid grepIU_container">
-    <image-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></image-reader>
+    <image-reader :t="preview.type" :id="preview.id" @close="onClosePreview"></image-reader>
     <text-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></text-reader>
-    <audio-reader :url="preview.url" :t="preview.type" :file-name="preview.fileName" @close="onClosePreview"></audio-reader>
+    <audio-reader :t="preview.type" :id="preview.id" :file-name="preview.fileName" @close="onClosePreview"></audio-reader>
     <event-menu></event-menu>
     <b-container class="m-0">
       <b-row>
@@ -25,8 +25,8 @@
       <div class="border border-danger bg-light" style="height: 60vh;overflow-y: scroll;">
         <div class="m-2">
           <p><b>디렉토리</b></p>
-          <div style="display: grid;grid-template-columns: 25% 25% 25% 25%;text-align: center">
-            <div v-for="item in getDir" @click="read(item)" style="padding: 5% 5% 5% 5%">{{item.name}}</div>
+          <div style="display: grid;grid-template-columns: 25% 25% 25% 25%;text-align: center;">
+            <div v-for="item in getDir" @click="read(item)" style="padding: 5% 5% 5% 5%; background-color: #0d95e8; border: 3px solid #fff; color: white;">{{item.name}}</div>
           </div>
         </div>
         <div class="m-2">
@@ -74,6 +74,7 @@
       return {
         uploadPercentage: 0,
         preview: {
+          id: null,
           type: '',
           url: null,
           fileName: ''
@@ -219,15 +220,15 @@
             })
             break;
           case "F" :
+            if(isAudio(item.files.fileName)) {
+              this.preview.type = 'AUDIO'
+              this.preview.id = item.id
+              this.preview.fileName = item.files.fileName
+              return true;
+            }
             if(isImage(item.files.fileName)) {
-              readBlobCloud(item.id)
-              .then(v=>{
-                const blob = new Blob([v])
-                let reader = new FileReader()
-                reader.onloadend = e => this.preview.url = e.target.result
-                reader.readAsDataURL(blob)
-                this.preview.type = 'IMG'
-              })
+              this.preview.type = 'IMG'
+              this.preview.id = item.id
               return true;
             }
             if(isText(item.files.fileName)){
@@ -238,18 +239,7 @@
                 reader.onloadend = e => this.preview.url = e.target.result
                 reader.readAsText(blob)
                 this.preview.type = 'TEXT'
-              })
-              return true;
-            }
-            if(isAudio(item.files.fileName)) {
-              this.preview.type = 'AUDIO'
-              readBlobCloud(item.id)
-              .then(v=>{
-                const blob = new Blob([v], {type: 'audio/ogg'});
-                let reader = new FileReader()
-                reader.onloadend = e => this.preview.url = e.target.result
-                reader.readAsDataURL(blob)
-                this.preview.fileName = item.files.fileName
+                this.preview.id = item.id
               })
               return true;
             }
@@ -259,7 +249,8 @@
             break;
         }
       }
-    }, mounted() {
+    },
+    mounted() {
     }
   }
 </script>
