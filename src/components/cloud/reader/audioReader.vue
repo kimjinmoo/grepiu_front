@@ -91,6 +91,8 @@
         }
       },
       onClosePreview() {
+        this.loop = '읽고 있는 중입니다.'
+        this.url = null
         this.$emit("close");
       }
     }
