@@ -4,16 +4,24 @@
     <text-reader :url="preview.url" :t="preview.type" @close="onClosePreview"></text-reader>
     <audio-reader :url="preview.url" :t="preview.type" :file-name="preview.fileName" @close="onClosePreview"></audio-reader>
     <event-menu></event-menu>
-      <b-button-group size="sm" class="mr-1" >
-        <b-button variant="success" @click="createNewFolder">폴더 생성</b-button>
-        <b-button variant="success" @click="moveTop" v-show="items.data.upperInfo.hasOwnProperty('parentId')">최상위경로</b-button>
-        <b-button variant="success" @click="moveUp" v-show="items.data.upperInfo.hasOwnProperty('parentId')">위로</b-button>
-        <b-input-group size="sm" v-show="items.data.upperInfo.hasOwnProperty('name')&&items.data.upperInfo.name!=null">
-          <b-form-input v-model="items.data.upperInfo.name" class="text-right"></b-form-input>
-        </b-input-group>
-        <b-button variant="success" @click="rename" v-show="items.data.upperInfo.hasOwnProperty('name')&&items.data.upperInfo.name!=null">변경</b-button>
-        <b-button class="ml-1" variant="success" @click="deleteFolder" v-show="items.data.upperInfo.hasOwnProperty('parentId')">삭제</b-button>
-      </b-button-group>
+    <b-container class="m-0">
+      <b-row>
+        <b-col md="auto" class="p-1">
+          <b-button size="sm" variant="success" @click="createNewFolder" style="min-width: 100px;">폴더 생성</b-button>
+          <b-button size="sm" variant="success" @click="moveTop" v-show="items.data.upperInfo.hasOwnProperty('parentId')" style="min-width: 100px;">최상위경로</b-button>
+          <b-button size="sm" variant="success" @click="moveUp" v-show="items.data.upperInfo.hasOwnProperty('parentId')" style="min-width: 100px;">위로</b-button>
+        </b-col>
+        <b-col md="auto" class="p-1">
+          <b-input-group size="sm" v-show="items.data.upperInfo.hasOwnProperty('name')&&items.data.upperInfo.name!=null">
+            <b-form-input v-model="items.data.upperInfo.name" class="text-right"></b-form-input>
+          </b-input-group>
+        </b-col>
+        <b-col class="p-1">
+          <b-button size="sm" variant="success" @click="rename" v-show="items.data.upperInfo.hasOwnProperty('name')&&items.data.upperInfo.name!=null" style="min-width: 100px;">변경</b-button>
+          <b-button size="sm" variant="success" @click="deleteFolder" v-show="items.data.upperInfo.hasOwnProperty('parentId')" style="min-width: 100px;">삭제</b-button>
+        </b-col>
+      </b-row>
+    </b-container>
       <div class="border border-danger bg-light" style="height: 60vh;overflow-y: scroll;">
         <div class="m-2">
           <p><b>디렉토리</b></p>
