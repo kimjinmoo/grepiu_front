@@ -12,6 +12,7 @@ import PostDetail from "@/components/post/postDetail"
 
 import Lab from "@/components/lab/lab"
 import Movie from "@/components/lab/movie"
+import Vote from "@/components/lab/vote"
 
 import MyAccount from "@/components/member/myAccount"
 
@@ -21,6 +22,8 @@ import AdminView from '@/components/admin/view'
 import cloud from "@/components/cloud/cloud"
 
 import error_404 from "@/components/error/404.vue"
+
+
 
 Vue.use(Router)
 
@@ -123,6 +126,15 @@ const router = new Router({
       component: Movie,
       meta: {
         info: "내창고-영화관 찾기",
+        requiresAuth: false
+      }
+    },
+    {
+      path: '/lab/vote',
+      name: 'Vote',
+      component: Vote,
+      meta: {
+        info: "실시간 투표",
         requiresAuth: false
       }
     },

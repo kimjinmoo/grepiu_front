@@ -107,7 +107,7 @@
         return this.markers.length
       }
     },
-    methods : {
+    methods: {
       setCurrentLanLng : function(lat, lng) {
         //현재 좌표를 Set 한다.
         this.currentLatLng.lat =  lat;
