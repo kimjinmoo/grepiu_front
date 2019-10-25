@@ -1,40 +1,42 @@
 <template>
   <div id="app" class="app">
     <div class="wrapper">
+      <div v-if="!isCommon">
       <transition name="fade">
-      <b-navbar toggleable="md" type="light" variant="write" :class="{'fixed-theme':myNavBar.isFixed,'fixed-off-theme': !myNavBar.isFixed}" class="fixed-top grepIU-underline">
-        <b-navbar-toggle target="nav_collapse" ></b-navbar-toggle>
-        <b-navbar-brand to="/" :class="{'fixed-theme':myNavBar.isFixed,'fixed-off-theme': !myNavBar.isFixed}">GrepIU</b-navbar-brand>
-        <b-collapse is-nav id="nav_collapse" right>
-          <b-navbar-nav>
-            <b-nav-item to="/about">관하여..</b-nav-item>
-            <b-nav-item v-if="menu.requiresAuth==false" :to="menu.url" v-for="menu in menuLists"
-                        v-bind:key="menu.id">{{menu.name}}
-            </b-nav-item>
-            <b-nav-item v-if="userIsAuthenticated && menu.requiresAuth==true && menu.admin==false" :to="menu.url" v-for="menu in menuLists"
-                        v-bind:key="menu.id">{{menu.name}}
-            </b-nav-item>
-            <b-nav-item v-show="user.role=='SUPER_ADMIN'" v-if="userIsAuthenticated && menu.requiresAuth==true && menu.admin==true" :to="menu.url" v-for="menu in menuLists"
-                        v-bind:key="menu.id">{{menu.name}}
-            </b-nav-item>
-          </b-navbar-nav>
-          <b-navbar-nav class="ml-auto" :class="{'fixed-theme':myNavBar.isFixed}">
-            <b-nav-item-dropdown right>
-              <template slot="button-content" v-b-popover.hover="'I am popover content!'" title="Popover Title">
-                <span v-if="!userIsAuthenticated">계정</span>
-                <span v-else>{{user.id}}</span>
-              </template>
-              <b-nav-item v-if="!userIsAuthenticated" to="/signIn">로그인</b-nav-item>
-              <b-nav-item v-if="!userIsAuthenticated">도움말</b-nav-item>
-              <b-nav-item v-if="userIsAuthenticated" to="/member/account">계정정보</b-nav-item>
-              <b-nav-item v-if="userIsAuthenticated" v-on:click="signOut">로그아웃</b-nav-item>
-            </b-nav-item-dropdown>
-          </b-navbar-nav>
-        </b-collapse>
-      </b-navbar>
+        <b-navbar  toggleable="md" type="light" variant="write" :class="{'fixed-theme':myNavBar.isFixed,'fixed-off-theme': !myNavBar.isFixed}" class="fixed-top grepIU-underline">
+          <b-navbar-toggle target="nav_collapse" ></b-navbar-toggle>
+          <b-navbar-brand to="/" :class="{'fixed-theme':myNavBar.isFixed,'fixed-off-theme': !myNavBar.isFixed}">GrepIU</b-navbar-brand>
+          <b-collapse is-nav id="nav_collapse" right>
+            <b-navbar-nav>
+              <b-nav-item to="/about">관하여..</b-nav-item>
+              <b-nav-item v-if="menu.requiresAuth==false" :to="menu.url" v-for="menu in menuLists"
+                          v-bind:key="menu.id">{{menu.name}}
+              </b-nav-item>
+              <b-nav-item v-if="userIsAuthenticated && menu.requiresAuth==true && menu.admin==false" :to="menu.url" v-for="menu in menuLists"
+                          v-bind:key="menu.id">{{menu.name}}
+              </b-nav-item>
+              <b-nav-item v-show="user.role=='SUPER_ADMIN'" v-if="userIsAuthenticated && menu.requiresAuth==true && menu.admin==true" :to="menu.url" v-for="menu in menuLists"
+                          v-bind:key="menu.id">{{menu.name}}
+              </b-nav-item>
+            </b-navbar-nav>
+            <b-navbar-nav class="ml-auto" :class="{'fixed-theme':myNavBar.isFixed}">
+              <b-nav-item-dropdown right>
+                <template slot="button-content" v-b-popover.hover="'I am popover content!'" title="Popover Title">
+                  <span v-if="!userIsAuthenticated">계정</span>
+                  <span v-else>{{user.id}}</span>
+                </template>
+                <b-nav-item v-if="!userIsAuthenticated" to="/signIn">로그인</b-nav-item>
+                <b-nav-item v-if="!userIsAuthenticated">도움말</b-nav-item>
+                <b-nav-item v-if="userIsAuthenticated" to="/member/account">계정정보</b-nav-item>
+                <b-nav-item v-if="userIsAuthenticated" v-on:click="signOut">로그아웃</b-nav-item>
+              </b-nav-item-dropdown>
+            </b-navbar-nav>
+          </b-collapse>
+        </b-navbar>
       </transition>
+      </div>
       <div class="grep-container">
-        <GrepIUNav></GrepIUNav>
+        <GrepIUNav v-if="!isCommon"></GrepIUNav>
         <main role="main">
           <router-view></router-view>
         </main>
@@ -42,7 +44,7 @@
       </div>
     </div>
     <!-- Footer -->
-    <GrepIUFooter class="footer"></GrepIUFooter>
+    <GrepIUFooter class="footer" v-if="!isCommon"></GrepIUFooter>
     <!-- 소켓알람-->
     <b-modal ref="alertModar" centered title="알림" ok-only>{{socketMessage}}</b-modal>
   </div>
@@ -53,8 +55,6 @@
   import GrepIUNav from '@/components/main/gnav'
   import GrepIUFooter from '@/components/main/footer'
 
-
-
   export default {
     name: 'app',
     components : {
@@ -63,6 +63,7 @@
     data : function() {
       return {
         scrollPosition: 0,
+        isCommon: false,
         myNavBar: {
           isFixed: false,
           flagAdd: true,
@@ -89,8 +90,9 @@
       socketMessage() {
         this.$refs.alertModar.show();
       },
-      // '$route' (to, from) {
-      // }
+      $route(to, from) {
+        console.log("route")
+      }
     },
     computed : {
       socketMessage() {
@@ -163,6 +165,10 @@
     },
 
     created () {
+      if(this.$route.path.indexOf("/share/") >= 0) {
+        this.isCommon = true;
+      }
+      console.log();
       // document.body.onscroll = this.handleScroll
       // document.addEventListener("touchmove", this.handleScroll, true)
       document.addEventListener('scroll', this.handleScroll, true)

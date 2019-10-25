@@ -1,14 +1,17 @@
 <template>
   <div class="container">
-    <div v-for="(item, index) in votes" :key="item.id">
-      <div>{{item.subject}}</div>
-      <div>{{item.contents}}</div>
+    <div class="m-3"></div>
+    <div v-for="(item, index) in votes" :key="item.id" class="mb-2">
+      <div>주제 : {{item.subject}} <b-button size="sm" variant="outline-primary">공유하기</b-button> <b-button :to="{path: '/share/'+item.id}" size="sm" variant="outline-info">확인하기</b-button></div>
+      <div>내용 : {{item.contents}}</div>
       <div v-for="(q, index) in item.items" :key="q.item">
         {{q.item}}
         <b-progress  @click.native="onVote(item.id, index)">
           <b-progress-bar :max="voteMax(item.id)" :value="q.vote" variant="success" style="cursor: pointer">{{q.vote}}</b-progress-bar>
         </b-progress>
+        <br>
       </div>
+      <div>총 투표자 : {{voteMax(item.id)}}</div>
     </div>
     <div style="height:15px;"></div>
   </div>
