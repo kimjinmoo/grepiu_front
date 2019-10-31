@@ -10,6 +10,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 //import GmapCluster from 'vue2-google-maps/dist/components/cluster'
 import vuescroll from 'vue-scroll'
+import VueClipboard from 'vue-clipboard2'
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -19,7 +20,7 @@ Vue.use(VueAxios, axios)
 Vue.use(require('vue-moment'))
 Vue.use(BootstrapVue)
 Vue.use(VueCarousel)
-Vue.use(VueGeolocation)
+Vue.use(VueClipboard)
 // Vue.component('GmapCluster', GmapCluster)
 Vue.use(VueGoogleMaps, {
   load: {

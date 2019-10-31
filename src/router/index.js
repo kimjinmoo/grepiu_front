@@ -175,6 +175,9 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  // set title
+  document.title = "GrepIU " + to.meta.info || "GrepIU"
+
   const auth = to.matched.some(record => record.meta.requiresAuth);
   let user = localStorage.user;
   if (auth && !user) {

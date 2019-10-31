@@ -1,16 +1,21 @@
 <template>
   <div class="container">
-   투표
-    <div>
-      <div>{{vote.subject}}</div>
-      <div>{{vote.contents}}</div>
-      <div v-for="(q, index) in vote.items" :key="q.item">
-        {{q.item}}
-        <b-progress  @click.native="onVote(index)">
-          <b-progress-bar :max="voteMax()" :value="q.vote" variant="success" style="cursor: pointer">{{q.vote}}</b-progress-bar>
-        </b-progress>
-      </div>
-    </div>
+    <b-list-group>
+      <b-list-group-item>
+        투표 <span>총 투표자 : {{voteMax()}}</span>
+        <div>
+          <h2>{{vote.subject}}</h2>
+          <p>{{vote.contents}}</p>
+          <hr class="my-4">
+          <div v-for="(q, index) in vote.items" :key="q.item">
+            {{q.item}}
+            <b-progress  @click.native="onVote(index)">
+              <b-progress-bar :max="voteMax()" :value="q.vote" variant="success" style="cursor: pointer">{{q.vote}}</b-progress-bar>
+            </b-progress>
+          </div>
+        </div>
+      </b-list-group-item>
+    </b-list-group>
   </div>
 </template>
 <script>
@@ -34,7 +39,7 @@
       //set ID
       this.id = this.$route.params.id
       //Web Socket Set
-      this.socket = new SockJS('http://192.168.0.66:8010/ws')
+      this.socket = new SockJS('https://conf.grepiu.com/ws')
       this.stompClient = Stomp.over(this.socket, {
         debug : false
       });
@@ -51,13 +56,19 @@
       this.onLoad()
     },
     methods : {
+      voteMax() {
+        return vote.items.reduce((a, b) => {
+          return a + b.vote
+        }, 0);
+      },
       test() {
         this.$http.post(process.env.ROOT_API+"/grepiu/lab/vote/"+this.id, null, {
-              params: {
-                voteIndex: index
-              }
+          params: {
+            voteIndex: index
+          }
+        })
       },
-      onVote: function(index) {
+      onVote(index) {
         this.$http.post(process.env.ROOT_API+"/grepiu/lab/vote/"+this.id, null, {
           params: {
             voteIndex: index
@@ -83,3 +94,9 @@
     }
   };
 </script>
+<style type="text/css">
+  .progress {
+    width: 90%;
+    cursor: pointer;
+  }
+</style>

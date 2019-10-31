@@ -35,12 +35,13 @@
         </b-navbar>
       </transition>
       </div>
+      <div class="innerPadding" v-if="!isCommon"/>
       <div class="grep-container">
         <GrepIUNav v-if="!isCommon"></GrepIUNav>
         <main role="main">
           <router-view></router-view>
         </main>
-        <div class="inner_footer_margin"></div>
+        <div class="inner_footer_margin" v-if="!isCommon"></div>
       </div>
     </div>
     <!-- Footer -->
@@ -91,7 +92,7 @@
         this.$refs.alertModar.show();
       },
       $route(to, from) {
-        console.log("route")
+        //console.log("route")
       }
     },
     computed : {
@@ -180,8 +181,12 @@
 </script>
 <style scoped>
 
-  .grep-container {
+  .innerPadding {
     padding-top: 68px;
+  }
+
+  .grep-container {
+    height: 100%;
   }
   /*
    * Custom styles

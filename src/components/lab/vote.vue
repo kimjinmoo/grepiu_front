@@ -1,18 +1,29 @@
 <template>
   <div class="container">
-    <div class="m-3"></div>
-    <div v-for="(item, index) in votes" :key="item.id" class="mb-2">
-      <div>주제 : {{item.subject}} <b-button size="sm" variant="outline-primary">공유하기</b-button> <b-button :to="{path: '/share/'+item.id}" size="sm" variant="outline-info">확인하기</b-button></div>
-      <div>내용 : {{item.contents}}</div>
-      <div v-for="(q, index) in item.items" :key="q.item">
-        {{q.item}}
-        <b-progress  @click.native="onVote(item.id, index)">
-          <b-progress-bar :max="voteMax(item.id)" :value="q.vote" variant="success" style="cursor: pointer">{{q.vote}}</b-progress-bar>
-        </b-progress>
-        <br>
-      </div>
-      <div>총 투표자 : {{voteMax(item.id)}}</div>
+    <div class="m-2">
+      <b-button size="sm" variant="primary">등록</b-button>
     </div>
+    <b-list-group>
+      <b-list-group-item v-for="(item, index) in votes" :key="item.id">
+        <h2>{{item.subject}}</h2>
+        <p>{{item.contents}}</p>
+        <hr class="my-4">
+
+        <div v-for="(q, index) in item.items" :key="q.item">
+          {{q.item}}
+          <b-progress  @click.native="onVote(item.id, index)">
+            <b-progress-bar :max="voteMax(item.id)" :value="q.vote" variant="success">{{q.vote}}</b-progress-bar>
+          </b-progress>
+          <br>
+        </div>
+        <div>총 투표자 : {{voteMax(item.id)}}</div>
+        <br>
+        <span>
+        <b-button size="sm" variant="outline-primary" @click="onCopyClip(item.id)">공유하기(iframe)</b-button>
+        <b-button size="sm" variant="outline-primary" @click="onCopyUrl(item.id)">URL 복사</b-button>
+        </span>
+      </b-list-group-item>
+    </b-list-group>
     <div style="height:15px;"></div>
   </div>
 </template>
@@ -24,6 +35,7 @@
     name: 'vote',
     data() {
       return {
+        shareClip: '<iframe src="http://192.168.0.66/share/$id$" height="100%" width="100%" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"/>',
         votes: []
       }
     },
@@ -53,6 +65,16 @@
           return a + b.vote
         }, 0);
       },
+      onCopyClip: function(id) {
+        this.$copyText(this.shareClip.replace("$id$",id)).then(function(e) {
+          alert('복사 되었습니다.')
+        });
+      },
+      onCopyUrl: function(id) {
+        this.$copyText(process.env.WEB_URL+`/share/${id}`).then(function(e) {
+          alert('복사 되었습니다.')
+        });
+      },
       onVote: function(id, index) {
         this.$http.post(process.env.ROOT_API+"/grepiu/lab/vote/"+id, null, {
           params: {
@@ -76,7 +98,7 @@
 </script>
 <style type="text/css">
   .progress {
-    width: 50%;
-    margin: 5px;
+    width: 90%;
+    cursor: pointer;
   }
 </style>
