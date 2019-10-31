@@ -35,7 +35,7 @@
     name: 'vote',
     data() {
       return {
-        shareClip: '<iframe src="http://192.168.0.66/share/$id$" height="100%" width="100%" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"/>',
+        shareClip: '<iframe src="'+process.env.WEB_URL+'/share/$id$" height="100%" width="100%" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"/>',
         votes: []
       }
     },
