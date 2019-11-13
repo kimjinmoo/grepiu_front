@@ -17,6 +17,7 @@ import "aos/dist/aos.css";
 Vue.config.silent = false
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
+Vue.use(VueGeolocation)
 Vue.use(require('vue-moment'))
 Vue.use(BootstrapVue)
 Vue.use(VueCarousel)
