@@ -13,6 +13,9 @@ import vuescroll from 'vue-scroll'
 import VueClipboard from 'vue-clipboard2'
 import AOS from "aos";
 import "aos/dist/aos.css";
+import 'vue-material-design-icons/styles.css';
+import AppleIos from 'vue-material-design-icons/Apple';
+import Android from 'vue-material-design-icons/Android';
 
 Vue.config.silent = false
 Vue.config.productionTip = false
@@ -23,6 +26,8 @@ Vue.use(BootstrapVue)
 Vue.use(VueCarousel)
 Vue.use(VueClipboard)
 // Vue.component('GmapCluster', GmapCluster)
+Vue.component('apple-market', AppleIos);
+Vue.component('android-market', Android);
 Vue.use(VueGoogleMaps, {
   load: {
     key: process.env.GOOGLE_API_KEY,

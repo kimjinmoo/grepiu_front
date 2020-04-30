@@ -42,9 +42,11 @@
                 <div style="color: #ffffff;font-size: 1vmax;text-align: end; width: 60vw;">
                   <p>좌표로 나만의 장소 저장, 정보 공유</p>
                 </div>
-                <div class="home_more">
-                  <b-btn variant="primary" href="https://play.google.com/store/apps/details?id=com.grepiu.gsapp.grep_search_app" target="_blank">안드로이드</b-btn>
-                  <b-btn variant="primary" href="#" target="_blank">IOS(마켓 등록 후 등록 예정)</b-btn>
+                <div class="home_more" style="text-align: end;">
+                  <a href="https://itunes.apple.com/app/id1507847743"><apple-market class="icon-2x" title="Apple 스토어" :size="100" decorative fill-color="#00000"/></a>
+                  <a href="https://play.google.com/store/apps/details?id=com.grepiu.gsapp.grep_search_app"><android-market class="icon-2x" title="구글 플레이" :size="100" fill-color="#FFFFFF" decorative /></a>
+<!--                  <b-btn variant="primary" href="https://play.google.com/store/apps/details?id=com.grepiu.gsapp.grep_search_app" target="_blank">안드로이드</b-btn>-->
+<!--                  <b-btn variant="primary" href="https://itunes.apple.com/app/id1507847743" target="_blank">IOS</b-btn>-->
                 </div>
               </div>
             </slide>
@@ -54,7 +56,9 @@
                 <div class="home_content">
                   <p>자전거 여행 안내 앱</p>
                 </div>
-                <div class="home_more"><b-btn variant="primary" href="http://sselenium.grepiu.com/wd/hub/" target="_blank">안드로이드</b-btn></div>
+                <div class="home_more" style="text-align: end;">
+                  <a href="https://play.google.com/store/apps/details?id=com.grepiu.bk"><android-market class="icon-2x" title="구글 마켓" :size="100" fill-color="#FFFFFF" decorative /></a>
+                </div>
               </div>
             </slide>
             <slide class="label bg movie">
@@ -101,9 +105,13 @@
   </div>
 </template>
 <script>
+  import AppleIos from 'vue-material-design-icons/AppleIos';
 
   export default {
     name: "About",
+    component: {
+      AppleIos
+    },
     data : function() {
       return {
         carousel : {
@@ -196,4 +204,13 @@
     background-image: url("/static/img/bg/logo-2563719_1920.jpg");
   }
 
+  .material-design-icon.icon-2x {
+    height: 2em;
+    width: 2em;
+  }
+
+  .material-design-icon.icon-2x > .material-design-icon__svg {
+    height: 2em;
+    width: 2em;
+  }
 </style>
