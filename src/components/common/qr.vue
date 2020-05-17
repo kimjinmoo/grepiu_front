@@ -6,6 +6,8 @@
 </template>
 
 <script>
+  var MobileDetect = require('mobile-detect'),md = new MobileDetect(navigator.userAgent);
+
   export default {
     name: "qr",
     data: function () {
@@ -17,14 +19,12 @@
     },
     methods: {
       checkPlatform: function() {
-        var varUA = navigator.userAgent.toLowerCase(); //userAgent 값 얻기
-
-        if( varUA.indexOf('android') > -1) {
-          this.platform = "A"
-          // 안드로이드
-        }else if (varUA.indexOf("iphone") > -1||varUA.indexOf("ipad") > -1||varUA.indexOf("ipod") > -1) {
-          // iOS 아이폰, 아이패드, 아이팟
+        if(md.is("iPhone")) {
           this.platform = "I"
+          // 안드로이드
+        }else if (md.is("Android")) {
+          // iOS 아이폰, 아이패드, 아이팟
+          this.platform = "A"
         }else {
           // 그 외 디바이스
           this.platform = "P"
