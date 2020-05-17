@@ -19,15 +19,17 @@
     },
     methods: {
       checkPlatform: function() {
+        console.log("userAgnet : "+navigator.userAgent)
         if(md.is("iPhone")) {
-          this.platform = "I"
+          // iOS 아이폰, 아이패드, 아이팟
+          this.platformType = "I"
           // 안드로이드
         }else if (md.is("Android")) {
-          // iOS 아이폰, 아이패드, 아이팟
-          this.platform = "A"
+          // 안드로이드
+          this.platformType = "A"
         }else {
           // 그 외 디바이스
-          this.platform = "P"
+          this.platformType = "P"
         }
       }
     },
@@ -56,7 +58,7 @@
         ]
       }
     },
-    created() {
+    created: function(){
       this.checkPlatform();
     }
   }
