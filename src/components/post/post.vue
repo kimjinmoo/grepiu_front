@@ -11,7 +11,10 @@
         </b-col>
         <b-col md="8">
           <div class="input-group mb-3">
-            <input type="text" v-on:input="searchFilter = $event.target.value" class="form-control" placeholder="검색" aria-label="Search" aria-describedby="basic-addon2" @keyup="onSearchByFilter">
+            <input type="text" v-on:input="searchFilter = $event.target.value" class="form-control" placeholder="검색" aria-label="Search" aria-describedby="basic-addon2">
+            <div class="mt-3">
+              <a href="#"><search-web class="icon-2x" title="Apple 스토어" :size="100" decorative fill-color="#00000" @click="onSearchByFilter"/></a>
+            </div>
           </div>
           <div v-show="searchHashTag != null">
             <h1>Selected</h1>
@@ -53,6 +56,7 @@
   </div>
 </template>
 <script>
+  import {BootstrapVueIcons   } from 'bootstrap-vue'
   import 'highlight.js/styles/monokai-sublime.css'
   import InfiniteLoading from 'vue-infinite-loading';
 
@@ -63,6 +67,7 @@
     },
     data : function() {
       return {
+        state: null,
         searchFilter: null,
         sectionLists : [],
         hashLists : [],
@@ -72,10 +77,6 @@
         isMoreBtn: false,
         searchHashTag: null
       }
-    },
-    created : function() {
-      // post를 불러온다.
-      // this.getPostList(this.cPage);
     },
     computed : {
       hashTotalCount() {
@@ -97,7 +98,7 @@
         this.cPage = 0;
         this.searchHashTag = tag;
         this.$nextTick(() =>{
-          //this.infiniteHandler();
+          this.infiniteHandler(this.state);
           this.$refs.infiniteLoading.stateChanger.reset();
           this.sectionLists = []
         });
@@ -105,42 +106,44 @@
       onSearchByFilter() {
         this.cPage = 0;
         this.$nextTick(() => {
-          //this.infiniteHandler();
-          //this.$refs.infiniteLoading.$emit('$InfiniteLoading:reset');
+          this.infiniteHandler(this.state);
           this.$refs.infiniteLoading.stateChanger.reset();
           this.sectionLists = []
         });
       },
       infiniteHandler($state) {
+        this.state = $state;
         // 자동은 안되서 수동으로 적용
         // 세션 text를 불러온다.
-        this.$http.get(process.env.ROOT_API + "/grepiu/post", {
-          params: {
-            currentPage: this.cPage++,
-            size: this.size,
-            hashTags: this.searchHashTag,
-            filter: this.searchFilter
-          }
-        })
-        .then((response) => {
-          if (response.data.list.length) {
-            this.tCount = response.data.tCount;
-            this.sectionLists = this.sectionLists.concat(response.data.list);
-            if (this.cPage == response.data.tPage) {
-              $state.complete();
+        this.$nextTick(() => {
+          this.$http.get(process.env.ROOT_API + "/grepiu/post", {
+            params: {
+              currentPage: this.cPage++,
+              size: this.size,
+              hashTags: this.searchHashTag,
+              filter: this.searchFilter
             }
-            $state.loaded();
-          } else {
-            $state.complete();
-          }
-          if (this.cPage >= response.data.tPage) {
-            this.isMoreBtn = false;
-          } else {
-            this.isMoreBtn = true;
-          }
-        }).catch((e) => {
-          console.log("e : "+e);
-          //todo 오류 alter
+          })
+            .then((response) => {
+              if (response.data.list.length) {
+                this.tCount = response.data.tCount;
+                this.sectionLists = this.sectionLists.concat(response.data.list);
+                if (this.cPage == response.data.tPage) {
+                  $state.complete();
+                }
+                $state.loaded();
+              } else {
+                $state.complete();
+              }
+              if (this.cPage >= response.data.tPage) {
+                this.isMoreBtn = false;
+              } else {
+                this.isMoreBtn = true;
+              }
+            }).catch((e) => {
+            console.log("e : "+e);
+            //todo 오류 alter
+          });
         });
       },
       onMore : function() {
@@ -151,3 +154,9 @@
     }
   }
 </script>
+<style type="text/css">
+  .material-design-icon.icon-2x > .material-design-icon__svg {
+    height: 2em;
+    width: 2em;
+  }
+</style>

@@ -164,9 +164,32 @@
         // console.log("err");
       })
     },
-
+    metaInfo: {
+      htmlAttrs: {
+        // 주 언어 명시
+        lang: 'ko-KR',
+        dir: 'ltr'
+      },
+      title: 'GrepIU',
+      meta: [
+        { name: 'description', content: 'GrepIU', vmid: 'GrepIU' },
+        { name: 'keywords', content: 'Develop, Java, Vue' },
+        { name: 'author', content: 'iukim21c' },
+        {property: 'og:title', content: 'GrepIU'},
+        {property: 'og:site_name', content: 'GrepIU'},
+        // The list of types is available here: http://ogp.me/#types
+        {property: 'og:type', content: 'website'},
+        // Should the the same as your canonical link, see below.
+        {property: 'og:url', content: 'https://www.grepiu.com/'},
+        // Often the same as your meta description, but not always.
+        {property: 'og:description', content: '개발자 JM'}
+      ]
+    },
     created () {
       if(this.$route.path.indexOf("/share/") >= 0) {
+        this.isCommon = true;
+      }
+      if(this.$route.path.indexOf("/qr/") >= 0) {
         this.isCommon = true;
       }
       console.log();

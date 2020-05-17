@@ -15,10 +15,15 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import 'vue-material-design-icons/styles.css';
 import AppleIos from 'vue-material-design-icons/Apple';
+import SearchWeb from 'vue-material-design-icons/SearchWeb';
 import Android from 'vue-material-design-icons/Android';
+import VueMeta from 'vue-meta'
 
 Vue.config.silent = false
 Vue.config.productionTip = false
+Vue.use(VueMeta, {
+  refreshOnceOnNavigation: true
+})
 Vue.use(VueAxios, axios)
 Vue.use(VueGeolocation)
 Vue.use(require('vue-moment'))
@@ -27,6 +32,7 @@ Vue.use(VueCarousel)
 Vue.use(VueClipboard)
 // Vue.component('GmapCluster', GmapCluster)
 Vue.component('apple-market', AppleIos);
+Vue.component('search-web', SearchWeb);
 Vue.component('android-market', Android);
 Vue.use(VueGoogleMaps, {
   load: {

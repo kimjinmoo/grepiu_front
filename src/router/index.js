@@ -22,10 +22,9 @@ import AdminView from '@/components/admin/view'
 import cloud from "@/components/cloud/cloud"
 
 import commonVote from "@/components/common/vote.vue"
+import commonQr from "@/components/common/qr.vue"
 
 import error_404 from "@/components/error/404.vue"
-
-
 
 Vue.use(Router)
 
@@ -38,6 +37,15 @@ const router = new Router({
       component: commonVote,
       meta: {
         info: "투표",
+        requiresAuth: false
+      }
+    },
+    {
+      path: '/qr/:id',
+      name: 'Qr',
+      component: commonQr,
+      meta: {
+        info: "QR",
         requiresAuth: false
       }
     },

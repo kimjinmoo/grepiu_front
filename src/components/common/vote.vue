@@ -80,11 +80,6 @@
           //console.log(e);
         });
       },
-      voteMax() {
-        return this.vote.items.reduce((a, b) => {
-          return a + b.vote
-        }, 0);
-      },
       onLoad: function() {
         this.$http.get(process.env.ROOT_API+"/grepiu/lab/vote/"+this.id).then((res)=>{
           this.vote = res.data;
