@@ -12,7 +12,7 @@
         <b-col md="8">
           <div class="input-group mb-3">
             <input type="text" v-on:input="searchFilter = $event.target.value" class="form-control" placeholder="검색" aria-label="Search" aria-describedby="basic-addon2">
-            <div class="mt-3">
+            <div class="mt-0">
               <a href="#"><search-web class="icon-2x" title="Apple 스토어" :size="100" decorative fill-color="#00000" @click="onSearchByFilter"/></a>
             </div>
           </div>

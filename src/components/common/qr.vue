@@ -17,10 +17,12 @@
     },
     methods: {
       checkPlatform: function() {
-        if( /Android/i.test(navigator.userAgent)) {
+        var varUA = navigator.userAgent.toLowerCase(); //userAgent 값 얻기
+
+        if( varUA.indexOf('android') > -1) {
           this.platform = "A"
           // 안드로이드
-        }else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        }else if (varUA.indexOf("iphone") > -1||varUA.indexOf("ipad") > -1||varUA.indexOf("ipod") > -1) {
           // iOS 아이폰, 아이패드, 아이팟
           this.platform = "I"
         }else {
