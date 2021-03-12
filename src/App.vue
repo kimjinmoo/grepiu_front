@@ -18,6 +18,7 @@
               <b-nav-item v-show="user.role=='SUPER_ADMIN'" v-if="userIsAuthenticated && menu.requiresAuth==true && menu.admin==true" :to="menu.url" v-for="menu in menuLists"
                           v-bind:key="menu.id">{{menu.name}}
               </b-nav-item>
+              <b-nav-item to="/support">지원받기</b-nav-item>
             </b-navbar-nav>
             <b-navbar-nav class="ml-auto" :class="{'fixed-theme':myNavBar.isFixed}">
               <b-nav-item-dropdown right>

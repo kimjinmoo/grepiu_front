@@ -24,6 +24,8 @@ import cloud from "@/components/cloud/cloud"
 import commonVote from "@/components/common/vote.vue"
 import commonQr from "@/components/common/qr.vue"
 
+import Support from '@/components/support/support.vue'
+
 import error_404 from "@/components/error/404.vue"
 
 Vue.use(Router)
@@ -165,6 +167,11 @@ const router = new Router({
         info: "클라우드-저장소",
         requiresAuth: true
       }
+    },
+    {
+      path: '/support',
+      name: 'Support',
+      component: Support
     },
     { path: '*', component: error_404}
 

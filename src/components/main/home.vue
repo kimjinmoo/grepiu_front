@@ -6,15 +6,6 @@
         {{home_text}}<span class="blink">_</span>
       </div>
     </div>
-    <div style="margin-top: 5px;"/>
-    <div class="grep_place_post">
-      <div style="margin: auto; height:50%; width:50%; font-size: 2em;color: white;text-align: center;">그렙 플레이스</div>
-      <div style="text-align: center;">장소 저장, 공유</div>
-      <div style="text-align: end; margin-top: 50vh; margin-right: 5vh">
-        <a href="https://itunes.apple.com/app/id1507847743"><apple-market class="icon-2x" title="Apple 스토어" :size="100" decorative fill-color="#00000"/></a>
-        <a href="https://play.google.com/store/apps/details?id=com.grepiu.gsapp.grep_search_app"><android-market class="icon-2x" title="구글 플레이" :size="100" fill-color="#FFFFFF" decorative /></a>
-      </div>
-    </div>
     <!-- End Step1 -->
     <div class="container-fluid">
       <div class="home_white_bg">
