@@ -20,7 +20,7 @@
     "bootstrap-vue": "^2.0.0-rc.28",
     "file-saver": "^2.0.2",
     "glyphicons": "^0.2.0",
-    "highlight.js": "9.15.9",
+    "highlight.js": "10.4.1",
     "jquery": "^3.5.0",
     "marker-clusterer-plus": "^2.1.4",
     "mobile-detect": "^1.4.3",
